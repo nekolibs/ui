@@ -1,7 +1,7 @@
 import { clearProps } from './_helpers'
 
 export function useMarginModifier(props) {
-  const { marginT, marginB, marginL, marginR, marginV, marginH, margin } = props
+  const { marginT, marginB, marginL, marginR, marginV, marginH, margin, ...restProps } = props
 
   const marginTop = marginT ?? marginV ?? margin
   const marginBottom = marginB ?? marginV ?? margin
@@ -11,7 +11,7 @@ export function useMarginModifier(props) {
   const style = clearProps({ marginTop, marginBottom, marginRight, marginLeft })
 
   return {
-    ...props,
+    ...restProps,
     style: {
       ...props.style,
       ...style,

@@ -1,7 +1,7 @@
 import { clearProps } from './_helpers'
 
 export function useTextModifier(props) {
-  let { opacity, bold, strong, fontWeight, italic, underline, lineHeight, align, center, toRight } = props
+  let { opacity, bold, strong, fontWeight, italic, underline, lineHeight, align, center, toRight, ...restProps } = props
 
   let fontStyle
   if (italic) fontStyle = 'italic'
@@ -27,7 +27,7 @@ export function useTextModifier(props) {
   // TODO: Handle font sizes based on theme
 
   return {
-    ...props,
+    ...restProps,
     style: {
       ...props.style,
       ...style,

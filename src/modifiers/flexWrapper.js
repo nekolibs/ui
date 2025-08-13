@@ -1,11 +1,11 @@
 import { clearProps } from './_helpers'
 
 export function useFlexWrapperModifier(props) {
-  const { justify, align, center, centerV, centerH, toRight, toBottom, direction, row, wrap, gap } = props
+  const { justify, align, center, centerV, centerH, toRight, toBottom, direction, row, wrap, gap, ...restProps } = props
 
   let justifyContent = justify
   let alignItems = align
-  let flexDirection = direction
+  let flexDirection = direction || 'column'
   let flexWrap
 
   if (center) {
@@ -22,6 +22,7 @@ export function useFlexWrapperModifier(props) {
   if (wrap) flexWrap = 'wrap'
 
   const style = clearProps({
+    display: 'flex',
     justifyContent,
     alignItems,
     flexDirection,
@@ -30,7 +31,7 @@ export function useFlexWrapperModifier(props) {
   })
 
   return {
-    ...props,
+    ...restProps,
     style: {
       ...props.style,
       ...style,

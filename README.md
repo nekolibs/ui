@@ -5,7 +5,7 @@ Universal React Native UI library (works on react-native, react-native-web and r
 ## Install
 
 ```
-yarn add @neko-os/ui
+yarn add @neko-os/ui ramda dayjs
 ```
 
 ### Web or native-web

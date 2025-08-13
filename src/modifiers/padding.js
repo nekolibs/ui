@@ -1,7 +1,7 @@
 import { clearProps } from './_helpers'
 
 export function usePaddingModifier(props) {
-  const { paddingT, paddingB, paddingL, paddingR, paddingV, paddingH, padding } = props
+  const { paddingT, paddingB, paddingL, paddingR, paddingV, paddingH, padding, ...restProps } = props
 
   const paddingTop = paddingT ?? paddingV ?? padding
   const paddingBottom = paddingB ?? paddingV ?? padding
@@ -11,7 +11,7 @@ export function usePaddingModifier(props) {
   const style = clearProps({ paddingTop, paddingBottom, paddingRight, paddingLeft })
 
   return {
-    ...props,
+    ...restProps,
     style: {
       ...props.style,
       ...style,
