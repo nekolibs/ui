@@ -1,7 +1,29 @@
 import { clearProps } from './_helpers'
+import { mergePreset, useGetColor, useTexts } from '../theme/ThemeHandler'
 
-export function useTextModifier(props) {
-  let { opacity, bold, strong, fontWeight, italic, underline, lineHeight, align, center, toRight, ...restProps } = props
+export function useTextModifier({ size, ...props }) {
+  const getColor = useGetColor()
+  const texts = useTexts()
+
+  if (!size && !props.inherit) size = 'p'
+
+  let {
+    color,
+    opacity,
+    bold,
+    strong,
+    fontWeight,
+    weight,
+    italic,
+    underline,
+    lineHeight,
+    align,
+    center,
+    toRight,
+    inherit,
+    fontSize,
+    ...restProps
+  } = mergePreset(texts, size, props, 'p')
 
   let fontStyle
   if (italic) fontStyle = 'italic'
@@ -13,7 +35,10 @@ export function useTextModifier(props) {
   if (center) textAlign = 'center'
   if (toRight) textAlign = 'right'
 
+  fontWeight = fontWeight || weight
   if (bold || strong) fontWeight = 600
+
+  if (!inherit) color = getColor(color || 'text')
 
   const style = clearProps({
     fontWeight,
@@ -22,9 +47,9 @@ export function useTextModifier(props) {
     lineHeight,
     textAlign,
     opacity,
+    color,
+    fontSize,
   })
-
-  // TODO: Handle font sizes based on theme
 
   return {
     ...restProps,

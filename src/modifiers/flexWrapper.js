@@ -1,12 +1,15 @@
 import { clearProps } from './_helpers'
+import { useGetSpace } from '../theme/ThemeHandler'
 
 export function useFlexWrapperModifier(props) {
-  const { justify, align, center, centerV, centerH, toRight, toBottom, direction, row, wrap, gap, ...restProps } = props
+  const getSpace = useGetSpace()
+  let { justify, align, center, centerV, centerH, toRight, toBottom, direction, row, wrap, gap, ...restProps } = props
 
   let justifyContent = justify
   let alignItems = align
   let flexDirection = direction || 'column'
   let flexWrap
+  gap = getSpace(gap)
 
   if (center) {
     justifyContent = 'center'

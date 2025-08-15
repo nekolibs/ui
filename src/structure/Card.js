@@ -12,8 +12,10 @@ import { usePositionModifier } from '../modifiers/position'
 import { useShadowModifier } from '../modifiers/shadow'
 import { useSizeModifier } from '../modifiers/size'
 
-export function View({ children, ...rootProps }) {
-  let props = useMergeThemeComponent('View', rootProps)
+export function Card({ children, ...rootProps }) {
+  let props = useMergeThemeComponent('Card', rootProps)
+  const defaultProps = { padding: 'md', br: 'xlg', bg: 'overlayBG' }
+
   props = pipe(
     useSizeModifier, //
     usePositionModifier,
@@ -24,10 +26,10 @@ export function View({ children, ...rootProps }) {
     useBackgroundModifier,
     useBorderModifier,
     useShadowModifier
-  )(props)
+  )({ ...defaultProps, ...props })
 
   return (
-    <AbsView className="neko-view" {...props}>
+    <AbsView className="neko-card" {...props}>
       {children}
     </AbsView>
   )

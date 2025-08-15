@@ -1,0 +1,68 @@
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color: #213547;
+  background-color: #ffffff;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+*,
+* * {
+  box-sizing: border-box;
+}
+
+#root,
+body {
+  margin: 0;
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+}
+
+.neko-wave-click-effect {
+  position: relative;
+  padding: 10px 20px;
+  background: #1677ff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.neko-wave-click-effect:after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  border: 2px solid rgba(200, 200, 200, 0.5);
+  opacity: 0;
+  transform: scale(0.9);
+}
+
+.neko-wave-click-effect:active:after {
+  animation: wave-effect 0.4s ease-out;
+}
+
+.neko-wave-click-effect:hover {
+  opacity: 0.95;
+}
+
+@keyframes wave-effect {
+  0% {
+    opacity: 1;
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.3);
+  }
+}
