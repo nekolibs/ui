@@ -2,7 +2,7 @@ import { clearProps } from './_helpers'
 import { mergePreset } from '../theme/helpers/mergePreset'
 import { useGetColor, useTexts } from '../theme/ThemeHandler'
 
-export function useTextModifier({ size, ...props }) {
+export function useTextModifier([values, { size, ...props }]) {
   const getColor = useGetColor()
   const texts = useTexts()
 
@@ -52,11 +52,14 @@ export function useTextModifier({ size, ...props }) {
     fontSize,
   })
 
-  return {
-    ...restProps,
-    style: {
-      ...props.style,
-      ...style,
+  return [
+    values,
+    {
+      ...restProps,
+      style: {
+        ...props.style,
+        ...style,
+      },
     },
-  }
+  ]
 }

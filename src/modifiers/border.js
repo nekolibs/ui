@@ -1,7 +1,7 @@
 import { clearProps } from './_helpers'
 import { useGetColor, useGetRadius } from '../theme/ThemeHandler'
 
-export function useBorderModifier(props) {
+export function useBorderModifier([values, props]) {
   const getRadius = useGetRadius()
   const getColor = useGetColor()
   let {
@@ -43,11 +43,14 @@ export function useBorderModifier(props) {
     borderWidth,
   })
 
-  return {
-    ...restProps,
-    style: {
-      ...props.style,
-      ...style,
+  return [
+    values,
+    {
+      ...restProps,
+      style: {
+        ...props.style,
+        ...style,
+      },
     },
-  }
+  ]
 }

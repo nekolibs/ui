@@ -1,7 +1,7 @@
 import { clearProps } from './_helpers'
 import { useGetElementHeight } from '../theme/ThemeHandler'
 
-export function useSizeModifier(props) {
+export function useSizeModifier([values, props]) {
   const getHeight = useGetElementHeight()
   let {
     width,
@@ -39,8 +39,11 @@ export function useSizeModifier(props) {
 
   const style = clearProps({ height, width, minHeight, minHeight, maxHeight, maxWidth, aspectRatio })
 
-  return {
-    ...restProps,
-    style: { ...props.style, ...style },
-  }
+  return [
+    values,
+    {
+      ...restProps,
+      style: { ...props.style, ...style },
+    },
+  ]
 }

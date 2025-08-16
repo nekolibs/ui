@@ -1,7 +1,7 @@
 import { clearProps } from './_helpers'
 import { useGetColor } from '../theme/ThemeHandler'
 
-export function useShadowModifier(props) {
+export function useShadowModifier([values, props]) {
   const getColor = useGetColor()
   let { shadow, ...restProps } = props
 
@@ -22,11 +22,14 @@ export function useShadowModifier(props) {
 
   const style = clearProps({ boxShadow, shadowRadius, shadowOffset, shadowOpacity, shadowColor, elevation })
 
-  return {
-    ...restProps,
-    style: {
-      ...props.style,
-      ...style,
+  return [
+    values,
+    {
+      ...restProps,
+      style: {
+        ...props.style,
+        ...style,
+      },
     },
-  }
+  ]
 }

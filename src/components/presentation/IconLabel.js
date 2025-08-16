@@ -1,9 +1,15 @@
+import { pipe } from 'ramda'
+
 import { ContentLabel } from './ContentLabel'
 import { Icon } from './Icon'
-import { useMergeThemeComponent } from '../theme/ThemeHandler'
+import { useThemeComponentModifier } from '../../modifiers/themeComponent'
 
 export function IconLabel(rootProps) {
-  const { icon, color, size = 'md', iconProps, ...props } = useMergeThemeComponent('IconLabel', rootProps)
+  const [_, formattedProps] = pipe(
+    useThemeComponentModifier('IconLabel') //
+  )([{}, rootProps])
+
+  const { icon, color, size = 'md', iconProps, ...props } = formattedProps
 
   return (
     <ContentLabel

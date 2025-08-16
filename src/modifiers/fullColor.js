@@ -1,38 +1,27 @@
 import tinycolor from 'tinycolor2'
 
 import { useGetColor } from '../theme/ThemeHandler'
-import { useSmartColor } from '../theme/helpers/colorScale'
 
-export function useFullColorModifier(props) {
+export function useFullColorModifier([{ color, ...values }, { outline, ...props }]) {
   const getColor = useGetColor()
-  // let { color, outline, ...restProps } = props
-
-  if (props.green) {
-    console.log('BEFORE', props)
-  }
-  const [color, { outline, ...restProps }] = useSmartColor(props, 'primary')
-
-  if (props.green) {
-    console.log('AFTER', props, color)
-  }
 
   let bg = color
   const bgObj = tinycolor(getColor(bg))
   let borderColor = color
-  let textColor = 'text'
-  let textColorObj = tinycolor(getColor('text'))
+  let fontColor = 'text'
+  let fontColorObj = tinycolor(getColor('text'))
 
   if (!!outline) {
     bg = 'transparent'
-    textColor = color
-  } else if (bgObj.isDark() === textColorObj.isDark()) {
-    textColor = 'overlayBG'
+    fontColor = color
+  } else if (bgObj.isDark() === fontColorObj.isDark()) {
+    fontColor = 'overlayBG'
   }
 
   return [
-    textColor,
+    { ...values, fontColor },
     {
-      ...restProps,
+      ...props,
       bg,
       borderColor,
     },

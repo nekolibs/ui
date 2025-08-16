@@ -1,7 +1,7 @@
 import { clearProps } from './_helpers'
 import { useGetSpace } from '../theme/ThemeHandler'
 
-export function useMarginModifier(props) {
+export function useMarginModifier([values, props]) {
   const getSpace = useGetSpace()
   const { marginT, marginB, marginL, marginR, marginV, marginH, margin, ...restProps } = props
 
@@ -12,11 +12,14 @@ export function useMarginModifier(props) {
 
   const style = clearProps({ marginTop, marginBottom, marginRight, marginLeft })
 
-  return {
-    ...restProps,
-    style: {
-      ...props.style,
-      ...style,
+  return [
+    values,
+    {
+      ...restProps,
+      style: {
+        ...props.style,
+        ...style,
+      },
     },
-  }
+  ]
 }

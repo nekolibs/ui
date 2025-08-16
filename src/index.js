@@ -1,8 +1,4 @@
-// export * from './form'
-export * from './structure'
-export * from './actions'
-export * from './presentation'
-export * from './text'
+export * from './components'
 export * from './theme'
 export * from './NekoUI'
 

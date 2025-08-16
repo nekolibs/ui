@@ -1,7 +1,7 @@
 import { clearProps } from './_helpers'
 import { useGetSpace } from '../theme/ThemeHandler'
 
-export function usePaddingModifier(props) {
+export function usePaddingModifier([values, props]) {
   const getSpace = useGetSpace()
   const { paddingT, paddingB, paddingL, paddingR, paddingV, paddingH, padding, ...restProps } = props
 
@@ -12,11 +12,14 @@ export function usePaddingModifier(props) {
 
   const style = clearProps({ paddingTop, paddingBottom, paddingRight, paddingLeft })
 
-  return {
-    ...restProps,
-    style: {
-      ...props.style,
-      ...style,
+  return [
+    values,
+    {
+      ...restProps,
+      style: {
+        ...props.style,
+        ...style,
+      },
     },
-  }
+  ]
 }

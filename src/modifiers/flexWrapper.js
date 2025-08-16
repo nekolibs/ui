@@ -1,7 +1,7 @@
 import { clearProps } from './_helpers'
 import { useGetSpace } from '../theme/ThemeHandler'
 
-export function useFlexWrapperModifier(props) {
+export function useFlexWrapperModifier([values, props]) {
   const getSpace = useGetSpace()
   let { justify, align, center, centerV, centerH, toRight, toBottom, direction, row, wrap, gap, ...restProps } = props
 
@@ -33,11 +33,14 @@ export function useFlexWrapperModifier(props) {
     gap,
   })
 
-  return {
-    ...restProps,
-    style: {
-      ...props.style,
-      ...style,
+  return [
+    values,
+    {
+      ...restProps,
+      style: {
+        ...props.style,
+        ...style,
+      },
     },
-  }
+  ]
 }

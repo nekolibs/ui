@@ -1,7 +1,7 @@
 import { clearProps } from './_helpers'
 import { useGetColor } from '../theme/ThemeHandler'
 
-export function useBackgroundModifier(props) {
+export function useBackgroundModifier([values, props]) {
   const getColor = useGetColor()
   let { bg, background, backgroundColor, ...restProps } = props
 
@@ -9,11 +9,14 @@ export function useBackgroundModifier(props) {
 
   const style = clearProps({ backgroundColor })
 
-  return {
-    ...restProps,
-    style: {
-      ...props.style,
-      ...style,
+  return [
+    values,
+    {
+      ...restProps,
+      style: {
+        ...props.style,
+        ...style,
+      },
     },
-  }
+  ]
 }

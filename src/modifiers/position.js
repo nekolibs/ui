@@ -1,6 +1,6 @@
 import { clearProps } from './_helpers'
 
-export function usePositionModifier(props) {
+export function usePositionModifier([values, props]) {
   let { position, absolute, relative, top, bottom, left, right, ...restProps } = props
 
   if (absolute) position = 'absolute'
@@ -8,11 +8,14 @@ export function usePositionModifier(props) {
 
   const style = clearProps({ position, top, bottom, left, right })
 
-  return {
-    ...restProps,
-    style: {
-      ...props.style,
-      ...style,
+  return [
+    values,
+    {
+      ...restProps,
+      style: {
+        ...props.style,
+        ...style,
+      },
     },
-  }
+  ]
 }
