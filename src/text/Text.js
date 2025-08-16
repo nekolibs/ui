@@ -18,3 +18,5 @@ export function Text({ children, ...props }) {
 
   return <AbsText {...props}>{children}</AbsText>
 }
+
+export const Title = Text

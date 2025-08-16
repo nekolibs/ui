@@ -2,50 +2,38 @@ import { mergeDeepRight } from 'ramda'
 import React from 'react'
 
 import { DEFAULT_LIGHT_THEME } from './default/lightTheme'
-import { DEFAULT_THEMES } from './default/themes'
+import { getThemeValue } from './helpers/relatedScales'
 import { useFormattedTheme } from './format/formatTheme'
 
 const ThemeContext = React.createContext(null)
 export const useThemeHandler = () => React.useContext(ThemeContext) || {}
-export const useTheme = () => useThemeHandler().theme || DEFAULT_LIGHT_THEME
-
-export const useColors = () => useTheme().colors || {}
-const getColor = (colors, key) => colors[key] || key
-export const useGetColor = () => {
-  const colors = useColors()
-  return (key) => getColor(colors, key)
+export const useTheme = (groupKey) => {
+  const theme = useThemeHandler().theme || DEFAULT_LIGHT_THEME
+  if (!groupKey) return theme
+  return theme?.[groupKey] || {}
 }
 
-export const useSpaces = () => useTheme().spaces || {}
-const getSpace = (spaces, key) => spaces[key] || key
-export const useGetSpace = () => {
-  const spaces = useSpaces()
-  return (key) => getSpace(spaces, key)
+export const useGetThemeValue = (groupKey) => {
+  const group = useTheme(groupKey)
+  return (key) => getThemeValue(group, key)
 }
 
-export const useRadius = () => useTheme().radius || {}
-const getRadius = (radius, key) => radius[key] || key
-export const useGetRadius = () => {
-  const radius = useRadius()
-  return (key) => getRadius(radius, key)
-}
+export const useColors = () => useTheme('colors')
+export const useGetColor = () => useGetThemeValue('colors')
 
-export const useTexts = () => useTheme().texts || {}
+export const useSpaces = () => useTheme('spaces')
+export const useGetSpace = () => useGetThemeValue('spaces')
 
-export function mergePreset(presets, key, props, defaultKey) {
-  if (!key) return props
-  const preset = presets[key] || presets[defaultKey]
-  return { ...props, ...preset }
-}
+export const useRadius = () => useTheme('radius')
+export const useGetRadius = () => useGetThemeValue('radius')
 
-export const useElementHeights = () => useTheme().elementHeights || {}
-const getElementHeight = (elementHeights, key) => elementHeights[key] || key
-export const useGetElementHeight = () => {
-  const elementHeights = useElementHeights()
-  return (key) => getElementHeight(elementHeights, key)
-}
+export const useElementHeights = () => useTheme('elementHeights')
+export const useGetElementHeight = () => useGetThemeValue('elementHeights')
 
-export const useThemeComponents = () => useTheme().components || {}
+export const useTexts = () => useTheme('texts')
+export const useGetText = () => useGetThemeValue('text')
+
+export const useThemeComponents = () => useTheme('components')
 export function useThemeComponent(name) {
   const components = useThemeComponents()
   return components[name] || {}

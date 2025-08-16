@@ -20,7 +20,29 @@ export function AbsIcon({ name, ...props }) {
     }
   }, [])
 
-  if (loading) return false
+  if (loading) {
+    return (
+      <div
+        style={{
+          height: props.size,
+          width: props.size,
+          borderRadius: props.size,
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <div
+          style={{
+            height: props.size / 3,
+            width: props.size / 3,
+            borderRadius: props.size,
+            backgroundColor: props.color,
+          }}
+        />
+      </div>
+    )
+  }
 
   return <Component {...props} />
 }

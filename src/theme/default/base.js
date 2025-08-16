@@ -23,7 +23,19 @@ export const BASE_THEME = {
     xxxlg: 18,
   },
 
-  // Buttons, inputs, tags
+  icons: {
+    xxxsm: 10,
+    xxsm: 12,
+    xsm: 14,
+    sm: 16,
+    md: 18,
+    lg: 22,
+    xlg: 26,
+    xxlg: 28,
+    xxxlg: 32,
+  },
+
+  // Buttons, inputs, etc.
   elementHeights: {
     xsm: 20,
     sm: 30,

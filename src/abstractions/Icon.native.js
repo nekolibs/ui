@@ -1,2 +1,11 @@
-import RmIcon from 'react-native-remix-icon'
-export const AbsIcon = RmIcon
+let AbsIcon
+
+try {
+  const RmIcon = require('react-native-remix-icon')?.default
+  console.log(RmIcon)
+  AbsIcon = (props) => <RmIcon {...props} />
+} catch {
+  AbsIcon = () => false
+}
+
+export { AbsIcon }

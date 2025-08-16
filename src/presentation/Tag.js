@@ -1,11 +1,14 @@
 import { Text } from '../text/Text'
 import { View } from '../structure/View'
-import { moveScaleDown } from '../theme/helpers/sizeScale'
-import { useFullColorModifier } from '../modifiers/fullColor.js'
+import { getSizeFromProps, moveScaleDown } from '../theme/helpers/sizeScale'
+import { useFullColorModifier } from '../modifiers/fullColor'
 import { useMergeThemeComponent } from '../theme/ThemeHandler'
 
 export function Tag(rootProps) {
-  let { label, style, textProps, size = 'md', ...props } = useMergeThemeComponent('Button', rootProps)
+  // TODO: Consider moving all to modifier and have robust return [formattedValues, props]. Then will be all mover to pipes
+  const [size, propsWithoutSize] = getSizeFromProps(rootProps, 'md')
+  let { label, style, textProps, ...props } = useMergeThemeComponent('Button', propsWithoutSize)
+
   const oneSizeDown = moveScaleDown(size, 1)
   const twoSizeDown = moveScaleDown(size, 2)
   const threeSizeDown = moveScaleDown(size, 3)
@@ -15,7 +18,6 @@ export function Tag(rootProps) {
     outline: true,
     br: threeSizeDown,
     borderWidth: 1,
-    color: 'primary',
     center: true,
   }
   const [fontColor, formattedProps] = useFullColorModifier({ ...defaultProps, ...props, style })

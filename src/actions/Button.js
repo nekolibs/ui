@@ -1,12 +1,12 @@
 import { pipe } from 'ramda'
 
 import { AbsTouchableOpacity } from '../abstractions/TouchableOpacity'
-import { Text } from '../text/Text'
+import { IconLabel } from '../presentation'
 import { useBackgroundModifier } from '../modifiers/background'
 import { useBorderModifier } from '../modifiers/border'
 import { useFlexModifier } from '../modifiers/flex'
 import { useFlexWrapperModifier } from '../modifiers/flexWrapper'
-import { useFullColorModifier } from '../modifiers/fullColor.js'
+import { useFullColorModifier } from '../modifiers/fullColor'
 import { useMarginModifier } from '../modifiers/margin'
 import { useMergeThemeComponent } from '../theme/ThemeHandler'
 import { usePaddingModifier } from '../modifiers/padding'
@@ -14,7 +14,17 @@ import { usePositionModifier } from '../modifiers/position'
 import { useSizeModifier } from '../modifiers/size'
 
 export function Button(rootProps) {
-  let { label, style, textProps, size = 'md', ...props } = useMergeThemeComponent('Button', rootProps)
+  let {
+    label,
+    style,
+    icon,
+    textProps,
+    iconProps,
+    gap,
+    invert,
+    size = 'md',
+    ...props
+  } = useMergeThemeComponent('Button', rootProps)
   const defaultProps = {
     paddingH: size,
     paddingV: 2,
@@ -40,9 +50,17 @@ export function Button(rootProps) {
 
   return (
     <AbsTouchableOpacity className="neko-button neko-wave-click-effect" {...props}>
-      <Text center color={fontColor} strong size={size} {...textProps}>
-        {label}
-      </Text>
+      <IconLabel
+        center
+        color={fontColor}
+        size={size}
+        label={label}
+        icon={icon}
+        gap={gap}
+        invert={invert}
+        textProps={{ strong: true, ...textProps }}
+        iconProps={iconProps}
+      />
     </AbsTouchableOpacity>
   )
 }

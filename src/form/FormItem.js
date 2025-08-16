@@ -1,7 +1,7 @@
-import { Text } from 'react-native'
 import React from 'react'
 
 import { FormGroup, useRelativePath } from './FormGroup'
+import { Text } from '../text/Text'
 import { useFormInstance } from './Form'
 
 export function FormItem({ name, relative, children }) {
@@ -28,7 +28,7 @@ export function FormItem({ name, relative, children }) {
   return (
     <FormGroup name={listPath}>
       {childWithProps}
-      {error && <Text style={{ color: 'red' }}>{error}</Text>}
+      {error && <Text color="red">{error}</Text>}
     </FormGroup>
   )
 }

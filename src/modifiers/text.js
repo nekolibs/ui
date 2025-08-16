@@ -1,5 +1,6 @@
 import { clearProps } from './_helpers'
-import { mergePreset, useGetColor, useTexts } from '../theme/ThemeHandler'
+import { mergePreset } from '../theme/helpers/mergePreset'
+import { useGetColor, useTexts } from '../theme/ThemeHandler'
 
 export function useTextModifier({ size, ...props }) {
   const getColor = useGetColor()
