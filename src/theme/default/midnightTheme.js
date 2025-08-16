@@ -12,6 +12,7 @@ export const MIDNIGHT_NEON_THEME = mergeDeepRight(BASE_THEME, {
     bg: '#0D0D0D',
     overlayBG: '#1A1A1A',
     shadow: 'rgba(39, 45, 52, 0.6)',
+    divider: 'rgba(255,255,255, 0.2)',
 
     blue: '#3B82F6',
     yellow: '#FACC15',

@@ -13,6 +13,7 @@ export const SUNSET_GLOW_THEME = mergeDeepRight(BASE_THEME, {
     bg: '#FFF5E6',
     overlayBG: '#FFFFFF',
     shadow: 'rgba(39, 45, 52, 0.15)',
+    divider: 'rgba(255,255,255, 0.2)',
 
     blue: '#3B82F6',
     yellow: '#FBBF24',

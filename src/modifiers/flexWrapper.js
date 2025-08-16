@@ -15,9 +15,9 @@ export function useFlexWrapperModifier([values, props]) {
     justifyContent = 'center'
     alignItems = 'center'
   } else {
-    if (centerH) justifyContent = 'center'
+    if (centerV) justifyContent = 'center'
     if (toBottom) justifyContent = 'flex-end'
-    if (centerV) alignItems = 'center'
+    if (centerH) alignItems = 'center'
     if (toRight) alignItems = 'flex-end'
   }
 

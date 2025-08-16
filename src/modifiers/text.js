@@ -2,14 +2,13 @@ import { clearProps } from './_helpers'
 import { mergePreset } from '../theme/helpers/mergePreset'
 import { useGetColor, useTexts } from '../theme/ThemeHandler'
 
-export function useTextModifier([values, { size, ...props }]) {
+export function useTextModifier([{ color, textCode, ...values }, { ...props }]) {
   const getColor = useGetColor()
   const texts = useTexts()
 
-  if (!size && !props.inherit) size = 'p'
+  if (!textCode && !props.inherit) textCode = 'p'
 
   let {
-    color,
     opacity,
     bold,
     strong,
@@ -24,7 +23,7 @@ export function useTextModifier([values, { size, ...props }]) {
     inherit,
     fontSize,
     ...restProps
-  } = mergePreset(texts, size, props, 'p')
+  } = mergePreset(texts, textCode, props, 'p')
 
   let fontStyle
   if (italic) fontStyle = 'italic'
@@ -38,8 +37,6 @@ export function useTextModifier([values, { size, ...props }]) {
 
   fontWeight = fontWeight || weight
   if (bold || strong) fontWeight = 600
-
-  if (!inherit) color = getColor(color || 'text')
 
   const style = clearProps({
     fontWeight,

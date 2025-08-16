@@ -3,7 +3,7 @@ import { pipe } from 'ramda'
 import { AbsView } from '../../abstractions/View'
 import { IconLabel } from './IconLabel'
 import { View } from '../structure/View'
-import { moveScaleDown } from '../../theme/helpers/sizeScale'
+import { moveScale } from '../../theme/helpers/sizeScale'
 import { useBackgroundModifier } from '../../modifiers/background'
 import { useBorderModifier } from '../../modifiers/border'
 import { useColorConverter } from '../../modifiers/colorConverter'
@@ -19,9 +19,9 @@ import { useSizeModifier } from '../../modifiers/size'
 import { useThemeComponentModifier } from '../../modifiers/themeComponent'
 
 const DEFAULT_PROPS = ([{ sizeCode }]) => {
-  const oneSizeDown = moveScaleDown(sizeCode, 1)
-  const twoSizeDown = moveScaleDown(sizeCode, 2)
-  const threeSizeDown = moveScaleDown(sizeCode, 3)
+  const oneSizeDown = moveScale(sizeCode, -1)
+  const twoSizeDown = moveScale(sizeCode, -2)
+  const threeSizeDown = moveScale(sizeCode, -3)
 
   return {
     paddingH: twoSizeDown,
@@ -34,20 +34,6 @@ const DEFAULT_PROPS = ([{ sizeCode }]) => {
 }
 
 export function Tag(rootProps) {
-  // TODO: Consider moving all to modifier and have robust return [formattedValues, props]. Then will be all mover to pipes
-  // const [size, propsWithoutSize] = getSizeFromProps(rootProps, 'md')
-  // let { label, style, textProps, ...props } = useMergeThemeComponent('Tag', propsWithoutSize)
-
-  // const defaultProps = {
-  // paddingH: twoSizeDown,
-  // padding: threeSizeDown,
-  // outline: true,
-  // br: threeSizeDown,
-  // borderWidth: 1,
-  // center: true,
-  // }
-  // const [{ fontColor }, formattedProps] = useFullColorModifier([{}, { ...defaultProps, ...props, style }])
-
   const [{ fontColor, sizeCode }, formattedProps] = pipe(
     useColorConverter('primary'),
     useSizeConverter('elementHeights', 'md'),
@@ -68,11 +54,11 @@ export function Tag(rootProps) {
 
   return (
     <View className="neko-tag" row>
-      <AbsView className="neko-tag" {...props}>
+      <AbsView className="neko-tag-inner" {...props}>
         <IconLabel
           center
           color={fontColor}
-          size={moveScaleDown(sizeCode, 1)}
+          size={moveScale(sizeCode, -1)}
           label={label}
           icon={icon}
           gap={gap}
@@ -83,14 +69,4 @@ export function Tag(rootProps) {
       </AbsView>
     </View>
   )
-
-  // return (
-  // <View className="neko-tag" row>
-  // <View className="neko-tag-inner" {...formattedProps}>
-  // <Text strong center color={fontColor} size={oneSizeDown} {...textProps}>
-  // {label}
-  // </Text>
-  // </View>
-  // </View>
-  // )
 }

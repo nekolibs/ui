@@ -2,6 +2,8 @@ import { CYBERPUNK_DARK_THEME } from './cyberpunkTheme'
 import { DEEP_WOODS_DARK_THEME } from './deepWoodsTheme'
 import { DEFAULT_DARK_THEME } from './darkTheme'
 import { DEFAULT_LIGHT_THEME } from './lightTheme'
+import { DEFAULT_MATRIX_THEME } from './hackerTheme'
+import { DEFAULT_MSDOS_THEME } from './msdosTheme'
 import { FOREST_MIST_THEME } from './forestTheme'
 import { MIDNIGHT_NEON_THEME } from './midnightTheme'
 import { OCEAN_BREEZE_THEME } from './oceanTheme'
@@ -18,4 +20,6 @@ export const DEFAULT_THEMES = {
   forest: FOREST_MIST_THEME,
   cyberpunk: CYBERPUNK_DARK_THEME,
   deepWoods: DEEP_WOODS_DARK_THEME,
+  hacker: DEFAULT_MATRIX_THEME,
+  msdos: DEFAULT_MSDOS_THEME,
 }

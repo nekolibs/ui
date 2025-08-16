@@ -12,6 +12,7 @@ export const FOREST_MIST_THEME = mergeDeepRight(BASE_THEME, {
     bg: '#E9F5EC',
     overlayBG: '#FFFFFF',
     shadow: 'rgba(39, 45, 52, 0.15)',
+    divider: 'rgba(0,0,0, 0.1)',
 
     blue: '#2563EB',
     yellow: '#F59E0B',
