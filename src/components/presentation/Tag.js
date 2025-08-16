@@ -48,7 +48,7 @@ export function Tag(rootProps) {
   // }
   // const [{ fontColor }, formattedProps] = useFullColorModifier([{}, { ...defaultProps, ...props, style }])
 
-  const [{ fontColor, size }, formattedProps] = pipe(
+  const [{ fontColor, sizeCode }, formattedProps] = pipe(
     useColorConverter('primary'),
     useSizeConverter('elementHeights', 'md'),
     useThemeComponentModifier('Tag'),
@@ -72,7 +72,7 @@ export function Tag(rootProps) {
         <IconLabel
           center
           color={fontColor}
-          size={size}
+          size={sizeCode}
           label={label}
           icon={icon}
           gap={gap}

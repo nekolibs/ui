@@ -26,7 +26,7 @@ const DEFAULT_PROPS = ([{ sizeCode }]) => ({
 })
 
 export function Button(rootProps) {
-  const [{ fontColor }, formattedProps] = pipe(
+  const [{ fontColor, sizeCode }, formattedProps] = pipe(
     useColorConverter('primary'),
     useSizeConverter('elementHeights', 'md'),
     useThemeComponentModifier('Button'),
@@ -49,7 +49,7 @@ export function Button(rootProps) {
       <IconLabel
         center
         color={fontColor}
-        size={size}
+        size={sizeCode}
         label={label}
         icon={icon}
         gap={gap}
