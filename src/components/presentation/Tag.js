@@ -72,7 +72,7 @@ export function Tag(rootProps) {
         <IconLabel
           center
           color={fontColor}
-          size={sizeCode}
+          size={moveScaleDown(sizeCode, 1)}
           label={label}
           icon={icon}
           gap={gap}
