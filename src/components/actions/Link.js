@@ -1,36 +1,39 @@
-import { pipe } from 'ramda'
+import { pipe, is } from 'ramda'
 
-import { AbsView } from '../../abstractions/View'
-import { useBackgroundModifier } from '../../modifiers/background'
-import { useBorderModifier } from '../../modifiers/border'
+import { AbsTouchableOpacity } from '../../abstractions/TouchableOpacity'
+import { Text } from '../text/Text'
 import { useDisplayModifier } from '../../modifiers/display'
 import { useFlexModifier } from '../../modifiers/flex'
 import { useFlexWrapperModifier } from '../../modifiers/flexWrapper'
 import { useMarginModifier } from '../../modifiers/margin'
 import { usePaddingModifier } from '../../modifiers/padding'
 import { usePositionModifier } from '../../modifiers/position'
-import { useShadowModifier } from '../../modifiers/shadow'
 import { useSizeModifier } from '../../modifiers/size'
 import { useThemeComponentModifier } from '../../modifiers/themeComponent'
 
-export function View({ children, ...rootProps }) {
+export function Link({ label, children, onPress, ...rootProps }) {
   const [_, props] = pipe(
-    useThemeComponentModifier('View'),
-    useDisplayModifier, //
+    useThemeComponentModifier('Link'),
     useSizeModifier, //
+    useDisplayModifier, //
     usePositionModifier,
     usePaddingModifier,
     useMarginModifier,
     useFlexWrapperModifier,
-    useFlexModifier,
-    useBackgroundModifier,
-    useBorderModifier,
-    useShadowModifier
+    useFlexModifier
   )([{}, rootProps])
 
+  if (!!label || is(String, children)) {
+    children = (
+      <Text primary {...props}>
+        {label || children}
+      </Text>
+    )
+  }
+
   return (
-    <AbsView className="neko-view" {...props}>
+    <AbsTouchableOpacity className="neko-link" link onPress={!!props.disabled ? undefined : onPress} {...props}>
       {children}
-    </AbsView>
+    </AbsTouchableOpacity>
   )
 }

@@ -5,8 +5,18 @@ import { DEFAULT_LIGHT_THEME } from './default/lightTheme'
 import { getThemeValue } from './helpers/relatedScales'
 import { useFormattedTheme } from './format/formatTheme'
 
+const DEFAULT_BREAKPOINTS = [
+  { name: 'sm', value: 768 },
+  { name: 'md', value: 1024 },
+  { name: 'lg', value: 1440 },
+  { name: 'xlg', value: 10000 },
+]
+
 const ThemeContext = React.createContext(null)
 export const useThemeHandler = () => React.useContext(ThemeContext) || {}
+
+export const useBreakpoints = () => useThemeHandler()?.breakpoints || DEFAULT_BREAKPOINTS
+
 export const useTheme = (groupKey) => {
   const theme = useThemeHandler().theme || DEFAULT_LIGHT_THEME
   if (!groupKey) return theme
@@ -43,10 +53,10 @@ export function useMergeThemeComponent(name, props) {
   return mergeDeepRight(themeProps, props)
 }
 
-export function ThemeHandler({ themes, initTheme, children }) {
+export function ThemeHandler({ breakpoints, themes, initTheme, children }) {
   const [activeThemeKey, setActiveThemeKey] = React.useState(initTheme || 'light')
   const theme = useFormattedTheme(themes, activeThemeKey)
-  const value = { theme, themes, activeThemeKey, setActiveThemeKey }
+  const value = { theme, themes, activeThemeKey, setActiveThemeKey, breakpoints: breakpoints || DEFAULT_BREAKPOINTS }
 
   return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
 }

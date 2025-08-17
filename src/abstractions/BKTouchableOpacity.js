@@ -1,12 +1,12 @@
-import React from 'react'
+// import React from 'react'
 
-let AbsTouchableOpacity
+// let AbsTouchableOpacity
 
-try {
-  const { Platform, TouchableOpacity: RNTouchableOpacity } = require('react-native')
-  AbsTouchableOpacity = (props) => <RNTouchableOpacity {...props} />
-} catch {
-  AbsTouchableOpacity = (props) => <button {...props} />
-}
+// try {
+// const { Platform, TouchableOpacity: RNTouchableOpacity } = require('react-native')
+// AbsTouchableOpacity = (props) => <RNTouchableOpacity {...props} />
+// } catch {
+// AbsTouchableOpacity = (props) => <button {...props} />
+// }
 
-export { AbsTouchableOpacity }
+// export { AbsTouchableOpacity }
