@@ -1,11 +1,11 @@
 import { pipe } from 'ramda'
 import React from 'react'
 
-import { AbsSwitch } from '../../../abstractions/Switch'
-import { ContentLabel } from '../../presentation/ContentLabel'
-import { useColorConverter } from '../../../modifiers/colorConverter'
-import { useSizeConverter } from '../../../modifiers/sizeConverter'
-import { useThemeComponentModifier } from '../../../modifiers/themeComponent'
+import { AbsSwitch } from '../../abstractions/Switch'
+import { ContentLabel } from '../presentation/ContentLabel'
+import { useColorConverter } from '../../modifiers/colorConverter'
+import { useSizeConverter } from '../../modifiers/sizeConverter'
+import { useThemeComponentModifier } from '../../modifiers/themeComponent'
 
 export function Switch({ value, onChange, disabled, ...rootProps }) {
   const [{ size, sizeCode, color }, props] = pipe(

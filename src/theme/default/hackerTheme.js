@@ -29,4 +29,12 @@ export const DEFAULT_MATRIX_THEME = mergeDeepRight(BASE_THEME, {
     lylac: '#8E24AA',
     pink: '#C51162',
   },
+
+  components: {
+    Card: {
+      border: 1,
+      br: 5,
+      borderColor: 'divider',
+    },
+  },
 })

@@ -1,5 +1,5 @@
-import React from 'react'
+import { View } from '../structure/View'
 
 export function FormWrapperComponent({ children, ...props }) {
-  return children
+  return <View {...props}>{children}</View>
 }

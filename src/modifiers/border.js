@@ -16,7 +16,11 @@ export function useBorderModifier([values, props]) {
     borderRadiusR,
     borderRadius,
     borderStyle,
-    borderWidth,
+    borderT,
+    borderB,
+    borderL,
+    borderR,
+    border,
     borderColor,
     brColor,
     round,
@@ -29,10 +33,22 @@ export function useBorderModifier([values, props]) {
   const borderBottomRightRadius = getRadius(brB ?? borderRadiusB ?? brR ?? borderRadiusR ?? borderRadius ?? br)
   const borderBottomLeftRadius = getRadius(brB ?? borderRadiusB ?? brL ?? borderRadiusL ?? borderRadius ?? br)
 
-  if (!!borderColor || brColor) borderColor = getColor(brColor ?? borderColor)
-
   borderStyle = borderStyle
-  if (!!borderWidth) borderStyle = 'solid'
+
+  if (border === true) border = 1
+  const borderTopWidth = borderT || border || 0
+  const borderBottomWidth = borderB || border || 0
+  const borderLeftWidth = borderL || border || 0
+  const borderRightWidth = borderR || border || 0
+  const hasBorder = borderTopWidth || borderBottomWidth || borderLeftWidth || borderRightWidth
+
+  if (!!hasBorder) {
+    borderStyle = 'solid'
+    if (!borderColor && !brColor) brColor = 'divider'
+  }
+
+  if (!!borderColor || !!brColor) borderColor = getColor(borderColor ?? brColor)
+
   const style = clearProps({
     borderStyle,
     borderTopRightRadius,
@@ -40,7 +56,10 @@ export function useBorderModifier([values, props]) {
     borderBottomRightRadius,
     borderBottomLeftRadius,
     borderColor,
-    borderWidth,
+    borderTopWidth,
+    borderBottomWidth,
+    borderLeftWidth,
+    borderRightWidth,
   })
 
   return [

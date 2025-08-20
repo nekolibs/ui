@@ -13,7 +13,7 @@ export function useRelativePath(name, opts) {
   return [...parentPath, ...listPath]
 }
 
-export function FormGroup({ name }) {
+export function FormGroup({ name, children }) {
   const path = useRelativePath(name, { relative: true })
   const value = { path }
 

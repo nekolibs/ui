@@ -2,7 +2,7 @@ import tinycolor from 'tinycolor2'
 
 import { useGetColor } from '../theme/ThemeHandler'
 
-export function useFullColorModifier([{ color, ...values }, { outline, ...props }]) {
+export function useFullColorModifier([{ color, ...values }, { outline, fill, ...props }]) {
   const getColor = useGetColor()
 
   let bg = color
@@ -11,7 +11,7 @@ export function useFullColorModifier([{ color, ...values }, { outline, ...props 
   let fontColor = 'text'
   let fontColorObj = tinycolor(getColor('text'))
 
-  if (!!outline) {
+  if (!!outline && fill !== true) {
     bg = 'transparent'
     fontColor = color
   } else if (bgObj.isDark() === fontColorObj.isDark()) {

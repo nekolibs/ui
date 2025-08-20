@@ -21,7 +21,7 @@ const DEFAULT_PROPS = ([{ sizeCode }]) => ({
   paddingV: 2,
   height: sizeCode,
   br: sizeCode,
-  borderWidth: 1,
+  border: 1,
   center: true,
 })
 
@@ -45,7 +45,7 @@ export function Button(rootProps) {
   const { label, icon, textProps, iconProps, gap, invert, size, ...props } = formattedProps
 
   return (
-    <AbsTouchableOpacity className="neko-button neko-wave-click-effect" {...props}>
+    <AbsTouchableOpacity className="neko-button neko-wave-click-effect" type="button" {...props}>
       <IconLabel
         center
         color={fontColor}

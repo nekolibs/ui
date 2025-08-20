@@ -2,9 +2,10 @@ import React from 'react'
 
 import { FormGroup, useRelativePath } from './FormGroup'
 import { Text } from '../text/Text'
+import { View } from '../structure/View'
 import { useFormInstance } from './Form'
 
-export function FormItem({ name, relative, children }) {
+export function FormItem({ name, label, relative, children, ...props }) {
   const form = useFormInstance()
   const listPath = useRelativePath(name, { relative })
   const [value, setValue] = React.useState(form.getFieldValue(listPath))
@@ -19,16 +20,24 @@ export function FormItem({ name, relative, children }) {
     form.setFieldValue(listPath, val)
   }
 
-  const child = React.Children.only(children)
-  const childWithProps = React.cloneElement(child, {
-    value,
+  const childProps = {
+    value: value === undefined ? '' : value,
     onChange: handleChange,
-  })
+  }
 
   return (
     <FormGroup name={listPath}>
-      {childWithProps}
-      {error && <Text color="red">{error}</Text>}
+      <View {...props}>
+        {label && (
+          <Text sm marginB="xxsm">
+            {label}
+          </Text>
+        )}
+        {typeof children === 'function'
+          ? children(childProps)
+          : React.cloneElement(React.Children.only(children), childProps)}
+        {error && <Text color="red">{error}</Text>}
+      </View>
     </FormGroup>
   )
 }

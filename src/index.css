@@ -28,6 +28,7 @@ body {
 a,
 button {
   cursor: pointer;
+  text-decoration: none;
 }
 
 .neko-wave-click-effect {

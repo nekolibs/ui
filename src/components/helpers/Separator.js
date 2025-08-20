@@ -1,4 +1,4 @@
-import { pipe } from 'ramda'
+import { pipe, is } from 'ramda'
 
 import { AbsView } from '../../abstractions/View'
 import { View } from '../structure/View'
@@ -11,10 +11,11 @@ import { useSizeConverter } from '../../modifiers/sizeConverter'
 import { useSizeModifier } from '../../modifiers/size'
 import { useThemeComponentModifier } from '../../modifiers/themeComponent'
 
-const DEFAULT_PROPS = ([{ size, sizeCode }, { withLine }]) => ({
-  height: withLine ? 2 * size : size,
+const DEFAULT_PROPS = ([{ size, sizeCode }, { line }]) => ({
+  height: !!line ? 2 * size : size,
   br: sizeCode,
   center: true,
+  fullW: true,
 })
 
 export function Separator(rootProps) {
@@ -29,21 +30,16 @@ export function Separator(rootProps) {
     useFlexWrapperModifier
   )([{}, rootProps])
 
-  const { withLine, lineProps, lineWidth, lineHeight = 1, ...props } = formattedProps
+  const { line, lineProps, ...props } = formattedProps
+  const lineHeight = is(Number, line) ? line : 1
 
   return (
     <AbsView className="neko-separator" {...props}>
-      {!!withLine && (
-        <View
-          bg={color}
-          br={lineHeight}
-          height={lineHeight}
-          fullW
-          maxWidth={lineWidth}
-          className="neko-separator-line"
-          {...lineProps}
-        />
+      {!!line && (
+        <View bg={color} br={lineHeight} height={lineHeight} fullW className="neko-separator-line" {...lineProps} />
       )}
     </AbsView>
   )
 }
+
+export const Divider = Separator

@@ -28,7 +28,7 @@ const DEFAULT_PROPS = ([{ sizeCode }]) => {
     padding: threeSizeDown,
     outline: true,
     br: threeSizeDown,
-    borderWidth: 1,
+    border: 1,
     center: true,
   }
 }

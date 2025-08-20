@@ -16,9 +16,11 @@ export function ContentLabel(rootProps) {
   return (
     <View className="neko-content-label" row gap={gap} centerV {...props}>
       {!invert && content}
-      <Text color={color} size={size} {...textProps}>
-        {label}
-      </Text>
+      {!!label && (
+        <Text color={color} size={size} {...textProps}>
+          {label}
+        </Text>
+      )}
       {!!invert && content}
     </View>
   )

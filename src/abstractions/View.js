@@ -1,3 +1,3 @@
-export function AbsView(props) {
-  return <div {...props} />
+export function AbsView({ onPress, onClick, ...props }) {
+  return <div onClick={onClick || onPress} {...props} />
 }

@@ -32,7 +32,7 @@ export const DEFAULT_MSDOS_THEME = mergeDeepRight(BASE_THEME, {
 
   components: {
     Card: {
-      borderWidth: 1,
+      border: 1,
       br: 5,
       borderColor: 'divider',
     },

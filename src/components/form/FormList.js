@@ -14,16 +14,36 @@ export function FormList({ name, relative, children }) {
   const listPathStr = listPath.join('$NEKOJOIN$')
   const error = form.getError(listPath)
 
+  // Counter to generate unique keys
+  const keyCounter = React.useRef(0)
+  // Map to track keys by value reference
+  const keysMap = React.useRef(new WeakMap())
+
+  const generateFields = (items) => {
+    if (!Array.isArray(items)) return []
+    return items.map((item, index) => {
+      let key
+      if (typeof item === 'object' && item !== null) {
+        key = keysMap.current.get(item)
+        if (!key) {
+          key = `field_${keyCounter.current++}`
+          keysMap.current.set(item, key)
+        }
+      } else {
+        key = `field_${keyCounter.current++}`
+      }
+      return { key, name: index }
+    })
+  }
+
   const [fields, setFields] = React.useState(() => {
     const initial = form.getFieldValue(listPath) || []
-    return initial.map((_, index) => ({ key: index, name: index }))
+    return generateFields(initial)
   })
 
   React.useEffect(() => {
     return form.registerListener(listPath, (val) => {
-      if (Array.isArray(val)) {
-        setFields(val.map((_, index) => ({ key: index, name: index })))
-      }
+      setFields(generateFields(val))
     })
   }, [listPathStr])
 
@@ -43,6 +63,15 @@ export function FormList({ name, relative, children }) {
       listPath,
       current.map((item, i) => (i === index ? value : item))
     )
+  }
+
+  const duplicate = (index) => {
+    const current = form.getFieldValue(listPath) || []
+    const value = current[index]
+    if (!value) return
+    // Deep clone the value to avoid reference issues
+    const clonedValue = typeof value === 'object' ? { ...value } : value
+    addOn(index + 1, clonedValue)
   }
 
   const move = (fromIndex, toIndex) => {
@@ -71,6 +100,7 @@ export function FormList({ name, relative, children }) {
       replace,
       remove,
       move,
+      duplicate,
     }),
     [listPathStr]
   )
