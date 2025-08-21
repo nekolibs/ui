@@ -3,10 +3,12 @@ import React from 'react'
 import { FormGroup, useRelativePath } from './FormGroup'
 import { Text } from '../text/Text'
 import { View } from '../structure/View'
-import { useFormInstance } from './Form'
+import { clearProps } from '../../modifiers/_helpers'
+import { useFormInstance, useFormState } from './Form'
 
-export function FormItem({ name, label, relative, children, ...props }) {
+export function FormItem({ name, label, relative, children, useDefaultValue, ...props }) {
   const form = useFormInstance()
+  const formState = useFormState()
   const listPath = useRelativePath(name, { relative })
   const [value, setValue] = React.useState(form.getFieldValue(listPath))
   const error = form.getError(listPath)
@@ -20,9 +22,22 @@ export function FormItem({ name, label, relative, children, ...props }) {
     form.setFieldValue(listPath, val)
   }
 
-  const childProps = {
-    value: value === undefined ? '' : value,
+  let valueKey = 'value'
+  if (!!useDefaultValue) valueKey = 'defaultValue'
+
+  const childProps = clearProps({
+    [valueKey]: value === undefined ? '' : value,
     onChange: handleChange,
+    loading: formState?.loading === true || undefined,
+    disabled: formState?.disabled === true || undefined,
+  })
+
+  let content
+  if (typeof children === 'function') {
+    content = children(childProps)
+  } else {
+    const child = React.Children.only(children)
+    content = React.cloneElement(child, { ...child.props, ...childProps })
   }
 
   return (
@@ -33,9 +48,7 @@ export function FormItem({ name, label, relative, children, ...props }) {
             {label}
           </Text>
         )}
-        {typeof children === 'function'
-          ? children(childProps)
-          : React.cloneElement(React.Children.only(children), childProps)}
+        {content}
         {error && <Text color="red">{error}</Text>}
       </View>
     </FormGroup>

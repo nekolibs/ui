@@ -12,7 +12,7 @@ export const DEFAULT_DARK_THEME = mergeDeepRight(BASE_THEME, {
     bg: '#383E44',
     overlayBG: '#272D34',
     shadow: 'rgba(39, 45, 52, 0.6)',
-    divider: 'rgba(255,255,255, 0.2)',
+    divider: '#5A5A5A',
 
     blue: '#4DA3FF',
     yellow: '#FFD93B',

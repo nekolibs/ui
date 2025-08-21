@@ -105,12 +105,18 @@ export function FormList({ name, relative, children }) {
     [listPathStr]
   )
 
+  let content
+  if (typeof children === 'function') {
+    content = children(fields, actions)
+  } else {
+    const child = React.Children.only(children)
+    content = React.cloneElement(child, { ...child.props, fields, ...actions })
+  }
+
   return (
     <FormGroup name={listPath}>
       <FormListContext.Provider value={actions}>
-        {typeof children === 'function'
-          ? children(fields, actions)
-          : React.cloneElement(React.Children.only(children), { fields, ...actions })}
+        {content}
         {error && <Text color="red">{error}</Text>}
       </FormListContext.Provider>
     </FormGroup>

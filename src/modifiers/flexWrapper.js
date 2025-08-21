@@ -3,13 +3,15 @@ import { useGetSpace } from '../theme/ThemeHandler'
 
 export function useFlexWrapperModifier([values, props]) {
   const getSpace = useGetSpace()
-  let { justify, align, center, centerV, centerH, toRight, toBottom, direction, row, wrap, gap, ...restProps } = props
+  let { justify, align, center, centerV, centerH, toRight, toBottom, direction, row, wrap, gap, noGap, ...restProps } =
+    props
 
   let justifyContent = justify
   let alignItems = align
   let flexDirection = direction || 'column'
   let flexWrap
   gap = getSpace(gap)
+  if (!!noGap) gap = undefined
 
   if (center) {
     justifyContent = 'center'

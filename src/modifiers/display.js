@@ -1,14 +1,10 @@
 import { clearProps } from './_helpers'
 
 export function useDisplayModifier([values, props]) {
-  let { cursor, opacity, disabled, hidden, display, inline, ...restProps } = props
+  let { cursor, opacity, hidden, display, inline, ...restProps } = props
 
   if (!!hidden) display = 'hidden'
   if (!!inline) display = 'inline'
-  if (!!disabled) {
-    opacity = opacity || 0.4
-    cursor = 'not-allowed'
-  }
 
   const style = clearProps({ display, opacity, cursor })
 

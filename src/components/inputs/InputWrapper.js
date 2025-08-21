@@ -2,6 +2,7 @@ import { pipe, is } from 'ramda'
 import React from 'react'
 
 import { Icon } from '../presentation/Icon'
+import { Loading } from '../state/Loading'
 import { Text } from '../text/Text'
 import { View } from '../structure/View'
 import { useDefaultModifier } from '../../modifiers/default'
@@ -17,10 +18,10 @@ const DEFAULT_PROPS = {
   gap: 'sm',
 }
 
-export function InputWrapper({ prefix, suffix, prefixIcon, suffixIcon, children, ...rootProps }) {
+export function InputWrapper({ prefix, suffix, prefixIcon, suffixIcon, loading, error, children, ...rootProps }) {
   const [hover, setHover] = React.useState(false)
   const inputRef = React.useRef()
-  const [{ size, sizeCode }, props] = pipe(
+  const [{ size, sizeCode, onChange }, props] = pipe(
     useSizeConverter('elementHeights', 'md'),
     useThemeComponentModifier('InputWrapper'),
     useDefaultModifier(DEFAULT_PROPS)
@@ -34,10 +35,17 @@ export function InputWrapper({ prefix, suffix, prefixIcon, suffixIcon, children,
   if (!!suffix && is(String, suffix)) suffix = <Text>{suffix}</Text>
   if (!prefix && !!prefixIcon) prefix = <Icon name={prefixIcon} size={sizeCode} />
   if (!suffix && !!suffixIcon) suffix = <Icon name={suffixIcon} size={sizeCode} />
+  if (!prefix && !!error) suffix = <Icon name="close-circle-fill" size={sizeCode} red />
+  if (!!loading) suffix = <Loading size={sizeCode} />
+
+  let borderColor = !!hover ? 'primary_op40' : 'divider'
+  if (!!error) borderColor = 'red_op40'
 
   const child = React.Children.only(children)
   const childWithProps = React.cloneElement(child, {
+    ...child.props,
     ref: inputRef,
+    onChange: child.props.onChange || onChange,
   })
 
   return (
@@ -45,7 +53,7 @@ export function InputWrapper({ prefix, suffix, prefixIcon, suffixIcon, children,
       className="neko-input-wrapper"
       height={size}
       onPress={handlePress}
-      borderColor={!!hover ? 'primary_op40' : 'divider'}
+      borderColor={borderColor}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
       {...props}

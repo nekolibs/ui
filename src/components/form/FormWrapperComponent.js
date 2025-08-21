@@ -5,6 +5,7 @@ import { useBorderModifier } from '../../modifiers/border'
 import { useDisplayModifier } from '../../modifiers/display'
 import { useFlexModifier } from '../../modifiers/flex'
 import { useFlexWrapperModifier } from '../../modifiers/flexWrapper'
+import { useFormState } from './Form'
 import { useMarginModifier } from '../../modifiers/margin'
 import { usePaddingModifier } from '../../modifiers/padding'
 import { usePositionModifier } from '../../modifiers/position'
@@ -12,8 +13,10 @@ import { useShadowModifier } from '../../modifiers/shadow'
 import { useSizeModifier } from '../../modifiers/size'
 
 export function FormWrapperComponent({ children, form, ...rootProps }) {
+  const formState = useFormState()
   const [_, props] = pipe(
     useDisplayModifier, //
+    // useStateModifier,
     useSizeModifier, //
     usePositionModifier,
     usePaddingModifier,
@@ -27,6 +30,7 @@ export function FormWrapperComponent({ children, form, ...rootProps }) {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    if (formState?.loading || formState?.disabled) return
     form.handleSubmit()
   }
 

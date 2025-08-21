@@ -1,11 +1,13 @@
 import { pipe } from 'ramda'
 
 import { AbsTouchableOpacity } from '../../abstractions/TouchableOpacity'
+import { ConditionalLoading } from '../state/ConditionalLoading'
 import { IconLabel } from '../presentation/IconLabel'
 import { useBackgroundModifier } from '../../modifiers/background'
 import { useBorderModifier } from '../../modifiers/border'
 import { useColorConverter } from '../../modifiers/colorConverter'
 import { useDefaultModifier } from '../../modifiers/default'
+import { useDisplayModifier } from '../../modifiers/display'
 import { useFlexModifier } from '../../modifiers/flex'
 import { useFlexWrapperModifier } from '../../modifiers/flexWrapper'
 import { useFullColorModifier } from '../../modifiers/fullColor'
@@ -14,6 +16,7 @@ import { usePaddingModifier } from '../../modifiers/padding'
 import { usePositionModifier } from '../../modifiers/position'
 import { useSizeConverter } from '../../modifiers/sizeConverter'
 import { useSizeModifier } from '../../modifiers/size'
+import { useStateModifier } from '../../modifiers/state'
 import { useThemeComponentModifier } from '../../modifiers/themeComponent'
 
 const DEFAULT_PROPS = ([{ sizeCode }]) => ({
@@ -26,12 +29,14 @@ const DEFAULT_PROPS = ([{ sizeCode }]) => ({
 })
 
 export function Button(rootProps) {
-  const [{ fontColor, sizeCode }, formattedProps] = pipe(
+  const [{ loading, fontColor, sizeCode }, formattedProps] = pipe(
     useColorConverter('primary'),
     useSizeConverter('elementHeights', 'md'),
     useThemeComponentModifier('Button'),
     useDefaultModifier(DEFAULT_PROPS),
     useFullColorModifier,
+    useDisplayModifier,
+    useStateModifier,
     useSizeModifier,
     usePositionModifier,
     usePaddingModifier,
@@ -46,17 +51,19 @@ export function Button(rootProps) {
 
   return (
     <AbsTouchableOpacity className="neko-button neko-wave-click-effect" type="button" {...props}>
-      <IconLabel
-        center
-        color={fontColor}
-        size={sizeCode}
-        label={label}
-        icon={icon}
-        gap={gap}
-        invert={invert}
-        textProps={{ strong: true, ...textProps }}
-        iconProps={iconProps}
-      />
+      <ConditionalLoading active={loading} size={sizeCode} color={fontColor}>
+        <IconLabel
+          center
+          color={fontColor}
+          size={sizeCode}
+          label={label}
+          icon={icon}
+          gap={gap}
+          invert={invert}
+          textProps={{ strong: true, ...textProps }}
+          iconProps={iconProps}
+        />
+      </ConditionalLoading>
     </AbsTouchableOpacity>
   )
 }

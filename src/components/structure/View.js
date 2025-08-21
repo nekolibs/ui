@@ -11,12 +11,14 @@ import { usePaddingModifier } from '../../modifiers/padding'
 import { usePositionModifier } from '../../modifiers/position'
 import { useShadowModifier } from '../../modifiers/shadow'
 import { useSizeModifier } from '../../modifiers/size'
+import { useStateModifier } from '../../modifiers/state'
 import { useThemeComponentModifier } from '../../modifiers/themeComponent'
 
 export function View({ children, ...rootProps }) {
   const [_, props] = pipe(
     useThemeComponentModifier('View'),
     useDisplayModifier, //
+    useStateModifier, //
     useSizeModifier, //
     usePositionModifier,
     usePaddingModifier,
