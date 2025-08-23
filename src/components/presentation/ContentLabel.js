@@ -1,5 +1,6 @@
 import { pipe } from 'ramda'
 
+import { Loading } from '../state/Loading'
 import { Text } from '../text/Text'
 import { View } from '../structure/View'
 import { useColorConverter } from '../../modifiers/colorConverter'
@@ -11,7 +12,8 @@ export function ContentLabel(rootProps) {
     useThemeComponentModifier('ContentLabel') //
   )([{}, rootProps])
 
-  const { label, content, textProps, size = 'md', invert, gap = 5, ...props } = formattedProps
+  let { loading, label, content, textProps, size = 'md', invert, gap = 5, ...props } = formattedProps
+  if (!!loading) content = <Loading size={size} color={color} />
 
   return (
     <View className="neko-content-label" row gap={gap} centerV {...props}>

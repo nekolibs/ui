@@ -7,6 +7,7 @@ import { useDisplayModifier } from '../../modifiers/display'
 import { useFlexModifier } from '../../modifiers/flex'
 import { useFlexWrapperModifier } from '../../modifiers/flexWrapper'
 import { useMarginModifier } from '../../modifiers/margin'
+import { useOverflowModifier } from '../../modifiers/overflow'
 import { usePaddingModifier } from '../../modifiers/padding'
 import { usePositionModifier } from '../../modifiers/position'
 import { useShadowModifier } from '../../modifiers/shadow'
@@ -17,13 +18,14 @@ import { useThemeComponentModifier } from '../../modifiers/themeComponent'
 export function View({ children, ...rootProps }) {
   const [_, props] = pipe(
     useThemeComponentModifier('View'),
+    useFlexWrapperModifier,
     useDisplayModifier, //
     useStateModifier, //
     useSizeModifier, //
     usePositionModifier,
+    useOverflowModifier,
     usePaddingModifier,
     useMarginModifier,
-    useFlexWrapperModifier,
     useFlexModifier,
     useBackgroundModifier,
     useBorderModifier,

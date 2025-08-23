@@ -1,7 +1,7 @@
 import { pipe, is } from 'ramda'
 
 import { AbsTouchableOpacity } from '../../abstractions/TouchableOpacity'
-import { ConditionalLoading } from '../state/ConditionalLoading'
+import { LoadingView } from '../state/LoadingView'
 import { Text } from '../text/Text'
 import { useColorConverter } from '../../modifiers/colorConverter'
 import { useDisplayModifier } from '../../modifiers/display'
@@ -37,10 +37,10 @@ export function Link({ label, children, href, target, ...rootProps }) {
   }
 
   return (
-    <ConditionalLoading active={loading}>
+    <LoadingView active={loading} noWrapper replaceChildren>
       <AbsTouchableOpacity className="neko-link" link target={target} href={!props.disabled && href} {...props}>
         {children}
       </AbsTouchableOpacity>
-    </ConditionalLoading>
+    </LoadingView>
   )
 }

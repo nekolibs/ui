@@ -1,3 +1,6 @@
 export * from './Tag'
 export * from './Icon'
 export * from './IconLabel'
+export * from './Result'
+export * from './ResultBar'
+export * from './Tooltip'

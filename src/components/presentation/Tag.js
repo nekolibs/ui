@@ -50,10 +50,10 @@ export function Tag(rootProps) {
     useBorderModifier
   )([{}, rootProps])
 
-  const { label, icon, textProps, iconProps, gap, invert, ...props } = formattedProps
+  const { loading, disabled, label, icon, textProps, iconProps, gap, invert, ...props } = formattedProps
 
   return (
-    <View className="neko-tag" row>
+    <View className="neko-tag" row disabled={disabled}>
       <AbsView className="neko-tag-inner" {...props}>
         <IconLabel
           center
@@ -65,6 +65,7 @@ export function Tag(rootProps) {
           invert={invert}
           textProps={{ strong: true, ...textProps }}
           iconProps={iconProps}
+          loading={loading}
         />
       </AbsView>
     </View>

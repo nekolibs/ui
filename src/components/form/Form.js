@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { FormWrapperComponent } from './FormWrapperComponent'
+import { LoadingView } from '../state/LoadingView'
 import { useNewForm } from './useNewForm'
 
 const FormContext = React.createContext(null)
@@ -14,9 +15,11 @@ export function Form({ form, onSubmit, initialValues, children, loading, disable
 
   return (
     <FormContext.Provider value={{ loading, disabled, form }}>
-      <FormWrapperComponent form={form} gap="md" {...props}>
-        {children}
-      </FormWrapperComponent>
+      <LoadingView active={loading} noWrapper>
+        <FormWrapperComponent form={form} gap="md" {...props}>
+          {children}
+        </FormWrapperComponent>
+      </LoadingView>
     </FormContext.Provider>
   )
 }

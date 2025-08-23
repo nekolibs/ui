@@ -1,7 +1,6 @@
 import { pipe } from 'ramda'
 
 import { AbsTouchableOpacity } from '../../abstractions/TouchableOpacity'
-import { ConditionalLoading } from '../state/ConditionalLoading'
 import { IconLabel } from '../presentation/IconLabel'
 import { useBackgroundModifier } from '../../modifiers/background'
 import { useBorderModifier } from '../../modifiers/border'
@@ -51,19 +50,18 @@ export function Button(rootProps) {
 
   return (
     <AbsTouchableOpacity className="neko-button neko-wave-click-effect" type="button" {...props}>
-      <ConditionalLoading active={loading} size={sizeCode} color={fontColor}>
-        <IconLabel
-          center
-          color={fontColor}
-          size={sizeCode}
-          label={label}
-          icon={icon}
-          gap={gap}
-          invert={invert}
-          textProps={{ strong: true, ...textProps }}
-          iconProps={iconProps}
-        />
-      </ConditionalLoading>
+      <IconLabel
+        center
+        color={fontColor}
+        size={sizeCode}
+        label={label}
+        icon={icon}
+        gap={gap}
+        invert={invert}
+        textProps={{ strong: true, ...textProps }}
+        iconProps={iconProps}
+        loading={loading}
+      />
     </AbsTouchableOpacity>
   )
 }

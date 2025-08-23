@@ -37,7 +37,7 @@ export function useSizeModifier([values, props]) {
   let aspectRatio = ratio
   if (!!square) aspectRatio = 1
 
-  const style = clearProps({ height, width, minHeight, minHeight, maxHeight, maxWidth, aspectRatio })
+  const style = clearProps({ height, width, minHeight, minHeight, maxHeight, minWidth, maxWidth, aspectRatio })
 
   return [
     values,

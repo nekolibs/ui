@@ -9,12 +9,12 @@ import { useThemeComponentModifier } from '../../modifiers/themeComponent'
 
 export function Loading({ ...rootProps }) {
   const [{ color, size }, props] = pipe(
-    useColorConverter('divider'),
+    useColorConverter('primary'),
     useSizeConverter('icons', 'md'),
     useThemeComponentModifier('Loading'),
     usePaddingModifier,
     useMarginModifier
   )([{}, rootProps])
 
-  return <AbsActivityIndicator size={size} color={color} {...props} />
+  return <AbsActivityIndicator className="neko-loader" size={size} color={color} {...props} />
 }

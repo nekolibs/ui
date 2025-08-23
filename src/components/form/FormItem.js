@@ -6,10 +6,10 @@ import { View } from '../structure/View'
 import { clearProps } from '../../modifiers/_helpers'
 import { useFormInstance, useFormState } from './Form'
 
-export function FormItem({ name, label, relative, children, useDefaultValue, ...props }) {
+export function FormItem({ name, label, isAbsolutePath, children, useDefaultValue, ...props }) {
   const form = useFormInstance()
   const formState = useFormState()
-  const listPath = useRelativePath(name, { relative })
+  const listPath = useRelativePath(name, { isAbsolutePath })
   const [value, setValue] = React.useState(form.getFieldValue(listPath))
   const error = form.getError(listPath)
 
@@ -28,7 +28,7 @@ export function FormItem({ name, label, relative, children, useDefaultValue, ...
   const childProps = clearProps({
     [valueKey]: value === undefined ? '' : value,
     onChange: handleChange,
-    loading: formState?.loading === true || undefined,
+    // loading: formState?.loading === true || undefined,
     disabled: formState?.disabled === true || undefined,
   })
 

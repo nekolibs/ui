@@ -7,9 +7,9 @@ import { useFormInstance } from './Form'
 const FormListContext = React.createContext(null)
 const useFormList = () => React.useContext(FormListContext)
 
-export function FormList({ name, relative, children }) {
+export function FormList({ name, isAbsolutePath, children }) {
   const form = useFormInstance()
-  const listPath = useRelativePath(name, { relative })
+  const listPath = useRelativePath(name, { isAbsolutePath })
   // To avoid watch being recalled
   const listPathStr = listPath.join('$NEKOJOIN$')
   const error = form.getError(listPath)

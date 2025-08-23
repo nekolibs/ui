@@ -7,6 +7,7 @@ import { useDefaultModifier } from '../../modifiers/default'
 import { useFlexModifier } from '../../modifiers/flex'
 import { useFlexWrapperModifier } from '../../modifiers/flexWrapper'
 import { useMarginModifier } from '../../modifiers/margin'
+import { useOverflowModifier } from '../../modifiers/overflow'
 import { usePaddingModifier } from '../../modifiers/padding'
 import { usePositionModifier } from '../../modifiers/position'
 import { useShadowModifier } from '../../modifiers/shadow'
@@ -25,6 +26,7 @@ export function Card({ children, ...rootProps }) {
     useDefaultModifier(DEFAULT_PROPS),
     useSizeModifier, //
     usePositionModifier,
+    useOverflowModifier,
     usePaddingModifier,
     useMarginModifier,
     useFlexWrapperModifier,
