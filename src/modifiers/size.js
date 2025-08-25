@@ -24,12 +24,13 @@ export function useSizeModifier([values, props]) {
   } = props || {}
 
   minHeight = getHeight(minHeight || minH)
-  minWidth = minWidth || minW
+  minWidth = getHeight(minWidth || minW)
 
-  maxHeight = maxHeight || maxH
-  maxWidth = maxWidth || maxW
+  maxHeight = getHeight(maxHeight || maxH)
+  maxWidth = getHeight(maxWidth || maxW)
 
   height = getHeight(height)
+  width = getHeight(width)
 
   if (fullWidth || fullW) width = '100%'
   if (fullHeight || fullH) height = '100%'

@@ -27,7 +27,7 @@ export function useBorderModifier([values, props]) {
     ...restProps
   } = props
 
-  if (round) br = 1000
+  if (br === undefined && !!round) br = 1000
   const borderTopRightRadius = getRadius(brT ?? borderRadiusT ?? brR ?? borderRadiusR ?? borderRadius ?? br)
   const borderTopLeftRadius = getRadius(brT ?? borderRadiusT ?? brL ?? borderRadiusL ?? borderRadius ?? br)
   const borderBottomRightRadius = getRadius(brB ?? borderRadiusB ?? brR ?? borderRadiusR ?? borderRadius ?? br)

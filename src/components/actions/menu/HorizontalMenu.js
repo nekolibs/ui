@@ -3,6 +3,7 @@ import React from 'react'
 
 import { IconText } from '../../presentation/IconLabel'
 import { Link } from '../Link'
+import { SubmenuWrapper } from './SubmenuWrapper'
 import { View } from '../../structure/View'
 import { useColorConverter } from '../../../modifiers/colorConverter'
 import { useSizeConverter } from '../../../modifiers/sizeConverter'
@@ -27,25 +28,34 @@ function Item({
   if (!active && activeKey !== undefined) active = activeKey === item.key
 
   return (
-    <Link
-      key={key || index}
-      fullH
-      center
-      paddingH={linkPaddingH}
-      {...linkProps}
-      onPress={() => handlePress(item, index)}
+    <SubmenuWrapper
+      item={item}
+      onChange={handlePress}
+      activeKey={activeKey}
+      color={color}
+      placement="bottomRight"
+      hideIcon
     >
-      <IconText
-        color={active ? activeColor : color}
+      <Link
+        key={key || index}
         fullH
-        marginT={3}
-        borderB={3}
-        borderColor={active ? activeColor : 'transparent'}
-        transition="border-color 0.6s ease"
-        size={sizeCode}
-        {...childProps}
-      />
-    </Link>
+        center
+        paddingH={linkPaddingH}
+        {...linkProps}
+        onPress={() => handlePress(item, index)}
+      >
+        <IconText
+          color={active ? activeColor : color}
+          fullH
+          marginT={3}
+          borderB={3}
+          borderColor={active ? activeColor : 'transparent'}
+          transition="border-color 0.6s ease"
+          size={sizeCode}
+          {...childProps}
+        />
+      </Link>
+    </SubmenuWrapper>
   )
 }
 
