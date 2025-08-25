@@ -36,7 +36,12 @@ export const useRegisterOverlay = (opts = {}) => {
     }, 250)
   }
 
-  return { onOpen, onClose, stopDelayedClosing }
+  const onFastClose = () => {
+    stopDelayedClosing()
+    !!unmountOnClose ? removeOverlay() : closeOverlay()
+  }
+
+  return { onOpen, onClose, onFastClose, stopDelayedClosing }
 }
 
 export function OverlayHandler({ children }) {

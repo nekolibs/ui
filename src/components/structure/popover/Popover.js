@@ -15,7 +15,7 @@ export function Popover({
   ...props
 }) {
   const ref = React.useRef(null)
-  const { onOpen, onClose, stopDelayedClosing } = useRegisterOverlay({ unmountOnClose })
+  const { onOpen, onClose, onFastClose, stopDelayedClosing } = useRegisterOverlay({ unmountOnClose })
 
   const click = trigger === 'click'
   const hover = trigger === 'hover'
@@ -48,7 +48,7 @@ export function Popover({
           onMouseEnter={hover ? stopDelayedClosing : undefined}
           onMouseLeave={hover ? onClose : undefined}
         >
-          {renderContent()}
+          {renderContent({ onClose: onFastClose })}
         </PopoverContent>
       ),
       triggerRect,

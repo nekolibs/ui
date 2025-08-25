@@ -1,6 +1,7 @@
 import { pipe } from 'ramda'
 
 import { AbsView } from '../../abstractions/View'
+import { useAnimationModifier } from '../../modifiers/animation'
 import { useBackgroundModifier } from '../../modifiers/background'
 import { useBorderModifier } from '../../modifiers/border'
 import { useDisplayModifier } from '../../modifiers/display'
@@ -19,9 +20,10 @@ export function View({ children, ...rootProps }) {
   const [_, props] = pipe(
     useThemeComponentModifier('View'),
     useFlexWrapperModifier,
-    useDisplayModifier, //
-    useStateModifier, //
-    useSizeModifier, //
+    useDisplayModifier,
+    useAnimationModifier,
+    useStateModifier,
+    useSizeModifier,
     usePositionModifier,
     useOverflowModifier,
     usePaddingModifier,

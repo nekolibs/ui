@@ -12,6 +12,7 @@ import { useThemeComponentModifier } from '../../modifiers/themeComponent'
 const DEFAULT_PROPS = {
   fullW: '100%', //
   paddingH: 'sm',
+  bg: 'overlayBG',
   border: true,
   br: 'md',
   row: true,

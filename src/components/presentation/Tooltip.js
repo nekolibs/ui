@@ -16,6 +16,7 @@ export function Tooltip(rootProps) {
   )([{}, rootProps])
 
   const { label, icon, textProps, iconProps, gap, invert, children, ...props } = formattedProps
+  if (!label && !icon) return children
 
   return (
     <Popover

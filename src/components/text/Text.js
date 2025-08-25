@@ -1,6 +1,7 @@
 import { pipe } from 'ramda'
 
 import { AbsText } from '../../abstractions/Text'
+import { useAnimationModifier } from '../../modifiers/animation'
 import { useColorConverter } from '../../modifiers/colorConverter'
 import { useFlexModifier } from '../../modifiers/flex'
 import { useMarginModifier } from '../../modifiers/margin'
@@ -15,6 +16,7 @@ export function Text({ children, label, ...rootProps }) {
     useColorConverter('text'),
     useTextConverter('p'),
     useThemeComponentModifier('Text'),
+    useAnimationModifier,
     useSizeModifier, //
     usePaddingModifier,
     useMarginModifier,
