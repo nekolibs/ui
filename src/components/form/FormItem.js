@@ -44,7 +44,7 @@ export function FormItem({ name, label, isAbsolutePath, children, useDefaultValu
     <FormGroup name={listPath}>
       <View {...props}>
         {label && (
-          <Text sm marginB="xxsm">
+          <Text sm marginB="xxs">
             {label}
           </Text>
         )}

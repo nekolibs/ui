@@ -1,5 +1,6 @@
 import tinycolor from 'tinycolor2'
 
+import { getContrastColor } from '../theme/helpers/contrastColor'
 import { useGetColor } from '../theme/ThemeHandler'
 
 export function useFullColorModifier([{ color, ...values }, { outline, fill, ...props }]) {
@@ -9,13 +10,12 @@ export function useFullColorModifier([{ color, ...values }, { outline, fill, ...
   const bgObj = tinycolor(getColor(bg))
   let borderColor = color
   let fontColor = 'text'
-  let fontColorObj = tinycolor(getColor('text'))
 
   if (!!outline && fill !== true) {
     bg = 'transparent'
     fontColor = color
-  } else if (bgObj.isDark() === fontColorObj.isDark()) {
-    fontColor = 'overlayBG'
+  } else {
+    fontColor = getContrastColor(bgObj, [getColor('text'), getColor('overlayBG')])
   }
 
   return [

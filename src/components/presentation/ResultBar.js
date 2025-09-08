@@ -45,7 +45,7 @@ export function ResultBar({
           {title}
         </Text>
         {!!description && (
-          <Text text3 xsm {...textProps} {...descriptionProps}>
+          <Text text3 xs {...textProps} {...descriptionProps}>
             {description}
           </Text>
         )}

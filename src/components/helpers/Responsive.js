@@ -1,4 +1,4 @@
-import { useResponsiveValue } from '../../helpers/responsive'
+import { useResponsiveValue } from '../../responsive/responsiveHooks'
 
 export function ResponsiveRender(props) {
   const value = useResponsiveValue(props) || props.df

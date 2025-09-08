@@ -45,7 +45,7 @@ export function Result({
   return (
     <View className="neko-result" center padding="lg" {...props}>
       <Icon name={icon} color={iconColor} size={42} primary {...iconProps} />
-      <Divider line maxWidth={20} height={20} />
+      <Divider height={10} />
       <Text h3 {...textProps} {...titleProps}>
         {title}
       </Text>

@@ -15,7 +15,7 @@ import { useThemeComponentModifier } from '../../../modifiers/themeComponent'
 function LinkItem({
   item,
   linkPaddingH = 'md',
-  linkPaddingV = 'xsm',
+  linkPaddingV = 'xs',
   handlePress,
   linkProps,
   activeIndex,
@@ -55,12 +55,12 @@ function LinkItem({
 }
 
 function DividerItem({ linkPaddingH = 'md', item }) {
-  let content = <Divider height="xxsm" line {...item} />
+  let content = <Divider height="xxs" line {...item} />
   if (!item.label) return content
   return (
     <>
       {content}
-      <Text size="xsm" color="text4" paddingH={linkPaddingH || 'md'} strong {...item} />
+      <Text size="xs" color="text4" paddingH={linkPaddingH || 'md'} strong {...item} />
     </>
   )
 }
@@ -90,7 +90,7 @@ export function VerticalMenu(rootProps) {
   )
 
   return (
-    <View className="neko-vertical-menu" gap={gap} fullH width="100%" {...props}>
+    <View className="neko-vertical-menu" gap={gap} width="100%" {...props}>
       {items.map((item, index) => (
         <Item
           key={item.key || index}

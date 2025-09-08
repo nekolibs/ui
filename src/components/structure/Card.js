@@ -16,8 +16,9 @@ import { useThemeComponentModifier } from '../../modifiers/themeComponent'
 
 const DEFAULT_PROPS = {
   padding: 'md', //
-  br: 'xlg',
+  br: 'xl',
   bg: 'overlayBG',
+  hiddenOverflow: true,
 }
 
 export function Card({ children, ...rootProps }) {

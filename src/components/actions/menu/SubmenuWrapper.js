@@ -7,7 +7,7 @@ export function SubmenuWrapper({ item, children, placement, hideIcon, ...props }
 
   return (
     <Dropdown popoverProps={{ placement: placement || 'rightTop' }} items={item.subItems} trigger="hover" {...props}>
-      <View flex row gap="xxsm" center fullH>
+      <View flex row gap="xxs" center fullH>
         {children}
         {!hideIcon && <Icon name="arrow-right-s-line" />}
       </View>

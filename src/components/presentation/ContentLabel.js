@@ -4,22 +4,36 @@ import { Loading } from '../state/Loading'
 import { Text } from '../text/Text'
 import { View } from '../structure/View'
 import { useColorConverter } from '../../modifiers/colorConverter'
+import { useSizeConverter } from '../../modifiers/sizeConverter'
 import { useThemeComponentModifier } from '../../modifiers/themeComponent'
 
+const AUTO_GAP_SCALE = {
+  xxxs: 5,
+  xxs: 5,
+  xs: 5,
+  sm: 5,
+  md: 6,
+  lg: 7,
+  xl: 8,
+  xxl: 9,
+  xxxl: 10,
+}
+
 export function ContentLabel(rootProps) {
-  const [{ color }, formattedProps] = pipe(
+  const [{ color, sizeCode }, formattedProps] = pipe(
     useColorConverter(),
+    useSizeConverter('elementHeights', 'md'),
     useThemeComponentModifier('ContentLabel') //
   )([{}, rootProps])
 
-  let { loading, label, content, textProps, size = 'md', invert, gap = 5, ...props } = formattedProps
-  if (!!loading) content = <Loading size={size} color={color} />
+  let { loading, label, content, textProps, invert, gap, ...props } = formattedProps
+  if (!!loading) content = <Loading size={sizeCode} color={color} />
 
   return (
-    <View className="neko-content-label" row gap={gap} centerV {...props}>
+    <View className="neko-content-label" row gap={gap || AUTO_GAP_SCALE[sizeCode] || 5} centerV {...props}>
       {!invert && content}
       {!!label && (
-        <Text color={color} size={size} {...textProps}>
+        <Text color={color} size={sizeCode} {...textProps}>
           {label}
         </Text>
       )}

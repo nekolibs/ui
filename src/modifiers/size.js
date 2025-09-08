@@ -20,6 +20,8 @@ export function useSizeModifier([values, props]) {
     fullH,
     ratio,
     square,
+    span,
+    parentSpan,
     ...restProps
   } = props || {}
 
@@ -31,6 +33,9 @@ export function useSizeModifier([values, props]) {
 
   height = getHeight(height)
   width = getHeight(width)
+
+  span = span ?? parentSpan
+  if (span) width = (span / 24) * 100 + '%'
 
   if (fullWidth || fullW) width = '100%'
   if (fullHeight || fullH) height = '100%'

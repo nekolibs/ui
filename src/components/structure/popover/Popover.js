@@ -10,8 +10,8 @@ export function Popover({
   placement = 'bottom',
   unmountOnClose,
   children,
-  useParentWidth,
-  useParentMinWidth,
+  parentWidth,
+  parentMinWidth,
   ...props
 }) {
   const ref = React.useRef(null)
@@ -42,8 +42,8 @@ export function Popover({
       content: (
         <PopoverContent
           placement={placement}
-          width={useParentWidth ? rect.width : undefined}
-          minWidth={useParentMinWidth ? rect.width : undefined}
+          width={parentWidth ? rect.width : undefined}
+          minWidth={parentMinWidth ? rect.width : undefined}
           {...props}
           onMouseEnter={hover ? stopDelayedClosing : undefined}
           onMouseLeave={hover ? onClose : undefined}

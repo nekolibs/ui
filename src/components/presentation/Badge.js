@@ -19,14 +19,14 @@ import { useSizeModifier } from '../../modifiers/size'
 import { useThemeComponentModifier } from '../../modifiers/themeComponent'
 
 const DOT_SIZE = 8
-const DEFAULT_PROPS = ([{ sizeCode }, { dot }]) => {
-  sizeCode = !!dot ? DOT_SIZE : moveScale(sizeCode, -2)
+const DEFAULT_PROPS = ([{ sizeCode }, { dot, br }]) => {
+  sizeCode = !!dot ? DOT_SIZE : undefined
 
   return {
     paddingH: !dot && 5,
     height: sizeCode,
     minWidth: sizeCode,
-    round: true,
+    round: br !== undefined ? false : true,
     center: true,
     border: 1,
   }
@@ -76,13 +76,13 @@ function Badge(rootProps) {
 }
 
 function BadgeWrapper({ children, dot, ...props }) {
-  if (!children) return <Badge {...props} />
+  if (!children) return <Badge dot={dot} {...props} />
   if (!props.value && !props.label && !props.icon) return children
 
   return (
     <View className="neko-badge-wrapper" relative>
       {children}
-      <Badge {...props} dot={dot} absolute top={dot ? -2 : -12} right={dot ? -5 : -15} />
+      <Badge {...props} dot={dot} absolute top={dot ? -2 : -8} right={dot ? -5 : -12} />
     </View>
   )
 }

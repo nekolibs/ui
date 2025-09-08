@@ -1,6 +1,6 @@
 import { omit } from 'ramda'
 
-const SCALE = ['xxxsm', 'xxsm', 'xsm', 'sm', 'md', 'lg', 'xlg', 'xxlg', 'xxxlg']
+const SCALE = ['xxxs', 'xxs', 'xs', 'sm', 'md', 'lg', 'xl', 'xxl', 'xxxl']
 
 export function moveScale(value, unit = 1) {
   const index = SCALE.indexOf(value)

@@ -9,7 +9,7 @@ const DEFAULT_BREAKPOINTS = [
   { name: 'sm', value: 768 },
   { name: 'md', value: 1024 },
   { name: 'lg', value: 1440 },
-  { name: 'xlg', value: 10000 },
+  { name: 'xl', value: 10000 },
 ]
 
 const ThemeContext = React.createContext(null)

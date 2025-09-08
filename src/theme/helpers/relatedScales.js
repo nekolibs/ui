@@ -1,15 +1,15 @@
 import { is } from 'ramda'
 
 const SCALES = [
-  ['xxxsm'],
-  ['xxsm'],
-  ['xsm'],
+  ['xxxs'],
+  ['xxs'],
+  ['xs'],
   ['sm', 'small'],
   ['md', 'p'],
   ['lg', 'h6'],
-  ['xlg', 'h5'],
-  ['xxlg', 'h4'],
-  ['xxxlg', 'h3'],
+  ['xl', 'h5'],
+  ['xxl', 'h4'],
+  ['xxxl', 'h3'],
 ]
 
 export function getScaleSynonyms(key) {

@@ -1,3 +1,5 @@
 export * from './View'
 export * from './Card'
+export * from './Row'
+export * from './Col'
 export * from './popover/Popover'
