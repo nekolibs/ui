@@ -5,7 +5,7 @@ export function useFlexModifier([values, props]) {
 
   if (flex === true) flex = 1
 
-  const style = clearProps({ flex })
+  const style = clearProps({ flex, minWidth: 0 })
 
   return [
     values,

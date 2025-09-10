@@ -37,6 +37,10 @@ export function useBorderModifier([values, props]) {
   borderStyle = borderStyle
 
   if (border === true) border = 1
+  if (borderT === true) borderT = 1
+  if (borderR === true) borderR = 1
+  if (borderB === true) borderB = 1
+  if (borderL === true) borderL = 1
   const borderTopWidth = borderT || border || 0
   const borderBottomWidth = borderB || border || 0
   const borderLeftWidth = borderL || border || 0

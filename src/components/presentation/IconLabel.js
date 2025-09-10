@@ -13,14 +13,14 @@ export function IconLabel(rootProps) {
     useThemeComponentModifier('IconLabel') //
   )([{}, rootProps])
 
-  const { icon, iconProps, ...props } = formattedProps
+  const { icon, iconProps, iconColor, ...props } = formattedProps
 
   return (
     <ContentLabel
       className="neko-icon-label"
       color={color}
       size={sizeCode}
-      content={!!icon && <Icon name={icon} size={sizeCode} color={color} {...iconProps} />}
+      content={!!icon && <Icon name={icon} size={sizeCode} color={iconColor || color} {...iconProps} />}
       {...props}
     />
   )

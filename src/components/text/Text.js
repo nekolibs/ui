@@ -3,6 +3,7 @@ import { pipe } from 'ramda'
 import { AbsText } from '../../abstractions/Text'
 import { useAnimationModifier } from '../../modifiers/animation'
 import { useColorConverter } from '../../modifiers/colorConverter'
+import { useDisplayModifier } from '../../modifiers/display'
 import { useFlexModifier } from '../../modifiers/flex'
 import { useMarginModifier } from '../../modifiers/margin'
 import { usePaddingModifier } from '../../modifiers/padding'
@@ -17,6 +18,7 @@ export function Text({ children, label, ...rootProps }) {
     useTextConverter('p'),
     useThemeComponentModifier('Text'),
     useAnimationModifier,
+    useDisplayModifier,
     useSizeModifier, //
     usePaddingModifier,
     useMarginModifier,

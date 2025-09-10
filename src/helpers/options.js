@@ -1,17 +1,14 @@
 import { is, propEq } from 'ramda'
 import React from 'react'
 
-import { debounce } from './debounce'
-
-export function formatOption(option) {
-  if (!option || !is(Object, option)) return option
-  return { value: option.id, label: option.name, ...option }
-}
-
-export function formatOptions(options = []) {
-  if (!!options && is(Object, options) && !is(Array, options)) return formatOption(options)
-  if (!options || !is(Array, options)) return options
-  return options?.map(formatOption)
+function formatOptions(options) {
+  if (!options?.length) return options
+  return options.map((option) => {
+    if (is(String, option) || is(Number, option)) {
+      return { label: option, value: option }
+    }
+    return option
+  })
 }
 
 export function useOptions(optionsOrFetch, { limit } = {}) {
@@ -30,7 +27,6 @@ export function useOptions(optionsOrFetch, { limit } = {}) {
     setPage(page)
     setLoading(true)
     optionsOrFetch(optionsOrFetch, page)
-      .then(formatOptions)
       .then((result) => {
         if (result?.length < limit) setDone(true)
         let newOptions = []
@@ -50,7 +46,7 @@ export function useOptions(optionsOrFetch, { limit } = {}) {
   }, [limit])
 
   return {
-    options: isLazy ? options : optionsOrFetch,
+    options: formatOptions(isLazy ? options : optionsOrFetch),
     handleGetOptions,
     fetchMore,
     done,
