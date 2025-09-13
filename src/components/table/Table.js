@@ -19,7 +19,7 @@ export const useTable = () => React.useContext(TableContext) || {}
 
 const DEFAULT_PROPS = {
   br: 'md', //
-  overflow: 'auto',
+  overflow: 'scroll',
   width: '100%',
   relative: true,
 }
@@ -58,18 +58,7 @@ export function Table({ children, ...rootProps }) {
   return (
     <TableContext.Provider value={{ scrolledToMaxLeft, scrolledToMaxRight }}>
       <AbsView {...props} className="neko-table-wrapper" ref={scrollRef}>
-        <AbsTable
-          className="neko-table"
-          style={{
-            borderCollapse: 'separate',
-            borderSpacing: 0,
-            // orderCollapse: 'collapse',
-            whiteSpace: 'nowrap',
-            width: '100%',
-          }}
-        >
-          {children}
-        </AbsTable>
+        <AbsTable className="neko-table">{children}</AbsTable>
       </AbsView>
     </TableContext.Provider>
   )

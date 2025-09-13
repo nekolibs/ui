@@ -43,8 +43,14 @@ export function DataTable({ data, columns, rowKey = 'key', stickyHeader, grid, .
         })}
       </TableHeaderRow>
 
-      {data.map((record) => (
-        <RowItem key={record[rowKey]} columns={columns} record={record} size={sizeCode} grid={grid} />
+      {data.map((record, index) => (
+        <RowItem
+          key={record[rowKey] || record?.id || index}
+          columns={columns}
+          record={record}
+          size={sizeCode}
+          grid={grid}
+        />
       ))}
     </Table>
   )

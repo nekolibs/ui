@@ -51,6 +51,7 @@ export function TableHeader({ children, label, colSpan, rowSpan, ...rootProps })
   )([{}, rootProps])
 
   if (!!label || is(String, children)) {
+    console.log(sizeCode, moveScale(sizeCode, -1))
     children = (
       <Text strong text3 fullW block align={align} size={moveScale(sizeCode, -1)}>
         {label || children}
@@ -60,7 +61,7 @@ export function TableHeader({ children, label, colSpan, rowSpan, ...rootProps })
 
   return (
     <AbsTableHeader className="neko-table-header" style={style} colSpan={colSpan} rowSpan={rowSpan}>
-      <View className="neko-table-header-content" fullW fullH align={align} {...props}>
+      <View className="neko-table-header-content" fullW fullH align={align} centerV {...props}>
         {children}
       </View>
     </AbsTableHeader>

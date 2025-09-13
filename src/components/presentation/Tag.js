@@ -19,15 +19,11 @@ import { useSizeModifier } from '../../modifiers/size'
 import { useThemeComponentModifier } from '../../modifiers/themeComponent'
 
 const DEFAULT_PROPS = ([{ sizeCode }]) => {
-  const oneSizeDown = moveScale(sizeCode, -1)
-  const twoSizeDown = moveScale(sizeCode, -2)
-  const threeSizeDown = moveScale(sizeCode, -3)
-
   return {
-    paddingH: twoSizeDown,
-    padding: threeSizeDown,
+    paddingH: moveScale(sizeCode, -2),
+    padding: moveScale(sizeCode, -4),
     outline: true,
-    br: threeSizeDown,
+    br: 'xxxs',
     border: 1,
     center: true,
   }
@@ -58,7 +54,7 @@ export function Tag(rootProps) {
         <IconLabel
           center
           color={fontColor}
-          size={moveScale(sizeCode, -1)}
+          size={moveScale(sizeCode, -2)}
           label={label}
           icon={icon}
           gap={gap}

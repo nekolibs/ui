@@ -5,7 +5,10 @@
   "main": "dist/index.js",
   "module": "dist/index.js",
   "react-native": "src/index.js",
-  "files": ["dist", "src"],
+  "files": [
+    "dist",
+    "src"
+  ],
   "scripts": {
     "build": "rm -rf dist && babel src --out-dir dist --extensions \".js,.jsx\" --copy-files",
     "watch": "babel src --out-dir dist --extensions \".js,.jsx\" --copy-files --watch",
@@ -23,11 +26,14 @@
     "ramda": "^0.31.3",
     "react": "*",
     "react-native": "*",
+    "react-native-gesture-handler": "^2.28.0",
+    "react-native-reanimated": "^4.1.0",
     "react-native-remix-icon": "^4.6.3",
     "react-native-web": "*"
   },
   "dependencies": {
     "prop-types": "^15.8.1",
+    "react-native-safe-area-context": "^5.6.1",
     "react-native-web": "^0.21.0",
     "tinycolor2": "^1.6.0"
   },

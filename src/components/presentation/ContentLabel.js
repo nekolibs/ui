@@ -26,14 +26,14 @@ export function ContentLabel(rootProps) {
     useThemeComponentModifier('ContentLabel') //
   )([{}, rootProps])
 
-  let { loading, label, content, textProps, invert, gap, ...props } = formattedProps
+  let { loading, label, content, textProps, invert, gap, strong, ...props } = formattedProps
   if (!!loading) content = <Loading size={sizeCode} color={color} />
 
   return (
     <View className="neko-content-label" row gap={gap || AUTO_GAP_SCALE[sizeCode] || 5} centerV {...props}>
       {!invert && content}
       {!!label && (
-        <Text color={color} size={sizeCode} {...textProps}>
+        <Text color={color} size={sizeCode} strong={strong} {...textProps}>
           {label}
         </Text>
       )}

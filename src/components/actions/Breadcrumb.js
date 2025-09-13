@@ -14,8 +14,6 @@ export function Breadcrumb({ items, onChange, ...rootProps }) {
     useThemeComponentModifier('Breadcrumb')
   )([{}, rootProps])
 
-  const oneSizeDown = moveScale(sizeCode, -1)
-  const twoSizeDown = moveScale(sizeCode, -1)
   const gap = 'sm'
 
   const handlePress = (item, index) => {
@@ -35,8 +33,8 @@ export function Breadcrumb({ items, onChange, ...rootProps }) {
               <IconLabel
                 color={active ? 'text' : 'text3'}
                 size={sizeCode}
-                iconProps={{ size: oneSizeDown }}
-                textProps={{ strong: active }}
+                moveIconSizeScale={-2}
+                strong={active}
                 {...omit(['onPress', 'onClick'], item)}
               />
             </Link>

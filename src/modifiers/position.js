@@ -1,3 +1,4 @@
+import { Platform } from '../abstractions/Platform'
 import { clearProps } from './_helpers'
 
 export function usePositionModifier([values, props]) {
@@ -8,6 +9,10 @@ export function usePositionModifier([values, props]) {
   if (relative) position = 'relative'
   if (fixed) position = 'fixed'
   if (sticky) position = 'sticky'
+
+  if (Platform.OS !== 'web' && ['fixed', 'sticky'].includes(position)) {
+    position = 'absolute'
+  }
 
   const style = clearProps({ position, top, bottom, left, right, zIndex })
 

@@ -1,3 +1,5 @@
 export * from './Separator'
 export * from './Responsive'
 export * from './VerticalView'
+export * from './PortalHandler'
+export * from './Portal'

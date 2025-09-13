@@ -59,7 +59,7 @@ export function TableCol({ label, children, strong, color, colSpan, rowSpan, ...
 
   return (
     <AbsTableCol className="neko-table-col" style={style} colSpan={colSpan} rowSpan={rowSpan}>
-      <View className="neko-table-col-content" fullW fullH align={align} {...props}>
+      <View className="neko-table-col-content" fullW fullH align={align} centerV {...props}>
         {children}
       </View>
     </AbsTableCol>

@@ -5,7 +5,12 @@ const SCALE = ['xxxs', 'xxs', 'xs', 'sm', 'md', 'lg', 'xl', 'xxl', 'xxxl']
 export function moveScale(value, unit = 1) {
   const index = SCALE.indexOf(value)
   if (!index) return value
-  return SCALE[index + unit] || value
+  const movedIndex = index + unit
+  let movedValue = SCALE[index + unit]
+  if (!movedValue) {
+    movedValue = unit > 0 ? 'xxxl' : 'xxxs'
+  }
+  return movedValue
 }
 
 export function getSizeFromProps({ size, ...props }, defaultValue) {

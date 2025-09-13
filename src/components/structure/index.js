@@ -1,4 +1,5 @@
 export * from './View'
+export * from './SafeAreaView'
 export * from './Card'
 export * from './Row'
 export * from './Col'

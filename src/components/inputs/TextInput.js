@@ -16,7 +16,7 @@ export function TextInput({ value, ...props }) {
 
   return (
     <InputWrapper {...props}>
-      <AbsTextInput style={STYLE} {...props} value={value} />
+      <AbsTextInput style={STYLE} placeholderTextColor={colors.text_op30} {...props} value={value} />
     </InputWrapper>
   )
 }

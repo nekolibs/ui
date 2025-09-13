@@ -1,6 +1,16 @@
-export function AbsTable({ children, ...props }) {
+export function AbsTable({ children, style, ...props }) {
   return (
-    <table {...props}>
+    <table
+      {...props}
+      style={{
+        ...style,
+        borderCollapse: 'separate',
+        borderSpacing: 0,
+        // orderCollapse: 'collapse',
+        // whiteSpace: 'nowrap',
+        width: '100%',
+      }}
+    >
       <tbody>{children}</tbody>
     </table>
   )

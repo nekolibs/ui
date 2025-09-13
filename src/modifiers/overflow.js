@@ -1,7 +1,7 @@
 import { clearProps } from './_helpers'
 
 export function useOverflowModifier([values, props]) {
-  let { hiddenOverflow, scroll, scrollY, scrolX, overflow, overflowY, overflowX, ...restProps } = props
+  let { hiddenOverflow, scroll, scrollY, scrollX, overflow, overflowY, overflowX, ...restProps } = props
 
   if (hiddenOverflow) overflow = 'hidden'
   if (scroll) overflow = 'scroll'

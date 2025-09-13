@@ -69,7 +69,7 @@ export function Avatar(rootProps) {
       iconProps={iconProps}
     />
   )
-  if (!!src) content = <Image br={0} src={src} style={{ width: '100%' }} />
+  if (!!src) content = <Image br={0} src={src} width={sizeCode} height={sizeCode} />
 
   return (
     <AbsView className="neko-avatar" {...props}>
