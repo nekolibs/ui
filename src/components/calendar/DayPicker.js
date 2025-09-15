@@ -9,7 +9,7 @@ import { Text } from '../text/Text'
 import { View } from '../structure/View'
 import { useCalendarDays } from './_helpers/calendarDays'
 
-export function DayPicker({ initialValue, value, onChange, ...props }) {
+export function DayPicker({ initialValue, value, onChange, min, max, onCheckDisabled, ...props }) {
   const [localValue, setLocalValue] = React.useState(dayjs(initialValue))
   value = value === undefined ? localValue : value
   const handleChange = (v) => {
@@ -64,22 +64,25 @@ export function DayPicker({ initialValue, value, onChange, ...props }) {
       </View>
 
       <Grid className="neko-day-picker-days" colSpan={24 / 7} gap="sm">
-        {cells.map((val, idx) => {
-          const dateVal = currentMonth.date(val)
-          const isActive = dateVal.isSame(value, 'day')
+        {cells.map((day, i) => {
+          const dateVal = currentMonth.date(day)
+          const isActive = !!day && dateVal.isSame(value, 'day')
+          const disabled =
+            (!!min && dateVal.isBefore(min)) || (!!max && dateVal.isAfter(max)) || onCheckDisabled?.(dateVal)
 
           return (
-            <Col key={idx} className="day-cell" center>
+            <Col key={day ? dateVal.format('YYYYMMDD') : i} className="day-cell" center>
               <Link
                 ratio={1}
                 width={30}
                 center
                 br="md"
-                onPress={() => !!val && handleChange(dateVal)}
+                onPress={() => !!day && handleChange(dateVal)}
                 bg={isActive && 'primary'}
+                disabled={disabled}
               >
                 <Text sm text2 center strong={isActive}>
-                  {val != null ? val : ''}
+                  {day || ''}
                 </Text>
               </Link>
             </Col>
