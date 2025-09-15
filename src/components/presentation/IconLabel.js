@@ -14,7 +14,7 @@ export function IconLabel(rootProps) {
     useThemeComponentModifier('IconLabel') //
   )([{}, rootProps])
 
-  const { icon, iconProps, iconColor, moveIconSizeScale, ...props } = formattedProps
+  const { icon, iconProps, iconColor, iconSize, moveIconSizeScale, ...props } = formattedProps
 
   return (
     <ContentLabel
@@ -25,7 +25,7 @@ export function IconLabel(rootProps) {
         !!icon && (
           <Icon
             name={icon}
-            size={moveScale(sizeCode, moveIconSizeScale || -1)}
+            size={iconSize || moveScale(sizeCode, moveIconSizeScale || -1)}
             color={iconColor || color}
             {...iconProps}
           />

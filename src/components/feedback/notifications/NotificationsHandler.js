@@ -3,6 +3,7 @@ import React from 'react'
 
 import { Notification } from './Notification'
 import { SafeAreaView } from '../../structure/SafeAreaView'
+import { View } from '../../structure/View'
 import { useResponsiveValue } from '../../../responsive/responsiveHooks'
 
 const NotificationsContext = React.createContext(null)
@@ -51,11 +52,13 @@ export function NotificationsHandler({ children }) {
       {children}
 
       {!!messages.length && (
-        <SafeAreaView fixed top={0} right={0} padding="md" gap="xs" width={width} maxWidth="100%">
-          {messages.map(({ key, ...item }) => (
-            <Notification key={key} {...item} />
-          ))}
-        </SafeAreaView>
+        <View fixed top={0} right={0} padding="md" width={width} maxWidth="100%" pointerEvents="box-none">
+          <SafeAreaView gap="xs">
+            {messages.map(({ key, ...item }) => (
+              <Notification key={key} {...item} />
+            ))}
+          </SafeAreaView>
+        </View>
       )}
     </NotificationsContext.Provider>
   )

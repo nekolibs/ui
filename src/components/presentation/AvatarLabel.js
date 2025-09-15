@@ -14,7 +14,20 @@ export function AvatarLabel(rootProps) {
     useThemeComponentModifier('AvatarLabel') //
   )([{}, rootProps])
 
-  const { icon, label, name, initials, src, avatarColor, square, dynamicColor, avatarProps, ...props } = formattedProps
+  const {
+    icon,
+    label,
+    name,
+    initials,
+    src,
+    avatarColor,
+    square,
+    dynamicColor,
+    avatarProps,
+    moveAvatarSizeScale,
+    avatarSize,
+    ...props
+  } = formattedProps
   const hasAvatar = !!name || !!initials || !!src
 
   return (
@@ -29,7 +42,7 @@ export function AvatarLabel(rootProps) {
           initials={initials}
           icon={icon}
           src={src}
-          size={moveScale(sizeCode, -1)}
+          size={avatarSize || moveScale(sizeCode, moveAvatarSizeScale || -1)}
           color={avatarColor || color}
           dynamicColor={dynamicColor}
           square={square}
