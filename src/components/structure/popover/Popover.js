@@ -53,7 +53,7 @@ export function Popover({
       ),
       triggerRect,
       placement,
-      options: { dismissOnClickOutside: !!click },
+      options: { dismissOnClickOutside: click || focus },
     })
   }
 
@@ -63,7 +63,7 @@ export function Popover({
   let childProps = { ref, onClick: show }
 
   if (hover) childProps = { ref, onMouseEnter: show, onMouseLeave: onClose }
-  if (focus) childProps = { ref, onFocus: show, onBlur: onClose }
+  if (focus) childProps = { ref, onFocus: show }
 
   return React.cloneElement(child, childProps)
 }

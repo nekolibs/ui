@@ -12,6 +12,7 @@ export const DEFAULT_MSDOS_THEME = mergeDeepRight(BASE_THEME, {
 
     bg: '#0000AA',
     overlayBG: '#000088',
+    backdrop: '#0000AA',
     shadow: 'rgba(0, 0, 0, 0.6)',
     divider: 'rgba(255,255,255,0.3)',
 

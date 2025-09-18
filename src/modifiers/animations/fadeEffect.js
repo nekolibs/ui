@@ -16,10 +16,12 @@ export function useFadeEffect([values, { fade, ...props }]) {
     if (!fade) return
 
     if (open) {
-      // setOpacity(0)
+      setOpacity(0)
 
       requestAnimationFrame(() => {
-        setOpacity(1)
+        requestAnimationFrame(() => {
+          setOpacity(1)
+        })
       })
     } else {
       setOpacity(0)

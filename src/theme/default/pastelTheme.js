@@ -11,8 +11,9 @@ export const PASTEL_DREAM_THEME = mergeDeepRight(BASE_THEME, {
 
     bg: '#FFF7FA',
     overlayBG: '#FFFFFF',
+    backdrop: '#4B4453',
     shadow: 'rgba(39, 45, 52, 0.15)',
-    divider: 'rgba(255,255,255, 0.2)',
+    divider: '#f0f0f0',
 
     blue: '#A5B4FC',
     yellow: '#FDE68A',

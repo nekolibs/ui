@@ -19,10 +19,23 @@ const DEFAULT_PROPS = {
   gap: 'sm',
 }
 
-export function InputWrapper({ prefix, suffix, prefixIcon, suffixIcon, loading, error, children, ...rootProps }) {
+export function InputWrapper({
+  prefix,
+  suffix,
+  prefixIcon,
+  prefixIconColor,
+  suffixIcon,
+  suffixIconColor,
+  loading,
+  error,
+  children,
+  ref,
+  ...rootProps
+}) {
   const [hover, setHover] = React.useState(false)
-  const inputRef = React.useRef()
-  const [{ size, sizeCode, onChange }, props] = pipe(
+  const fallbackInputRef = React.useRef()
+  const inputRef = ref || fallbackInputRef
+  const [{ size, sizeCode }, props] = pipe(
     useSizeConverter('elementHeights', 'md'),
     useThemeComponentModifier('InputWrapper'),
     useDefaultModifier(DEFAULT_PROPS)
@@ -34,8 +47,8 @@ export function InputWrapper({ prefix, suffix, prefixIcon, suffixIcon, loading, 
 
   if (!!prefix && is(String, prefix)) prefix = <Text>{prefix}</Text>
   if (!!suffix && is(String, suffix)) suffix = <Text>{suffix}</Text>
-  if (!prefix && !!prefixIcon) prefix = <Icon name={prefixIcon} size={sizeCode} />
-  if (!suffix && !!suffixIcon) suffix = <Icon name={suffixIcon} size={sizeCode} />
+  if (!prefix && !!prefixIcon) prefix = <Icon name={prefixIcon} size={sizeCode} color={prefixIconColor} />
+  if (!suffix && !!suffixIcon) suffix = <Icon name={suffixIcon} size={sizeCode} color={suffixIconColor} />
   if (!prefix && !!error) suffix = <Icon name="close-circle-fill" size={sizeCode} red />
   if (!!loading) suffix = <Loading size={sizeCode} />
 
@@ -46,7 +59,6 @@ export function InputWrapper({ prefix, suffix, prefixIcon, suffixIcon, loading, 
   const childWithProps = React.cloneElement(child, {
     ...child.props,
     ref: inputRef,
-    onChange: child.props.onChange || onChange,
   })
 
   return (

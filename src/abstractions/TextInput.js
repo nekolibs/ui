@@ -1,3 +1,3 @@
-export function AbsTextInput(props) {
-  return <input type="text" {...props} />
+export function AbsTextInput({ onChange, ...props }) {
+  return <input type="text" onChange={(e) => onChange?.(e?.target?.value, e)} {...props} />
 }

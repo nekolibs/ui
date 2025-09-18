@@ -3,6 +3,7 @@ import React from 'react'
 
 import { useApplyStyles } from '../applyStyles'
 import { useFadeEffect } from './fadeEffect'
+import { useScaleEffect } from './scaleEffect'
 import { useSlideEffect } from './slideEffect'
 
 export function useAnimatedEffects([values, { open, onClose, lazy = false, unmountOnClose = false, ...props }]) {
@@ -41,6 +42,7 @@ export function useAnimatedEffects([values, { open, onClose, lazy = false, unmou
   return pipe(
     useFadeEffect, //
     useSlideEffect,
+    useScaleEffect,
     useApplyStyles({ transition: transitions.join(',') })
   )([
     {

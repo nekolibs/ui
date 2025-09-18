@@ -3,6 +3,7 @@ import { useSharedValue } from 'react-native-reanimated'
 import React from 'react'
 
 import { useFadeEffect } from './fadeEffect'
+import { useScaleEffect } from './scaleEffect'
 import { useSlideEffect } from './slideEffect'
 
 export function useAnimatedEffects([values, { open = true, onClose, lazy = false, unmountOnClose = false, ...props }]) {
@@ -32,7 +33,8 @@ export function useAnimatedEffects([values, { open = true, onClose, lazy = false
 
   return pipe(
     useFadeEffect, //
-    useSlideEffect
+    useSlideEffect,
+    useScaleEffect
   )([
     {
       ...values,

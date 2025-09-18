@@ -9,8 +9,6 @@ export function useCalendarDays(currentMonth) {
     const days = Array.from({ length: daysInMonth }, (_, i) => i + 1)
     const cells = [...blanks, ...days]
 
-    const weekdayLabels = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
-
-    return { weekdayLabels, cells }
+    return { cells }
   }, [currentMonth.month(), currentMonth.year()])
 }

@@ -11,6 +11,7 @@ export const DEEP_WOODS_DARK_THEME = mergeDeepRight(BASE_THEME, {
 
     bg: '#0D1B14',
     overlayBG: '#16281F',
+    backdrop: '#0D1B14',
     shadow: 'rgba(39, 45, 52, 0.6)',
     divider: 'rgba(255,255,255, 0.2)',
 

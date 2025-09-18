@@ -11,6 +11,7 @@ export const OCEAN_BREEZE_THEME = mergeDeepRight(BASE_THEME, {
 
     bg: '#E6F7FF',
     overlayBG: '#FFFFFF',
+    backdrop: '#04364A',
     shadow: 'rgba(39, 45, 52, 0.15)',
     divider: 'rgba(0,0,0, 0.1)',
 

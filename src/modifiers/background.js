@@ -6,8 +6,9 @@ export function useBackgroundModifier([values, props]) {
   let { bg, background, backgroundColor, ...restProps } = props
 
   backgroundColor = getColor(bg ?? background ?? backgroundColor)
+  const pointerEvents = props.pointerEvents
 
-  const style = clearProps({ backgroundColor })
+  const style = clearProps({ backgroundColor, pointerEvents })
 
   return [
     values,

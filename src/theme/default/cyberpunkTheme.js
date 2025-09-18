@@ -11,6 +11,7 @@ export const CYBERPUNK_DARK_THEME = mergeDeepRight(BASE_THEME, {
 
     bg: '#0A0A0F',
     overlayBG: '#14141F',
+    backdrop: '#0A0A0F',
     shadow: 'rgba(39, 45, 52, 0.6)',
     divider: 'rgba(255,255,255, 0.2)',
 

@@ -1,5 +1,6 @@
 export * from './Button'
 export * from './Link'
+export * from './Pressable'
 export * from './Dropdown'
 export * from './Breadcrumb'
 export * from './menu/Menu'

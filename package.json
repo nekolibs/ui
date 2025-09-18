@@ -5,10 +5,7 @@
   "main": "dist/index.js",
   "module": "dist/index.js",
   "react-native": "src/index.js",
-  "files": [
-    "dist",
-    "src"
-  ],
+  "files": ["dist", "src"],
   "scripts": {
     "build": "rm -rf dist && babel src --out-dir dist --extensions \".js,.jsx\" --copy-files",
     "watch": "babel src --out-dir dist --extensions \".js,.jsx\" --copy-files --watch",
@@ -32,10 +29,14 @@
     "react-native-web": "*",
     "react-native-safe-area-context": "*"
   },
+  "peerDependenciesMeta": {
+    "react-native-safe-area-context": {
+      "optional": true
+    }
+  },
   "dependencies": {
-    "dayjs": "^1.11.18",
+    "dayjs": "1.11.18",
     "prop-types": "^15.8.1",
-    "react-native-safe-area-context": "^5.6.1",
     "react-native-web": "^0.21.0",
     "tinycolor2": "^1.6.0"
   },

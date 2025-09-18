@@ -37,7 +37,9 @@ export function useSlideEffect([values, { slide, ...props }]) {
       setTransform(initialValue)
 
       requestAnimationFrame(() => {
-        setTransform('translateY(0)')
+        requestAnimationFrame(() => {
+          setTransform('translateY(0)')
+        })
       })
     } else {
       setTransform(initialValue)

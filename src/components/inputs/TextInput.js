@@ -2,7 +2,7 @@ import { AbsTextInput } from '../../abstractions/TextInput'
 import { InputWrapper } from './InputWrapper'
 import { useColors } from '../../theme/ThemeHandler'
 
-export function TextInput({ value, ...props }) {
+export function TextInput({ onChange, ...props }) {
   const colors = useColors()
 
   const STYLE = {
@@ -16,7 +16,7 @@ export function TextInput({ value, ...props }) {
 
   return (
     <InputWrapper {...props}>
-      <AbsTextInput style={STYLE} placeholderTextColor={colors.text_op30} {...props} value={value} />
+      <AbsTextInput style={STYLE} placeholderTextColor={colors.text_op30} {...props} onChange={onChange} />
     </InputWrapper>
   )
 }

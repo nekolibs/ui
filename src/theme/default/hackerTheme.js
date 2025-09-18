@@ -12,6 +12,7 @@ export const DEFAULT_MATRIX_THEME = mergeDeepRight(BASE_THEME, {
 
     bg: '#000000',
     overlayBG: '#0A0A0A',
+    backdrop: '#000000',
     shadow: 'rgba(0, 255, 65, 0.2)',
     divider: 'rgba(0,255,65, 0.3)',
 
