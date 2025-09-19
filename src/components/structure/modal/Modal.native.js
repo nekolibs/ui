@@ -55,7 +55,15 @@ export function Modal({
   }
 
   return (
-    <RNModal animationType="fade" transparent visible={open} onRequestClose={onClose} allowSwipeDismissal>
+    <RNModal
+      animationType="fade"
+      transparent
+      visible={open}
+      onRequestClose={onClose}
+      allowSwipeDismissal
+      navigationBarTranslucent
+      statusBarTranslucent
+    >
       <ModalBackdrop open={open} useSimpleView>
         <Pressable
           onPress={!disableOutsideClick ? onClose : undefined}

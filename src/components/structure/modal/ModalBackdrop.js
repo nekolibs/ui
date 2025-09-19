@@ -6,19 +6,33 @@ import { SafeAreaView } from '../SafeAreaView'
 import { useDefaultModifier } from '../../../modifiers/default'
 import { useThemeComponentModifier } from '../../../modifiers/themeComponent'
 
-const DEFAULT_PROPS = {
-  fixed: true,
-  top: 0,
-  left: 0,
-  right: 0,
-  bottom: 0,
-  center: true,
-  center: true,
-  lazy: true,
-  unmountOnClose: true,
-  fade: true,
-  zIndex: 500,
-  bg: 'backdrop_op70',
+const DEFAULT_PROPS = ([{}, { position }]) => {
+  let justify = 'center'
+  let align = 'center'
+  if (position === 'bottom') {
+    justify = 'flex-end'
+  } else if (position === 'top') {
+    justify = 'flex-top'
+  } else if (position === 'left') {
+    align = 'flex-start'
+  } else if (position === 'right') {
+    align = 'flex-end'
+  }
+
+  return {
+    fixed: true,
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justify,
+    align,
+    lazy: true,
+    unmountOnClose: true,
+    fade: true,
+    zIndex: 500,
+    bg: 'backdrop_op70',
+  }
 }
 
 export function ModalBackdrop({ open, onClose, children, useSimpleView, ...rootProps }) {

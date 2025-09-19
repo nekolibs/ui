@@ -9,14 +9,35 @@ import { Portal } from '../../helpers/Portal'
 import { useDefaultModifier } from '../../../modifiers/default'
 import { useThemeComponentModifier } from '../../../modifiers/themeComponent'
 
-const DEFAULT_PROPS = {
-  maxWidth: '90%',
-  maxHeight: '90%',
-  scale: true,
-  br: 'xl',
-  bg: 'overlayBG',
-  overflow: 'hidden',
-  shadow: true,
+const DEFAULT_PROPS = ([{}, { position }]) => {
+  let radiusKey = 'br'
+  let height = undefined
+  if (position === 'bottom') {
+    radiusKey = 'borderRadiusT'
+    height = '95%'
+  } else if (position === 'top') {
+    radiusKey = 'borderRadiusB'
+    height = '95%'
+  } else if (position === 'right') {
+    radiusKey = 'borderRadiusL'
+    height = '100%'
+  } else if (position === 'left') {
+    radiusKey = 'borderRadiusR'
+    height = '100%'
+  }
+
+  return {
+    maxWidth: !position && '95%',
+    maxHeight: !position && '95%',
+    height,
+    scale: !position,
+    fade: !!position,
+    slide: position && { from: position },
+    [radiusKey]: 'xl',
+    bg: 'overlayBG',
+    overflow: 'hidden',
+    shadow: true,
+  }
 }
 
 export function Modal({
@@ -36,7 +57,7 @@ export function Modal({
     useDefaultModifier(DEFAULT_PROPS)
   )([{}, rootProps])
 
-  const { contentProps, headerProps, footerProps, ...props } = formattedProps
+  const { contentProps, headerProps, footerProps, position, ...props } = formattedProps
 
   let content = children
   if (!noLayout) {
@@ -53,7 +74,7 @@ export function Modal({
 
   return (
     <Portal>
-      <ModalBackdrop open={open} onClose={!disableOutsideClick && onClose}>
+      <ModalBackdrop open={open} onClose={!disableOutsideClick && onClose} position={position}>
         <AnimatedView className="neko-modal" open={open} width={width} {...props} onPress={(e) => e.stopPropagation()}>
           {content}
         </AnimatedView>

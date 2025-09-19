@@ -6,6 +6,7 @@ import { useThemeComponentModifier } from '../../../modifiers/themeComponent'
 
 const DEFAULT_PROPS = {
   fullW: true,
+  flex: true,
   // fullH: true,
   scrollY: true,
   padding: 'md',
