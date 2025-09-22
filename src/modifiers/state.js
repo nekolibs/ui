@@ -3,7 +3,7 @@ import { clearProps } from './_helpers'
 export function useStateModifier([values, props]) {
   let { disabled, loading, onClick, onPress, onChange, ...restProps } = props
 
-  let cursor = props.style
+  let cursor = undefined
   let opacity = props.opacity
 
   if (!!disabled) {

@@ -19,6 +19,7 @@
   },
   "peerDependencies": {
     "@remixicon/react": "^4.6.0",
+    "expo-linear-gradient": "~14.1.5",
     "dayjs": "*",
     "ramda": "^0.31.3",
     "react": "*",

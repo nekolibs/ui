@@ -27,7 +27,7 @@ const DEFAULT_PROPS = ([{}, { position }]) => {
   }
 
   return {
-    maxWidth: !position && '95%',
+    maxWidth: '100%',
     maxHeight: !position && '95%',
     height,
     scale: !position,

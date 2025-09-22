@@ -1,3 +1,4 @@
+export * from './handler/ModalsHandler'
 export * from './Modal'
 export * from './ModalContent'
 export * from './ModalHeader'

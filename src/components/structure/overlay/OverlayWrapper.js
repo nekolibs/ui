@@ -43,7 +43,7 @@ export function OverlayWrapper({ children, triggerRect, placement, onClickOutsid
       top={pos.y}
       left={pos.x}
       zIndex={9999}
-      pointerEvents="none"
+      ointerEvents="none"
       {...props}
     >
       {children}

@@ -15,7 +15,7 @@ import { useThemeComponentModifier } from '../../../modifiers/themeComponent'
 function LinkItem({
   item,
   linkPaddingH = 'md',
-  linkPaddingV = 'xs',
+  linkPaddingV = 'sm',
   handlePress,
   linkProps,
   activeIndex,
@@ -41,14 +41,15 @@ function LinkItem({
         paddingV={linkPaddingV}
         marginR={3}
         borderL={3}
-        marginV={!!active && -4}
+        marginV={-4}
         borderColor={active ? activeColor : 'transparent'}
         bg={bg}
         transition="border-color 0.5s ease, background 0.3s ease"
+        hover={{ br: 0 }}
         {...linkProps}
         onPress={() => handlePress(item, index)}
       >
-        <IconText paddingV={active && 4} color={active ? activeColor : color} fullW size={sizeCode} {...childProps} />
+        <IconText addingV={active && 4} color={active ? activeColor : color} fullW size={sizeCode} {...childProps} />
       </Link>
     </SubmenuWrapper>
   )

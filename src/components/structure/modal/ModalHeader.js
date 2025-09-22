@@ -41,7 +41,7 @@ export function ModalHeader({ onClose, title, children, ...rootProps }) {
       {children}
 
       {!!onClose && (
-        <Link onPress={onClose}>
+        <Link onPress={onClose} padding="sm" marginR={-10}>
           <Icon name="close-line" />
         </Link>
       )}

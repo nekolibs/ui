@@ -5,11 +5,13 @@ import { IconLabel } from '../presentation/IconLabel'
 import { useBackgroundModifier } from '../../modifiers/background'
 import { useBorderModifier } from '../../modifiers/border'
 import { useColorConverter } from '../../modifiers/colorConverter'
+import { useCursorModifier } from '../../modifiers/cursor'
 import { useDefaultModifier } from '../../modifiers/default'
 import { useDisplayModifier } from '../../modifiers/display'
 import { useFlexModifier } from '../../modifiers/flex'
 import { useFlexWrapperModifier } from '../../modifiers/flexWrapper'
 import { useFullColorModifier } from '../../modifiers/fullColor'
+import { useHoverConverter } from '../../modifiers/hover'
 import { useMarginModifier } from '../../modifiers/margin'
 import { usePaddingModifier } from '../../modifiers/padding'
 import { usePositionModifier } from '../../modifiers/position'
@@ -25,6 +27,9 @@ const DEFAULT_PROPS = ([{ sizeCode }]) => ({
   br: sizeCode,
   border: 1,
   center: true,
+  hover: {
+    opacity: 0.7,
+  },
 })
 
 export function Button(rootProps) {
@@ -33,6 +38,8 @@ export function Button(rootProps) {
     useSizeConverter('elementHeights', 'md'),
     useThemeComponentModifier('Button'),
     useDefaultModifier(DEFAULT_PROPS),
+    useHoverConverter,
+    useCursorModifier,
     useFullColorModifier,
     useDisplayModifier,
     useStateModifier,

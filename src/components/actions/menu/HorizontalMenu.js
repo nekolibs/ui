@@ -66,7 +66,7 @@ export function HorizontalMenu(rootProps) {
     useThemeComponentModifier('HorizontalMenu') //
   )([{}, rootProps])
 
-  let { gap = 'sm', height = 50, items, onChange, onChangeIndex, ...props } = formattedProps
+  let { gap = 'sm', height = 50, items, onChange, onChangeIndex, activeIndex, ...props } = formattedProps
 
   const handlePress = React.useCallback(
     (item, index) => {
@@ -88,6 +88,7 @@ export function HorizontalMenu(rootProps) {
           color={color}
           sizeCode={sizeCode}
           index={index}
+          activeIndex={activeIndex}
           {...props}
         />
       ))}

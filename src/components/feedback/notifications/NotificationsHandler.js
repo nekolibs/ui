@@ -20,8 +20,8 @@ export function useNotifier() {
 
     if (is(String, data)) data = { title: data }
 
-    const timerId = setTimeout(() => remove(key), time)
-    add(key, { ...data, type, opts, timerId, time })
+    const timerId = setTimeout(() => remove?.(key), time)
+    add?.(key, { ...data, type, opts, timerId, time })
   }
 
   return {
@@ -52,7 +52,7 @@ export function NotificationsHandler({ children }) {
       {children}
 
       {!!messages.length && (
-        <View fixed top={0} right={0} padding="md" width={width} maxWidth="100%" pointerEvents="box-none">
+        <View fixed top={0} right={0} padding="md" width={width} maxWidth="100%" pointerEvents="box-none" zIndex={600}>
           <SafeAreaView gap="xs">
             {messages.map(({ key, ...item }) => (
               <Notification key={key} {...item} />

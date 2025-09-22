@@ -7,9 +7,12 @@ import { useAnimationModifier } from '../../modifiers/animation'
 import { useBackgroundModifier } from '../../modifiers/background'
 import { useBorderModifier } from '../../modifiers/border'
 import { useColorConverter } from '../../modifiers/colorConverter'
+import { useCursorModifier } from '../../modifiers/cursor'
+import { useDefaultModifier } from '../../modifiers/default'
 import { useDisplayModifier } from '../../modifiers/display'
 import { useFlexModifier } from '../../modifiers/flex'
 import { useFlexWrapperModifier } from '../../modifiers/flexWrapper'
+import { useHoverConverter } from '../../modifiers/hover'
 import { useMarginModifier } from '../../modifiers/margin'
 import { usePaddingModifier } from '../../modifiers/padding'
 import { usePositionModifier } from '../../modifiers/position'
@@ -17,11 +20,22 @@ import { useSizeModifier } from '../../modifiers/size'
 import { useStateModifier } from '../../modifiers/state'
 import { useThemeComponentModifier } from '../../modifiers/themeComponent'
 
+const DEFAULT_PROPS = {
+  pointer: true, //
+  hover: {
+    br: 'md',
+    bg: 'text4_op10',
+  },
+}
+
 export function Link({ label, children, href, target, ...rootProps }) {
-  const [{ loading, color: color }, props] = pipe(
-    useThemeComponentModifier('Link'),
+  const [{ isHover, loading, color: color }, props] = pipe(
+    useDefaultModifier(DEFAULT_PROPS),
+    useHoverConverter,
     useBackgroundModifier,
     useColorConverter('primary'),
+    useThemeComponentModifier('Link'),
+    useCursorModifier,
     useAnimationModifier,
     useSizeModifier, //
     useFlexWrapperModifier,

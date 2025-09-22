@@ -18,7 +18,7 @@ export function Notification({ time, ...props }) {
       className="neko-notification"
       slide={{ from: 'right' }}
       fade
-      zIndex={120}
+      zIndex={520}
       maxWidth="100%"
       bg="overlayBG"
       br="sm"

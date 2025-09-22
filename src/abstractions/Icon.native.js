@@ -2,10 +2,12 @@ let AbsIcon
 
 try {
   const RmIcon = require('react-native-remix-icon')?.default
-  console.log(RmIcon)
   AbsIcon = (props) => <RmIcon {...props} />
 } catch {
-  AbsIcon = () => false
+  AbsIcon = () => {
+    console.warn('react-native-remix-icon not instaled.')
+    return false
+  }
 }
 
 export { AbsIcon }

@@ -1,17 +1,28 @@
+import { is } from 'ramda'
+
 import { clearProps } from './_helpers'
 import { useGetColor } from '../theme/ThemeHandler'
 
 export function useBackgroundModifier([values, props]) {
   const getColor = useGetColor()
-  let { bg, background, backgroundColor, ...restProps } = props
+  let { bg, colors, background, backgroundColor, ...restProps } = props
+  let gradientColors = []
 
-  backgroundColor = getColor(bg ?? background ?? backgroundColor)
+  if (is(Array, bg) || !!colors?.length) {
+    colors = colors || bg || []
+    gradientColors = colors.map(getColor)
+    const angle = restProps.angle || 45
+    background = `linear-gradient(${angle}deg, ${gradientColors.join(', ')})`
+  } else {
+    backgroundColor = getColor(bg ?? background ?? backgroundColor)
+  }
+
   const pointerEvents = props.pointerEvents
 
-  const style = clearProps({ backgroundColor, pointerEvents })
+  const style = clearProps({ background, backgroundColor, pointerEvents })
 
   return [
-    values,
+    { gradientColors, ...values },
     {
       ...restProps,
       style: {

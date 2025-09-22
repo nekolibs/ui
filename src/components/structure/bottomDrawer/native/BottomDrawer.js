@@ -17,8 +17,6 @@ import { View } from '../../View'
 import { normalizeSnapPoints, findClosestSnapPoint } from './utils'
 import { useColors } from '../../../../theme/ThemeHandler'
 
-const { height: SCREEN_HEIGHT } = Dimensions.get('window')
-
 function InnerContent({
   children,
   render,
@@ -42,6 +40,7 @@ function InnerContent({
   contentProps,
   ...props
 }) {
+  const { height: SCREEN_HEIGHT } = Dimensions.get('window')
   const insets = useSafeAreaInsets()
   const bottomInset = useSafeArea ? insets.bottom : 0
 
@@ -190,7 +189,7 @@ function InnerContent({
 
       <DrawerProvider value={contextValue}>
         <GestureDetector gesture={panGesture}>
-          <Animated.View style={[styles.container, animatedSheetStyle]}>
+          <Animated.View style={[styles.container, { height: SCREEN_HEIGHT }, animatedSheetStyle]}>
             <View flex bg="overlayBG" shadow paddingB={useSafeArea && bottomInset} borderRadiusT="xxxl" {...props}>
               <DrawerHandle hide={hideHandle} />
               <View flex {...contentProps}>
@@ -210,7 +209,6 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     top: 0,
-    height: SCREEN_HEIGHT,
   },
 })
 

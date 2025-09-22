@@ -41,13 +41,14 @@ export function Dropdown({ items, ...rootProps }) {
         placement="bottomLeft"
         trigger={trigger}
         padding="xs"
+        useBottomDrawer={{ native: true, sm: true, md: true }}
         {...popoverProps}
         renderContent={({ onClose }) => {
           const handleChange = (...params) => {
             if (onChange) onChange(...params)
             onClose()
           }
-          return <Menu vertical items={items} gap={0} onChange={handleChange} linkPaddingH="xs" />
+          return <Menu vertical items={items} onChange={handleChange} linkPaddingH="xs" />
         }}
       >
         {children || (

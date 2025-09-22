@@ -1,3 +1,4 @@
+import { ModalsHandler } from './components/structure/modal/handler/ModalsHandler'
 import { NotificationsHandler } from './components/feedback/notifications/NotificationsHandler'
 import { OverlayHandler } from './components/structure/overlay/OverlayHandler'
 import { PortalHandler } from './components/helpers/PortalHandler'
@@ -9,9 +10,11 @@ export function NekoUI({ children, ...props }) {
     <ThemeHandler {...props}>
       <ResponsiveHandler>
         <PortalHandler>
-          <NotificationsHandler>
-            <OverlayHandler>{children}</OverlayHandler>
-          </NotificationsHandler>
+          <ModalsHandler>
+            <NotificationsHandler>
+              <OverlayHandler>{children}</OverlayHandler>
+            </NotificationsHandler>
+          </ModalsHandler>
         </PortalHandler>
       </ResponsiveHandler>
     </ThemeHandler>

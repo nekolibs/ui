@@ -1,17 +1,34 @@
 import { Modal, TouchableWithoutFeedback } from 'react-native'
 import React from 'react'
 
+import { BottomDrawer } from '../bottomDrawer'
 import { PopoverContent } from './PopoverContent'
 import { View } from '../View'
 import { calculatePosition } from '../overlay/calculatePosition'
+import { useResponsiveValue } from '../../../responsive'
 
-export function Popover({ content, placement = 'bottom', children, ...props }) {
+export function Popover({
+  content,
+  renderContent,
+  placement = 'bottom',
+  children,
+  useBottomDrawer = {},
+  snapPoints,
+  ...props
+}) {
+  const shouldUseDrawer = useResponsiveValue(useBottomDrawer)
   const ref = React.useRef(null)
-  const [visible, setVisible] = React.useState(false)
+  const [open, setOpen] = React.useState(false)
   const [triggerRect, setTriggerRect] = React.useState(null)
   const [position, setPosition] = React.useState(null)
 
-  const show = () => {
+  renderContent = renderContent || (() => content)
+
+  const onOpen = () => {
+    if (shouldUseDrawer) {
+      setOpen(true)
+      return
+    }
     if (ref.current) {
       ref.current.measureInWindow((x, y, width, height) => {
         setTriggerRect({
@@ -22,29 +39,41 @@ export function Popover({ content, placement = 'bottom', children, ...props }) {
           width,
           height,
         })
-        setVisible(true)
+        setOpen(true)
       })
     }
   }
 
-  const hide = () => {
-    setVisible(false)
+  const onClose = () => {
+    setOpen(false)
     setTriggerRect(null)
     setPosition(null)
   }
 
+  children = React.cloneElement(React.Children.only(children), {
+    onPress: onOpen,
+  })
+
+  if (shouldUseDrawer) {
+    return (
+      <View ref={ref}>
+        {children}
+
+        <BottomDrawer open={open} onClose={onClose} snapPoints={snapPoints}>
+          {renderContent({ onClose: onClose })}
+        </BottomDrawer>
+      </View>
+    )
+  }
+
   return (
     <>
-      <View ref={ref}>
-        {React.cloneElement(React.Children.only(children), {
-          onPress: show,
-        })}
-      </View>
+      <View ref={ref}>{children}</View>
 
-      {visible && (
-        <Modal transparent visible={visible} animationType="fade" onRequestClose={hide}>
+      {open && (
+        <Modal transparent visible={open} animationType="fade" onRequestClose={onClose}>
           <View fullW flex fullH bg="bg_op50">
-            <TouchableWithoutFeedback onPress={hide}>
+            <TouchableWithoutFeedback onPress={onClose}>
               <View style={{ flex: 1 }}>
                 {triggerRect && (
                   <View
@@ -61,7 +90,7 @@ export function Popover({ content, placement = 'bottom', children, ...props }) {
                     }}
                   >
                     <PopoverContent placement={placement} {...props}>
-                      {content}
+                      {renderContent({ onClose: onClose })}
                     </PopoverContent>
                   </View>
                 )}

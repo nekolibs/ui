@@ -1,6 +1,7 @@
 import { is } from 'ramda'
 import React from 'react'
 
+import { Platform } from '../abstractions/Platform'
 import { useBreakpoints } from '../theme/ThemeHandler'
 import { useResponsive } from '../responsive/ResponsiveHandler'
 
@@ -10,6 +11,12 @@ export function useGetResponsiveValue() {
 
   return React.useCallback(
     (value) => {
+      const isNative = value?.native !== undefined && Platform.OS !== 'web'
+      if (isNative) return value?.native
+
+      const isWeb = value?.web !== undefined && Platform.OS === 'web'
+      if (isWeb) return value?.web
+
       const isObj = is(Object, value)
 
       if (!isObj) return value

@@ -12,8 +12,6 @@ const DEFAULT_PROPS = ([{ sizeCode }, _]) => ({
   paddingV: moveScale(sizeCode, -2),
   minHeight: moveScale(sizeCode, 1),
   centerV: true,
-  row: true,
-  gap: 'xs',
 })
 
 export function ModalFooter({ children, ...rootProps }) {

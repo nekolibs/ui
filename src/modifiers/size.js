@@ -1,3 +1,4 @@
+import { Platform } from '../abstractions/Platform'
 import { clearProps } from './_helpers'
 import { useGetElementHeight } from '../theme/ThemeHandler'
 
@@ -38,7 +39,7 @@ export function useSizeModifier([values, props]) {
   if (span) width = (span / 24) * 100 + '%'
 
   if (fullWidth || fullW) width = '100%'
-  if (fullHeight || fullH) height = '100%'
+  if ((fullHeight || fullH) && Platform.OS === 'web') height = '100%'
 
   let aspectRatio = ratio
   if (!!square) aspectRatio = 1

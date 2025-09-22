@@ -43,7 +43,7 @@ export function Accordion({ children, title, open, onChange, ...rootProps }) {
         row
         gap={moveScale(sizeCode, -2)}
         borderB={open ? props.border || true : open}
-        borderColor={props.borderColor}
+        borderColor={props.borderColor || 'bg'}
         centerV
         {...headerProps}
         onPress={toggle}

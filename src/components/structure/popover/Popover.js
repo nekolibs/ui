@@ -1,7 +1,9 @@
 import React from 'react'
 
+import { BottomDrawer } from '../bottomDrawer'
 import { PopoverContent } from './PopoverContent'
 import { useRegisterOverlay } from '../overlay/OverlayHandler'
+import { useResponsiveValue } from '../../../responsive'
 
 export function Popover({
   renderContent,
@@ -12,8 +14,10 @@ export function Popover({
   children,
   parentWidth,
   parentMinWidth,
+  useBottomDrawer = {},
   ...props
 }) {
+  const shouldUseDrawer = useResponsiveValue(useBottomDrawer)
   const ref = React.useRef(null)
   const { onOpen, onClose, onFastClose, stopDelayedClosing } = useRegisterOverlay({ unmountOnClose })
 
@@ -59,6 +63,10 @@ export function Popover({
 
   React.useEffect(() => () => onClose(), [])
 
+  if (shouldUseDrawer) {
+    return <DrawerPopover content={content} renderContent={renderContent} children={children} {...props} />
+  }
+
   const child = React.Children.only(children)
   let childProps = { ref, onClick: show }
 
@@ -66,4 +74,22 @@ export function Popover({
   if (focus) childProps = { ref, onFocus: show }
 
   return React.cloneElement(child, childProps)
+}
+
+function DrawerPopover({ children, content, renderContent, snapPoints, ...props }) {
+  const [open, setOpen] = React.useState(false)
+  const onClose = () => setOpen(false)
+
+  const child = React.Children.only(children)
+  let childProps = { onClick: () => setOpen(true) }
+
+  return (
+    <>
+      {React.cloneElement(child, childProps)}
+
+      <BottomDrawer open={open} onClose={onClose} snapPoints={snapPoints}>
+        {renderContent({ onClose })}
+      </BottomDrawer>
+    </>
+  )
 }

@@ -3,10 +3,6 @@ import advancedFormat from 'dayjs/esm/plugin/advancedFormat'
 import dayjs from 'dayjs'
 import weekOfYear from 'dayjs/esm/plugin/weekOfYear'
 
-import { LinkInput } from './LinkInput'
-import { View } from '../structure/View'
-import { useResponsiveValue } from '../../responsive'
-
 dayjs.extend(advancedFormat)
 dayjs.extend(weekOfYear)
 
@@ -30,21 +26,8 @@ export function getDateInputDefaultFormat(type) {
   }
 }
 
-export function DateInput({
-  value,
-  onChange,
-  min,
-  max,
-  onCheckDisabled,
-  placement,
-  type = 'day',
-  format,
-  useBottomDrawer = { native: true, sm: true, md: true },
-  ...props
-}) {
-  useBottomDrawer = useResponsiveValue(useBottomDrawer)
+export function DateInput({ value, onChange, min, max, onCheckDisabled, placement, type = 'day', format, ...props }) {
   format = format || getDateInputDefaultFormat(type)
-  if (value === '') value = undefined
   const [inputValue, setInputValue] = React.useState('')
   const [localValue, setLocalValue] = React.useState(value)
 
@@ -75,29 +58,24 @@ export function DateInput({
     setInputValue(!!value ? dayjs(value).format(format) : '')
   }, [value])
 
-  const Input = useBottomDrawer ? LinkInput : MaskInput
-
+  return false
   return (
     <Popover
       trigger="click"
       placement={placement || 'bottomLeft'}
-      snapPoints={[350]}
-      useBottomDrawer={useBottomDrawer}
       renderContent={({ onClose }) => (
-        <View flex centerH>
-          <DatePicker
-            value={value}
-            onChange={(v) => {
-              handleChange(v)
-              onClose()
-            }}
-            {...validations}
-            type={type}
-          />
-        </View>
+        <DatePicker
+          value={value}
+          onChange={(v) => {
+            handleChange(v)
+            onClose()
+          }}
+          {...validations}
+          type={type}
+        />
       )}
     >
-      <Input
+      <MaskInput
         value={inputValue}
         onChange={handleChangeInput}
         suffixIcon="calendar-line"
