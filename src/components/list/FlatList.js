@@ -1,10 +1,10 @@
 import { pipe } from 'ramda'
 
-import { AbsView } from '../../abstractions/View'
+import { AbsFlatList } from '../../abstractions/FlatList'
 import { useAnimationModifier } from '../../modifiers/animation'
 import { useBackgroundModifier } from '../../modifiers/background'
 import { useBorderModifier } from '../../modifiers/border'
-import { useCursorModifier } from '../../modifiers/cursor'
+import { useDefaultModifier } from '../../modifiers/default'
 import { useDisplayModifier } from '../../modifiers/display'
 import { useFlexModifier } from '../../modifiers/flex'
 import { useFlexWrapperModifier } from '../../modifiers/flexWrapper'
@@ -17,12 +17,21 @@ import { useSizeModifier } from '../../modifiers/size'
 import { useStateModifier } from '../../modifiers/state'
 import { useThemeComponentModifier } from '../../modifiers/themeComponent'
 
-export function View({ children, ...rootProps }) {
+const DEFAULT_PROPS = ([_, { horizontal }]) => {
+  const overflowKey = horizontal ? 'scrollX' : 'scrollY'
+
+  return {
+    [overflowKey]: true,
+    row: !!horizontal,
+  }
+}
+
+export function FlatList({ children, ...rootProps }) {
   const [_, props] = pipe(
-    useThemeComponentModifier('View'),
+    useThemeComponentModifier('FlatList'),
+    useDefaultModifier(DEFAULT_PROPS),
     useFlexWrapperModifier,
     useDisplayModifier,
-    useCursorModifier,
     useAnimationModifier,
     useStateModifier,
     useSizeModifier,
@@ -35,10 +44,11 @@ export function View({ children, ...rootProps }) {
     useBorderModifier,
     useShadowModifier
   )([{}, rootProps])
+  // useNormalView = useResponsiveValue(useNormalView)
 
   return (
-    <AbsView className="neko-view" {...props}>
+    <AbsFlatList className="neko-flat-list" {...props}>
       {children}
-    </AbsView>
+    </AbsFlatList>
   )
 }

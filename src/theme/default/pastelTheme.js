@@ -2,6 +2,8 @@ import { mergeDeepRight } from 'ramda'
 import { BASE_THEME } from './base'
 
 export const PASTEL_DREAM_THEME = mergeDeepRight(BASE_THEME, {
+  label: 'Pastel Dream',
+
   colors: {
     primary: '#FFB6C1',
     text: '#4B4453',
@@ -9,7 +11,7 @@ export const PASTEL_DREAM_THEME = mergeDeepRight(BASE_THEME, {
     text3: '#A093A6',
     text4: '#C9BBCF',
 
-    bg: '#FFF7FA',
+    mainBG: '#FFF7FA',
     overlayBG: '#FFFFFF',
     backdrop: '#4B4453',
     shadow: 'rgba(39, 45, 52, 0.15)',

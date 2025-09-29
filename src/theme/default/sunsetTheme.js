@@ -3,15 +3,17 @@ import { mergeDeepRight } from 'ramda'
 import { BASE_THEME } from './base'
 
 export const SUNSET_GLOW_THEME = mergeDeepRight(BASE_THEME, {
+  label: 'Sunset',
+
   colors: {
     primary: '#FF6B6B',
-    text: '#331E0A',
+    text: '#4B372E',
     text2: '#5C4033',
     text3: '#8C5A43',
     text4: '#B97A57',
 
-    bg: '#FFF5E6',
-    overlayBG: '#FFFFFF',
+    mainBG: '#FFF5E6',
+    overlayBG: '#FFFAF1',
     backdrop: '#331E0A',
     shadow: 'rgba(39, 45, 52, 0.15)',
     divider: '#f0f0f0',

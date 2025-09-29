@@ -1,6 +1,6 @@
-import { Animated, Easing, Platform } from 'react-native'
-import React from 'react'
 import tinycolor from 'tinycolor2'
+import { Animated, Easing } from 'react-native'
+import React from 'react'
 
 export function AbsActivityIndicator({ size = 20, color, style }) {
   const spinValue = React.useRef(new Animated.Value(0)).current
@@ -12,7 +12,7 @@ export function AbsActivityIndicator({ size = 20, color, style }) {
         toValue: 1,
         duration: 1000,
         easing: Easing.linear,
-        useNativeDriver: Platform.OS !== 'web',
+        useNativeDriver: false,
       })
     )
     spinAnimation.start()

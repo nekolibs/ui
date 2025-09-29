@@ -3,6 +3,8 @@ import { mergeDeepRight } from 'ramda'
 import { BASE_THEME } from './base'
 
 export const DEFAULT_MATRIX_THEME = mergeDeepRight(BASE_THEME, {
+  label: 'Hacker',
+
   colors: {
     primary: '#00FF41',
     text: '#00FF41',
@@ -10,7 +12,7 @@ export const DEFAULT_MATRIX_THEME = mergeDeepRight(BASE_THEME, {
     text3: '#009926',
     text4: '#00661A',
 
-    bg: '#000000',
+    mainBG: '#000000',
     overlayBG: '#0A0A0A',
     backdrop: '#000000',
     shadow: 'rgba(0, 255, 65, 0.2)',

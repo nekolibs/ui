@@ -1,7 +1,10 @@
 import { mergeDeepRight } from 'ramda'
+
 import { BASE_THEME } from './base'
 
 export const DEFAULT_BLACK_THEME = mergeDeepRight(BASE_THEME, {
+  label: 'Pitch Black',
+
   colors: {
     primary: '#818DF9',
     text: '#FFFFFF',
@@ -9,7 +12,7 @@ export const DEFAULT_BLACK_THEME = mergeDeepRight(BASE_THEME, {
     text3: '#B0B0B0',
     text4: '#8A8A8A',
 
-    bg: '#0f0f0f',
+    mainBG: '#0f0f0f',
     overlayBG: '#000000',
     backdrop: '#1f1f1f',
     shadow: 'rgba(216, 210, 203, 0.1)',

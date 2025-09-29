@@ -2,6 +2,8 @@ import { mergeDeepRight } from 'ramda'
 import { BASE_THEME } from './base'
 
 export const DEFAULT_DARK_THEME = mergeDeepRight(BASE_THEME, {
+  label: 'Dark',
+
   colors: {
     primary: '#818DF9',
     text: '#FFFFFF',
@@ -9,7 +11,7 @@ export const DEFAULT_DARK_THEME = mergeDeepRight(BASE_THEME, {
     text3: '#B0B0B0',
     text4: '#8A8A8A',
 
-    bg: '#383E44',
+    mainBG: '#383E44',
     overlayBG: '#272D34',
     backdrop: '#383E44',
     shadow: 'rgba(216, 210, 203, 0.1)',

@@ -4,6 +4,8 @@ import { OverlayHandler } from './components/structure/overlay/OverlayHandler'
 import { PortalHandler } from './components/helpers/PortalHandler'
 import { ResponsiveHandler } from './responsive/ResponsiveHandler'
 import { ThemeHandler } from './theme/ThemeHandler'
+import { ThemePickerDrawer } from './components/theme'
+import { useThemeHandler } from './theme'
 
 export function NekoUI({ children, ...props }) {
   return (
@@ -12,11 +14,21 @@ export function NekoUI({ children, ...props }) {
         <PortalHandler>
           <ModalsHandler>
             <NotificationsHandler>
-              <OverlayHandler>{children}</OverlayHandler>
+              <OverlayHandler>
+                {children}
+                <FixedComponents />
+              </OverlayHandler>
             </NotificationsHandler>
           </ModalsHandler>
         </PortalHandler>
       </ResponsiveHandler>
     </ThemeHandler>
   )
+}
+
+// TODO: Move to ModalRouter when its ready
+function FixedComponents() {
+  const { themePickerOpen, setThemePickerOpen } = useThemeHandler()
+
+  return <ThemePickerDrawer open={themePickerOpen} onClose={() => setThemePickerOpen(false)} />
 }

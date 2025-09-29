@@ -15,6 +15,7 @@ export function Popover({
   parentWidth,
   parentMinWidth,
   useBottomDrawer = {},
+  bottomDrawerProps = {},
   ...props
 }) {
   const shouldUseDrawer = useResponsiveValue(useBottomDrawer)
@@ -64,7 +65,15 @@ export function Popover({
   React.useEffect(() => () => onClose(), [])
 
   if (shouldUseDrawer) {
-    return <DrawerPopover content={content} renderContent={renderContent} children={children} {...props} />
+    return (
+      <DrawerPopover
+        content={content}
+        renderContent={renderContent}
+        children={children}
+        {...props}
+        {...bottomDrawerProps}
+      />
+    )
   }
 
   const child = React.Children.only(children)
@@ -87,7 +96,7 @@ function DrawerPopover({ children, content, renderContent, snapPoints, ...props 
     <>
       {React.cloneElement(child, childProps)}
 
-      <BottomDrawer open={open} onClose={onClose} snapPoints={snapPoints}>
+      <BottomDrawer open={open} onClose={onClose} snapPoints={snapPoints} {...props}>
         {renderContent({ onClose })}
       </BottomDrawer>
     </>

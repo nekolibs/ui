@@ -2,6 +2,8 @@ import { mergeDeepRight } from 'ramda'
 import { BASE_THEME } from './base'
 
 export const MIDNIGHT_NEON_THEME = mergeDeepRight(BASE_THEME, {
+  label: 'Midnight',
+
   colors: {
     primary: '#FF00FF',
     text: '#F0F0F0',
@@ -9,7 +11,7 @@ export const MIDNIGHT_NEON_THEME = mergeDeepRight(BASE_THEME, {
     text3: '#A3A3A3',
     text4: '#7A7A7A',
 
-    bg: '#0D0D0D',
+    mainBG: '#0D0D0D',
     overlayBG: '#1A1A1A',
     backdrop: '#0D0D0D',
     shadow: 'rgba(39, 45, 52, 0.6)',

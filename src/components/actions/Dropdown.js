@@ -31,6 +31,8 @@ export function Dropdown({ items, ...rootProps }) {
     popoverProps,
     iconLabelProps,
     children,
+    placement,
+    gap,
     ...props
   } = formattedProps
 
@@ -38,17 +40,29 @@ export function Dropdown({ items, ...rootProps }) {
     <View className="neko-dropdown" {...props}>
       <Popover
         useParentMinWidth
-        placement="bottomLeft"
+        placement={placement || 'bottomLeft'}
         trigger={trigger}
         padding="xs"
         useBottomDrawer={{ native: true, sm: true, md: true }}
+        bottomDrawerProps={{
+          bg: 'mainBG',
+          contentProps: { bg: 'overlayBG', br: 'lg', margin: 'md' },
+        }}
         {...popoverProps}
         renderContent={({ onClose }) => {
           const handleChange = (...params) => {
             if (onChange) onChange(...params)
             onClose()
           }
-          return <Menu vertical items={items} onChange={handleChange} linkPaddingH="xs" />
+          return (
+            <Menu
+              vertical
+              items={items}
+              onChange={handleChange}
+              _linkPaddingV="lg"
+              _linkProps={{ borderB: true, padding: 'lg', borderL: 0, brColor: 'divider' }}
+            />
+          )
         }}
       >
         {children || (
@@ -59,6 +73,7 @@ export function Dropdown({ items, ...rootProps }) {
               strong={strong}
               color={color}
               invert
+              gap={gap}
               {...iconLabelProps}
             />
           </Link>

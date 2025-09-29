@@ -27,6 +27,7 @@ const DEFAULT_PROPS = ([{ sizeCode }]) => ({
   br: sizeCode,
   border: 1,
   center: true,
+  pointer: true,
   hover: {
     opacity: 0.7,
   },

@@ -2,6 +2,8 @@ import { mergeDeepRight } from 'ramda'
 import { BASE_THEME } from './base'
 
 export const DEFAULT_LIGHT_THEME = mergeDeepRight(BASE_THEME, {
+  label: 'Light',
+
   colors: {
     primary: '#818DF9',
     text: '#272D34',
@@ -9,7 +11,7 @@ export const DEFAULT_LIGHT_THEME = mergeDeepRight(BASE_THEME, {
     text3: '#6E7680',
     text4: '#9AA1AC',
 
-    bg: '#F4F5FE',
+    mainBG: '#F4F5FE',
     overlayBG: '#FFFFFF',
     backdrop: '#383E44',
     shadow: 'rgba(39, 45, 52, 0.15)',

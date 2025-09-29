@@ -32,7 +32,7 @@ export function Layout({ children, ...rootProps }) {
 
   return (
     <LayoutContext.Provider value={value}>
-      <View className="neko-layout" bg="bg" flex relative {...rootProps} ref={layoutRef}>
+      <View className="neko-layout" bg="mainBG" flex relative {...rootProps} ref={layoutRef}>
         {children}
       </View>
     </LayoutContext.Provider>

@@ -2,6 +2,8 @@ import { mergeDeepRight } from 'ramda'
 import { BASE_THEME } from './base'
 
 export const CYBERPUNK_DARK_THEME = mergeDeepRight(BASE_THEME, {
+  label: 'Cyberpunk',
+
   colors: {
     primary: '#FCEE09',
     text: '#FFFFFF',
@@ -9,7 +11,7 @@ export const CYBERPUNK_DARK_THEME = mergeDeepRight(BASE_THEME, {
     text3: '#8C8C8C',
     text4: '#666666',
 
-    bg: '#0A0A0F',
+    mainBG: '#14141F',
     overlayBG: '#14141F',
     backdrop: '#0A0A0F',
     shadow: 'rgba(39, 45, 52, 0.6)',

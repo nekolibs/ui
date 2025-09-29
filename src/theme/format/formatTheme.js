@@ -1,5 +1,6 @@
-import { mergeDeepRight, pipe } from 'ramda'
+import { mergeDeepRight, mergeDeepLeft, pipe } from 'ramda'
 import React from 'react'
+import tinycolor from 'tinycolor2'
 
 import { DEFAULT_LIGHT_THEME } from '../default/lightTheme'
 import { DEFAULT_THEMES } from '../default/themes'
@@ -15,8 +16,13 @@ export function formatTheme(themes, key) {
   const theme = themes[key] || DEFAULT_THEMES[key] || DEFAULT_LIGHT_THEME
   const baseDefaultTheme = DEFAULT_THEMES[theme.base] || DEFAULT_THEMES[key] || DEFAULT_LIGHT_THEME
 
-  return pipe(
+  const formattedTheme = pipe(
     mergeDeepRight(baseDefaultTheme), //
-    applyColorVariantsOnTheme
+    applyColorVariantsOnTheme,
+    mergeDeepLeft(themes._all || {}) //
   )({ ...theme })
+
+  const isDark = tinycolor(formattedTheme?.colors?.overlayBG || formattedTheme?.colors?.bg).isDark()
+
+  return { ...formattedTheme, isDark, isLight: !isDark }
 }

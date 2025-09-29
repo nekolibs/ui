@@ -42,7 +42,7 @@ function LinkItem({
         marginR={3}
         borderL={3}
         marginV={-4}
-        borderColor={active ? activeColor : 'transparent'}
+        brColor={active ? activeColor : 'transparent'}
         bg={bg}
         transition="border-color 0.5s ease, background 0.3s ease"
         hover={{ br: 0 }}

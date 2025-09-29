@@ -46,27 +46,27 @@ export const BASE_THEME = {
 
   texts: {
     h1: {
-      fontSize: 32,
+      fontSize: 35,
       strong: true,
     },
     h2: {
-      fontSize: 26,
+      fontSize: 28,
       strong: true,
     },
     h3: {
-      fontSize: 22,
+      fontSize: 26,
       strong: true,
     },
     h4: {
-      fontSize: 18,
+      fontSize: 22,
       strong: true,
     },
     h5: {
-      fontSize: 16,
+      fontSize: 18,
       strong: true,
     },
     h6: {
-      fontSize: 14,
+      fontSize: 16,
       strong: true,
     },
     p: { fontSize: 14 },

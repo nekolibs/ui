@@ -2,6 +2,8 @@ import { mergeDeepRight } from 'ramda'
 import { BASE_THEME } from './base'
 
 export const FOREST_MIST_THEME = mergeDeepRight(BASE_THEME, {
+  label: 'Forest Mist',
+
   colors: {
     primary: '#4CAF50',
     text: '#0B2414',
@@ -9,7 +11,7 @@ export const FOREST_MIST_THEME = mergeDeepRight(BASE_THEME, {
     text3: '#1B5E20',
     text4: '#388E3C',
 
-    bg: '#E9F5EC',
+    mainBG: '#E9F5EC',
     overlayBG: '#FFFFFF',
     backdrop: '#E9F5EC',
     shadow: 'rgba(39, 45, 52, 0.15)',

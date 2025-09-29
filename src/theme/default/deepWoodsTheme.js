@@ -2,14 +2,16 @@ import { mergeDeepRight } from 'ramda'
 import { BASE_THEME } from './base'
 
 export const DEEP_WOODS_DARK_THEME = mergeDeepRight(BASE_THEME, {
+  label: 'Deep Woods',
+
   colors: {
     primary: '#4CAF50',
-    text: '#F0F8F2',
+    text: '#C8E6C9',
     text2: '#C8E6C9',
     text3: '#A5D6A7',
     text4: '#81C784',
 
-    bg: '#0D1B14',
+    mainBG: '#0D1B14',
     overlayBG: '#16281F',
     backdrop: '#0D1B14',
     shadow: 'rgba(39, 45, 52, 0.6)',

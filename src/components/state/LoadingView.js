@@ -18,7 +18,16 @@ export function LoadingView({ active, children, size, color, replaceChildren, no
   return (
     <View className="neko-loading-view" relative {...props}>
       {children}
-      <View className="neko-laoding-view-overlay" bg="bg_op90" absolute top={0} left={0} right={0} bottom={0} center>
+      <View
+        className="neko-laoding-view-overlay"
+        bg="mainBG_op90"
+        absolute
+        top={0}
+        left={0}
+        right={0}
+        bottom={0}
+        center
+      >
         {loader}
       </View>
     </View>

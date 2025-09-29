@@ -13,6 +13,7 @@ export function Popover({
   placement = 'bottom',
   children,
   useBottomDrawer = {},
+  bottomDrawerProps = {},
   snapPoints,
   ...props
 }) {
@@ -59,7 +60,7 @@ export function Popover({
       <View ref={ref}>
         {children}
 
-        <BottomDrawer open={open} onClose={onClose} snapPoints={snapPoints}>
+        <BottomDrawer open={open} onClose={onClose} snapPoints={snapPoints} {...bottomDrawerProps}>
           {renderContent({ onClose: onClose })}
         </BottomDrawer>
       </View>
@@ -72,7 +73,7 @@ export function Popover({
 
       {open && (
         <Modal transparent visible={open} animationType="fade" onRequestClose={onClose}>
-          <View fullW flex fullH bg="bg_op50">
+          <View fullW flex fullH bg="backdrop_op50">
             <TouchableWithoutFeedback onPress={onClose}>
               <View style={{ flex: 1 }}>
                 {triggerRect && (

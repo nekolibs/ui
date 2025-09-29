@@ -189,8 +189,21 @@ function InnerContent({
 
       <DrawerProvider value={contextValue}>
         <GestureDetector gesture={panGesture}>
-          <Animated.View style={[styles.container, { height: SCREEN_HEIGHT }, animatedSheetStyle]}>
-            <View flex bg="overlayBG" shadow paddingB={useSafeArea && bottomInset} borderRadiusT="xxxl" {...props}>
+          <Animated.View
+            style={[styles.container, { height: SCREEN_HEIGHT }, animatedSheetStyle]}
+            pointerEvents="box-none"
+          >
+            <View
+              flex
+              bg="overlayBG"
+              shadow
+              paddingB={useSafeArea && bottomInset}
+              borderRadiusT="xxxl"
+              marginL="auto"
+              marginR="auto"
+              fullW
+              {...props}
+            >
               <DrawerHandle hide={hideHandle} />
               <View flex {...contentProps}>
                 {children}
