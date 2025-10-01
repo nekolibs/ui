@@ -17,10 +17,12 @@ const quarters = [1, 2, 3, 4]
 
 export function QuarterPicker({ value, onChange, min, max, onCheckDisabled, ...props }) {
   const [localValue, setLocalValue] = React.useState(value)
+  const [currentYear, setCurrentYear] = React.useState(() => dayjs(value || undefined).startOf('year'))
   value = value === undefined ? localValue : value
 
   React.useEffect(() => {
     setLocalValue(value)
+    if (value?.isValid?.()) setCurrentYear(value.startOf('year'))
   }, [value?.quarter?.(), value?.year?.()])
 
   const handleChange = (v) => {
@@ -28,8 +30,6 @@ export function QuarterPicker({ value, onChange, min, max, onCheckDisabled, ...p
     setLocalValue(newValue)
     onChange?.(newValue)
   }
-
-  const [currentYear, setCurrentYear] = React.useState(() => dayjs(value).startOf('year'))
 
   return (
     <View className="neko-day-picker" width={275} {...props}>

@@ -1,9 +1,33 @@
+import { is } from 'ramda'
 import React from 'react'
 
 import { Col } from '../structure/Col'
 import { LoadingView } from '../state/LoadingView'
 import { Row } from '../structure/Row'
+import { normalizeString } from '../../helpers/string'
 import { useOptions } from '../../helpers/options'
+
+export function getOption(options, value, config = {}) {
+  if (!options?.length) return value
+  const option = options.find((option) => compareOptionsValues(option, value, config))
+  return option || value
+}
+
+export function getOptionLabel(options, value, config = {}) {
+  if (!options?.length) return ''
+  const { labelKey } = config
+  const selectedOption = getOption(options, value, config)
+  const label = selectedOption?.[labelKey] || value
+  if (!is(String, label)) return ''
+  return label
+}
+
+export function searchOptions(options, search, config = {}) {
+  const { labelKey } = config
+  if (!options?.length) return options
+  if (!search) return options
+  return options.filter((item) => normalizeString(item?.[labelKey])?.includes(normalizeString(search)))
+}
 
 function isSelected(value, option, config = {}) {
   return !!config.multiple
@@ -53,7 +77,7 @@ function PickerItem({ option, onChange, value, renderOption, useRawOption, multi
   const handleChange = () => {
     const formatChangeValueFunc = multiple ? formatMultipleChangeValue : formatSingleChangeValue
     const formattedValue = formatChangeValueFunc(option, value, { selected, useRawOption, valueKey })
-    onChange(formattedValue)
+    onChange(formattedValue, option)
   }
 
   return <Col {...props}>{renderOption({ option, selected, onChange: handleChange, valueKey, labelKey })}</Col>
@@ -77,10 +101,10 @@ export function Picker({
   value = value === undefined ? localValue : value
   onChange = onChange || setLocalValue
 
-  const handleChange = (v) => {
+  const handleChange = (v, option) => {
     if (!!disabled) return
     setLocalValue(v)
-    onChange?.(v)
+    onChange?.(v, option)
   }
 
   const { options: finalOptions, isFirstLoad } = useOptions(options, {})

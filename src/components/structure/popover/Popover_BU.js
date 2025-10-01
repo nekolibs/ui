@@ -69,13 +69,17 @@ export function Popover({
 
   React.useEffect(() => () => onClose(), [])
 
+  // 🔑 re-render do portal quando `watch` (ex.: search) mudar
   React.useEffect(() => {
-    if (!ref.current || !watch) return
+    if (!ref.current) return
+    const triggerRect = computeTriggerRect()
     onUpdate({
       content: buildContent(),
+      triggerRect,
+      placement,
       options: { dismissOnClickOutside: click || focus },
     })
-  }, watch)
+  }, [watch, renderContent])
 
   // const show = (e) => {
   // if (e && e.stopPropagation) e.stopPropagation()

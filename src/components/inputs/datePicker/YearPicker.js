@@ -11,12 +11,21 @@ import { Text } from '../../text/Text'
 import { View } from '../../structure/View'
 import { isDateDisabled } from '../../calendar/_helpers/dateDisabled'
 
+function getDecade(value) {
+  const year = dayjs(value || undefined).year()
+  const decadeStartYear = Math.floor(year / 10) * 10
+  return dayjs().year(decadeStartYear).startOf('year')
+}
+
 export function YearPicker({ value, onChange, min, max, onCheckDisabled, ...props }) {
   const [localValue, setLocalValue] = React.useState(value)
+  const [currentDecade, setCurrentDecade] = React.useState(() => getDecade(value))
+
   value = value === undefined ? localValue : value
 
   React.useEffect(() => {
     setLocalValue(value)
+    if (value?.isValid?.()) setCurrentDecade(getDecade(value))
   }, [value?.year?.()])
 
   const handleChange = (v) => {
@@ -24,12 +33,6 @@ export function YearPicker({ value, onChange, min, max, onCheckDisabled, ...prop
     setLocalValue(newValue)
     onChange?.(newValue)
   }
-
-  const [currentDecade, setCurrentDecade] = React.useState(() => {
-    const year = dayjs(value).year()
-    const decadeStartYear = Math.floor(year / 10) * 10
-    return dayjs().year(decadeStartYear).startOf('year')
-  })
 
   const years = range(currentDecade.year(), currentDecade.year() + 10)
 

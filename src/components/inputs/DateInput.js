@@ -83,6 +83,7 @@ export function DateInput({
       placement={placement || 'bottomLeft'}
       snapPoints={[350]}
       useBottomDrawer={useBottomDrawer}
+      watch={[value?.format?.('YYYYMMDD')]}
       renderContent={({ onClose }) => (
         <View flex centerH>
           <DatePicker
@@ -97,15 +98,17 @@ export function DateInput({
         </View>
       )}
     >
-      <Input
-        value={inputValue}
-        onChange={handleChangeInput}
-        suffixIcon="calendar-line"
-        suffixIconColor="text4"
-        onBlur={onBlur}
-        mask={format.replace(/[DMYQwW]/gi, '9')}
-        {...props}
-      />
+      <View fullW>
+        <Input
+          value={inputValue}
+          onChange={handleChangeInput}
+          suffixIcon="calendar-line"
+          suffixIconColor="text4"
+          onBlur={onBlur}
+          mask={format.replace(/[DMYQwW]/gi, '9')}
+          {...props}
+        />
+      </View>
     </Popover>
   )
 }

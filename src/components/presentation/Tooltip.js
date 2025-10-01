@@ -21,6 +21,7 @@ export function Tooltip(rootProps) {
   return (
     <Popover
       className="neko-tooltip"
+      padding="xs"
       {...props}
       content={
         <IconLabel

@@ -14,10 +14,12 @@ const months = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
 
 export function MonthPicker({ value, onChange, min, max, onCheckDisabled, ...props }) {
   const [localValue, setLocalValue] = React.useState(value)
+  const [currentYear, setCurrentYear] = React.useState(() => dayjs(value || undefined).startOf('year'))
   value = value === undefined ? localValue : value
 
   React.useEffect(() => {
     setLocalValue(value)
+    if (value?.isValid?.()) setCurrentYear(value.startOf('year'))
   }, [value?.month?.(), value?.year?.()])
 
   const handleChange = (v) => {
@@ -25,8 +27,6 @@ export function MonthPicker({ value, onChange, min, max, onCheckDisabled, ...pro
     setLocalValue(newValue)
     onChange?.(newValue)
   }
-
-  const [currentYear, setCurrentYear] = React.useState(() => dayjs(value).startOf('year'))
 
   return (
     <View className="neko-day-picker" width={275} {...props}>

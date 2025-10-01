@@ -5,6 +5,7 @@ import tinycolor from 'tinycolor2'
 import { Divider } from '../../helpers/Separator'
 import { IconText } from '../../presentation/IconLabel'
 import { Link } from '../Link'
+import { List } from '../../list/FlatList'
 import { SubmenuWrapper } from './SubmenuWrapper'
 import { Text } from '../../text/Text'
 import { View } from '../../structure/View'
@@ -15,7 +16,7 @@ import { useThemeComponentModifier } from '../../../modifiers/themeComponent'
 function LinkItem({
   item,
   linkPaddingH = 'md',
-  linkPaddingV = 'sm',
+  linkPaddingV = 'md',
   handlePress,
   linkProps,
   activeIndex,
@@ -41,7 +42,6 @@ function LinkItem({
         paddingV={linkPaddingV}
         marginR={3}
         borderL={3}
-        marginV={-4}
         brColor={active ? activeColor : 'transparent'}
         bg={bg}
         transition="border-color 0.5s ease, background 0.3s ease"
@@ -78,7 +78,7 @@ export function VerticalMenu(rootProps) {
     useThemeComponentModifier('VerticalMenu') //
   )([{}, rootProps])
 
-  let { gap = 'sm', items, onChange, onChangeIndex, ...props } = formattedProps
+  let { gap = 'sm', items, onChange, onChangeIndex, withDivider, ...props } = formattedProps
 
   const handlePress = React.useCallback(
     (item, index) => {
@@ -88,6 +88,27 @@ export function VerticalMenu(rootProps) {
       if (!!item.onClick) item.onClick()
     },
     [onChange, onChangeIndex]
+  )
+
+  return (
+    <View className="neko-vertical-menu" gap={gap} width="100%" {...props}>
+      <List
+        data={items}
+        keyExtractor={(item, index) => item.key || index}
+        divider={withDivider}
+        renderItem={({ item, index }) => (
+          <Item
+            key={item.key || index}
+            item={item}
+            handlePress={handlePress}
+            color={color}
+            sizeCode={sizeCode}
+            index={index}
+            {...props}
+          />
+        )}
+      />
+    </View>
   )
 
   return (

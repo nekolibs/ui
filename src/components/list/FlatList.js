@@ -1,6 +1,9 @@
 import { pipe } from 'ramda'
+import React from 'react'
 
 import { AbsFlatList } from '../../abstractions/FlatList'
+import { AbsStaticList } from '../../abstractions/StaticList'
+import { ConditionalLazyRender, Divider } from '../helpers'
 import { useAnimationModifier } from '../../modifiers/animation'
 import { useBackgroundModifier } from '../../modifiers/background'
 import { useBorderModifier } from '../../modifiers/border'
@@ -12,6 +15,7 @@ import { useMarginModifier } from '../../modifiers/margin'
 import { useOverflowModifier } from '../../modifiers/overflow'
 import { usePaddingModifier } from '../../modifiers/padding'
 import { usePositionModifier } from '../../modifiers/position'
+import { useResponsiveValue } from '../../responsive'
 import { useShadowModifier } from '../../modifiers/shadow'
 import { useSizeModifier } from '../../modifiers/size'
 import { useStateModifier } from '../../modifiers/state'
@@ -27,7 +31,7 @@ const DEFAULT_PROPS = ([_, { horizontal }]) => {
 }
 
 export function FlatList({ children, ...rootProps }) {
-  const [_, props] = pipe(
+  const [_, formattedProps] = pipe(
     useThemeComponentModifier('FlatList'),
     useDefaultModifier(DEFAULT_PROPS),
     useFlexWrapperModifier,
@@ -44,11 +48,44 @@ export function FlatList({ children, ...rootProps }) {
     useBorderModifier,
     useShadowModifier
   )([{}, rootProps])
-  // useNormalView = useResponsiveValue(useNormalView)
+
+  let {
+    divider,
+    dividerColor,
+    dividerProps,
+    renderSeparator,
+    renderItem,
+    lazy,
+    onlyOnScreen,
+    itemMinHeight,
+    ...props
+  } = formattedProps
+  const noScroll = useResponsiveValue(rootProps.noScroll)
+  const Wrapper = noScroll ? AbsStaticList : AbsFlatList
+
+  const formattedRenderItem = React.useCallback(
+    (...params) => (
+      <ConditionalLazyRender
+        whenVisible={lazy || onlyOnScreen}
+        destroyOffScreen={onlyOnScreen}
+        minHeight={itemMinHeight}
+      >
+        {renderItem?.(...params)}
+      </ConditionalLazyRender>
+    ),
+    [renderItem]
+  )
+
+  if (!renderSeparator && !!divider) {
+    if (divider === true) divider = 1
+    renderSeparator = () => <Divider line={divider} height={divider} color={dividerColor} {...dividerProps} />
+  }
 
   return (
-    <AbsFlatList className="neko-flat-list" {...props}>
+    <Wrapper className="neko-flat-list" renderSeparator={renderSeparator} renderItem={formattedRenderItem} {...props}>
       {children}
-    </AbsFlatList>
+    </Wrapper>
   )
 }
+
+export const List = (props) => <FlatList noScroll {...props} />

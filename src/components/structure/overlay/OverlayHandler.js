@@ -29,6 +29,11 @@ export const useRegisterOverlay = (opts = {}) => {
     mergeOverlay({ open: true, content, triggerRect, placement, ...options })
   }
 
+  const onUpdate = ({ content, options = {} }) => {
+    if (!overlay.open) return
+    mergeOverlay({ content, ...options })
+  }
+
   const onClose = () => {
     stopDelayedClosing()
     timeout.current = setTimeout(() => {
@@ -41,7 +46,7 @@ export const useRegisterOverlay = (opts = {}) => {
     !!unmountOnClose ? removeOverlay() : closeOverlay()
   }
 
-  return { onOpen, onClose, onFastClose, stopDelayedClosing }
+  return { onOpen, onClose, onUpdate, onFastClose, stopDelayedClosing }
 }
 
 export function OverlayHandler({ children }) {

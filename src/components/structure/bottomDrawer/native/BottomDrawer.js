@@ -53,7 +53,10 @@ function InnerContent({
   const snapIndex = useSharedValue(0)
   const velocityY = useSharedValue(0)
 
-  const normalizedSnapPoints = React.useMemo(() => normalizeSnapPoints(snapPoints, SCREEN_HEIGHT), [snapPoints])
+  const normalizedSnapPoints = React.useMemo(
+    () => normalizeSnapPoints(snapPoints, SCREEN_HEIGHT, bottomInset),
+    [snapPoints, useSafeArea]
+  )
   const maxSnapPoint = React.useMemo(() => Math.max(...normalizedSnapPoints), [normalizedSnapPoints])
   const minSnapPoint = React.useMemo(() => Math.min(...normalizedSnapPoints), [normalizedSnapPoints])
 

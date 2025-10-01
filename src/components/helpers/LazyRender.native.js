@@ -51,7 +51,7 @@ export function LazyRender({
   }, [open])
 
   return (
-    <View className="neko-lazy-render" {...props} minHeight={minHeight} ref={ref}>
+    <View className="neko-lazy-render" flex="0 0 auto" {...props} minHeight={minHeight} ref={ref}>
       {open ? children : null}
     </View>
   )

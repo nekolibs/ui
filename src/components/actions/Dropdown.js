@@ -5,8 +5,10 @@ import { Link } from './Link'
 import { Menu } from './menu/Menu'
 import { Popover } from '../structure/popover/Popover'
 import { View } from '../structure/View'
+import { useResponsiveValue } from '../../responsive'
 import { useThemeComponentModifier } from '../../modifiers/themeComponent'
 
+// TODO: Refactor to use default values
 export function Dropdown({ items, ...rootProps }) {
   const [_, formattedProps] = pipe(
     useThemeComponentModifier('Dropdown')
@@ -21,7 +23,7 @@ export function Dropdown({ items, ...rootProps }) {
     // useFlexModifier
   )([{}, rootProps])
 
-  const {
+  let {
     onChange,
     label,
     trigger = 'click',
@@ -33,8 +35,11 @@ export function Dropdown({ items, ...rootProps }) {
     children,
     placement,
     gap,
+    useBottomDrawer,
     ...props
   } = formattedProps
+
+  useBottomDrawer = useResponsiveValue(useBottomDrawer || { native: true, sm: true, md: true })
 
   return (
     <View className="neko-dropdown" {...props}>
@@ -42,12 +47,10 @@ export function Dropdown({ items, ...rootProps }) {
         useParentMinWidth
         placement={placement || 'bottomLeft'}
         trigger={trigger}
-        padding="xs"
-        useBottomDrawer={{ native: true, sm: true, md: true }}
-        bottomDrawerProps={{
-          bg: 'mainBG',
-          contentProps: { bg: 'overlayBG', br: 'lg', margin: 'md' },
-        }}
+        padding={0}
+        // In case its web use the Drawer component
+        contentProps={{ padding: 0 }}
+        useBottomDrawer={useBottomDrawer}
         {...popoverProps}
         renderContent={({ onClose }) => {
           const handleChange = (...params) => {
@@ -59,8 +62,8 @@ export function Dropdown({ items, ...rootProps }) {
               vertical
               items={items}
               onChange={handleChange}
-              _linkPaddingV="lg"
-              _linkProps={{ borderB: true, padding: 'lg', borderL: 0, brColor: 'divider' }}
+              linkPaddingV={useBottomDrawer ? 'md' : 'sm'}
+              withDivider={useBottomDrawer}
             />
           )
         }}

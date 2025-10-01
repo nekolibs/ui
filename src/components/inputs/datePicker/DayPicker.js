@@ -14,19 +14,18 @@ import { useCalendarDays } from '../../calendar/_helpers/calendarDays'
 export function DayPicker({ value, onChange, min, max, onCheckDisabled, ...props }) {
   if (!!value) value = dayjs(value)
   const [localValue, setLocalValue] = React.useState(value)
+  const [currentMonth, setCurrentMonth] = React.useState(() => dayjs(value || undefined).startOf('month'))
+  value = value === undefined ? localValue : value
 
   React.useEffect(() => {
     setLocalValue(value)
-  }, [value])
-
-  value = value === undefined ? localValue : value
+    if (value?.isValid?.()) setCurrentMonth(value.startOf('month'))
+  }, [value?.day?.(), value?.month?.(), value?.year?.()])
 
   const handleChange = (v) => {
     setLocalValue(v)
     onChange?.(v)
   }
-
-  const [currentMonth, setCurrentMonth] = React.useState(() => dayjs(value).startOf('month'))
 
   const { cells } = useCalendarDays(currentMonth)
 

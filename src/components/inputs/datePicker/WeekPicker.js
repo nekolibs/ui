@@ -14,10 +14,12 @@ import { useCalendarDays } from '../../calendar/_helpers/calendarDays'
 
 export function WeekPicker({ value, onChange, min, max, onCheckDisabled, ...props }) {
   const [localValue, setLocalValue] = React.useState(value)
+  const [currentMonth, setCurrentMonth] = React.useState(() => dayjs(value || undefined).startOf('month'))
   value = value === undefined ? localValue : value
 
   React.useEffect(() => {
     setLocalValue(value)
+    if (value?.isValid?.()) setCurrentMonth(value.startOf('month'))
   }, [value?.day?.(), value?.month?.(), value?.year?.()])
 
   const handleChange = (v) => {
@@ -25,8 +27,6 @@ export function WeekPicker({ value, onChange, min, max, onCheckDisabled, ...prop
     setLocalValue(newValue)
     onChange?.(newValue)
   }
-
-  const [currentMonth, setCurrentMonth] = React.useState(() => dayjs(value).startOf('month'))
 
   const { cells } = useCalendarDays(currentMonth)
   const weeks = splitEvery(7, cells)

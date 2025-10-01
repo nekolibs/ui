@@ -1,7 +1,9 @@
+import dayjs from 'dayjs'
 import React from 'react'
 
 export function useCalendarDays(currentMonth) {
   return React.useMemo(() => {
+    if (!currentMonth?.isValid?.()) currentMonth = dayjs()
     const startWeekday = currentMonth.startOf('month').day()
     const daysInMonth = currentMonth.daysInMonth()
 

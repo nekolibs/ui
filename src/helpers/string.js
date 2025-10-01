@@ -1,4 +1,19 @@
-import { adjust, compose, defaultTo, head, join, juxt, map, pipe, replace, split, tail, toLower, toUpper } from 'ramda'
+import {
+  adjust,
+  compose,
+  defaultTo,
+  head,
+  join,
+  juxt,
+  map,
+  pipe,
+  replace,
+  split,
+  tail,
+  toLower,
+  toUpper,
+  trim,
+} from 'ramda'
 
 export const removeSpecialChars = replace(/[^a-zA-Z ,0-9]/g, '')
 
@@ -55,3 +70,5 @@ export const truncate = truncateString
 export const slugify = (text) => {
   return toSnakeCase(text)
 }
+
+export const normalizeString = pipe(toLower, trim, (str) => str.normalize('NFD').replace(/[\u0300-\u036f]/g, ''))
