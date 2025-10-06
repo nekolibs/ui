@@ -2,8 +2,11 @@ import { is } from 'ramda'
 import React from 'react'
 
 import { Col } from '../structure/Col'
+import { FlatList } from '../list/FlatList'
 import { LoadingView } from '../state/LoadingView'
 import { Row } from '../structure/Row'
+import { Text } from '../text'
+import { View } from '../structure'
 import { normalizeString } from '../../helpers/string'
 import { useOptions } from '../../helpers/options'
 
@@ -92,6 +95,7 @@ export function Picker({
   renderOption,
   colProps,
   useRawOption,
+  useFlatList,
   multiple,
   valueKey,
   labelKey,
@@ -100,6 +104,7 @@ export function Picker({
   const [localValue, setLocalValue] = React.useState(initialValue)
   value = value === undefined ? localValue : value
   onChange = onChange || setLocalValue
+  const { options: finalOptions, isFirstLoad } = useOptions(options, {})
 
   const handleChange = (v, option) => {
     if (!!disabled) return
@@ -107,14 +112,40 @@ export function Picker({
     onChange?.(v, option)
   }
 
-  const { options: finalOptions, isFirstLoad } = useOptions(options, {})
-
   valueKey = valueKey || 'value'
   labelKey = labelKey || 'label'
 
   if (!renderOption) {
     console.error('Picker requires a renderOption prop')
     return false
+  }
+
+  if (useFlatList) {
+    return (
+      <LoadingView active={isFirstLoad} replaceChildren flex>
+        <FlatList
+          keyExtractor={(i) => i[valueKey]}
+          data={finalOptions}
+          divider
+          fullH
+          renderItem={({ item: option }) => (
+            <PickerItem
+              key={option.value}
+              option={option}
+              onChange={handleChange}
+              value={value}
+              renderOption={renderOption}
+              useRawOption={useRawOption}
+              multiple={multiple}
+              valueKey={valueKey}
+              labelKey={labelKey}
+              {...colProps}
+            />
+          )}
+          {...rootProps}
+        />
+      </LoadingView>
+    )
   }
 
   return (

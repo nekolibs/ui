@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { AbsView } from './View'
+import { LazyAction } from '../components/helpers/LazyAction'
 
 const defaultRender = () => false
 
@@ -20,6 +21,7 @@ export function AbsStaticList({
   Header,
   renderHeader,
   keyExtractor,
+  onEndReached,
   ...props
 }) {
   ItemSeparatorComponent = ItemSeparatorComponent || Separator || renderSeparator || defaultRender
@@ -40,6 +42,8 @@ export function AbsStaticList({
           {renderItem({ item, index })}
         </React.Fragment>
       ))}
+
+      <LazyAction action={onEndReached} destroyOffScreen />
 
       <ListFooterComponent />
     </AbsView>

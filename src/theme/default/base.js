@@ -40,8 +40,8 @@ export const BASE_THEME = {
     xs: 20,
     sm: 30,
     md: 35,
-    lg: 50,
-    xl: 60,
+    lg: 40,
+    xl: 50,
   },
 
   texts: {

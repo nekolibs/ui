@@ -9,6 +9,7 @@ import { List } from '../../list/FlatList'
 import { SubmenuWrapper } from './SubmenuWrapper'
 import { Text } from '../../text/Text'
 import { View } from '../../structure/View'
+import { moveScale } from '../../../theme/helpers/sizeScale'
 import { useColorConverter } from '../../../modifiers/colorConverter'
 import { useSizeConverter } from '../../../modifiers/sizeConverter'
 import { useThemeComponentModifier } from '../../../modifiers/themeComponent'
@@ -16,7 +17,8 @@ import { useThemeComponentModifier } from '../../../modifiers/themeComponent'
 function LinkItem({
   item,
   linkPaddingH = 'md',
-  linkPaddingV = 'md',
+  linkPaddingV = 'xs',
+  linkMinHeight,
   handlePress,
   linkProps,
   activeIndex,
@@ -32,6 +34,7 @@ function LinkItem({
   if (!active && activeIndex >= 0) active = activeIndex === index
   if (!active && activeKey !== undefined) active = activeKey === item.key
   const bg = active && tinycolor(color).setAlpha(0.03).toString()
+  linkMinHeight = linkMinHeight || moveScale(sizeCode, 1)
 
   return (
     <SubmenuWrapper item={item} onChange={handlePress} activeKey={activeKey} color={color}>
@@ -40,6 +43,7 @@ function LinkItem({
         center
         paddingH={linkPaddingH}
         paddingV={linkPaddingV}
+        minHeight={linkMinHeight}
         marginR={3}
         borderL={3}
         brColor={active ? activeColor : 'transparent'}
@@ -61,7 +65,7 @@ function DividerItem({ linkPaddingH = 'md', item }) {
   return (
     <>
       {content}
-      <Text size="xs" color="text4" paddingH={linkPaddingH || 'md'} strong {...item} />
+      <Text size="xs" color="text4" paddingV="xs" paddingH={linkPaddingH || 'md'} strong {...item} />
     </>
   )
 }

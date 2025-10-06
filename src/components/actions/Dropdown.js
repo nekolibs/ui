@@ -62,7 +62,8 @@ export function Dropdown({ items, ...rootProps }) {
               vertical
               items={items}
               onChange={handleChange}
-              linkPaddingV={useBottomDrawer ? 'md' : 'sm'}
+              linkPaddingH={useBottomDrawer ? 'md' : 'sm'}
+              linkMinHeight={useBottomDrawer ? 'xl' : 'md'}
               withDivider={useBottomDrawer}
             />
           )

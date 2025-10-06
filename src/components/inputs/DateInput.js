@@ -30,6 +30,14 @@ export function getDateInputDefaultFormat(type) {
   }
 }
 
+function FullWidthInputWrapper({ ref, ...props }) {
+  return (
+    <View fullW ref={ref}>
+      <MaskInput {...props} />
+    </View>
+  )
+}
+
 export function DateInput({
   value,
   onChange,
@@ -75,7 +83,7 @@ export function DateInput({
     setInputValue(!!value ? dayjs(value).format(format) : '')
   }, [value])
 
-  const Input = useBottomDrawer ? LinkInput : MaskInput
+  const Input = useBottomDrawer ? LinkInput : FullWidthInputWrapper
 
   return (
     <Popover
@@ -83,6 +91,7 @@ export function DateInput({
       placement={placement || 'bottomLeft'}
       snapPoints={[350]}
       useBottomDrawer={useBottomDrawer}
+      bottomDrawerProps={{ contentProps: { padding: 'md' } }}
       watch={[value?.format?.('YYYYMMDD')]}
       renderContent={({ onClose }) => (
         <View flex centerH>
@@ -98,17 +107,15 @@ export function DateInput({
         </View>
       )}
     >
-      <View fullW>
-        <Input
-          value={inputValue}
-          onChange={handleChangeInput}
-          suffixIcon="calendar-line"
-          suffixIconColor="text4"
-          onBlur={onBlur}
-          mask={format.replace(/[DMYQwW]/gi, '9')}
-          {...props}
-        />
-      </View>
+      <Input
+        value={inputValue}
+        onChange={handleChangeInput}
+        suffixIcon="calendar-line"
+        suffixIconColor="text4"
+        onBlur={onBlur}
+        mask={format.replace(/[DMYQwW]/gi, '9')}
+        {...props}
+      />
     </Popover>
   )
 }
