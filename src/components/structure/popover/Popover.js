@@ -17,6 +17,7 @@ export function Popover({
   useBottomDrawer = {},
   bottomDrawerProps = {},
   watch,
+  disabled,
   ...props
 }) {
   const shouldUseDrawer = useResponsiveValue(useBottomDrawer)
@@ -77,42 +78,6 @@ export function Popover({
     })
   }, watch)
 
-  // const show = (e) => {
-  // if (e && e.stopPropagation) e.stopPropagation()
-  // const rect = ref.current.getBoundingClientRect()
-  // const scrollX = window.scrollX || window.pageXOffset
-  // const scrollY = window.scrollY || window.pageYOffset
-
-  // const triggerRect = {
-  // left: rect.left + scrollX,
-  // right: rect.right + scrollX,
-  // top: rect.top + scrollY,
-  // bottom: rect.bottom + scrollY,
-  // width: rect.width,
-  // height: rect.height,
-  // }
-
-  // onOpen({
-  // content: () => (
-  // <PopoverContent
-  // placement={placement}
-  // width={parentWidth ? rect.width : undefined}
-  // minWidth={parentMinWidth ? rect.width : undefined}
-  // {...props}
-  // onMouseEnter={hover ? stopDelayedClosing : undefined}
-  // onMouseLeave={hover ? onClose : undefined}
-  // >
-  // {renderContent({ onClose: onFastClose })}
-  // </PopoverContent>
-  // ),
-  // triggerRect,
-  // placement,
-  // options: { dismissOnClickOutside: click || focus },
-  // })
-  // }
-
-  // React.useEffect(() => () => onClose(), [])
-
   if (shouldUseDrawer) {
     return (
       <DrawerPopover
@@ -128,8 +93,8 @@ export function Popover({
   const child = React.Children.only(children)
   let childProps = { ref, onClick: show }
 
-  if (hover) childProps = { ref, onMouseEnter: show, onMouseLeave: onClose }
-  if (focus) childProps = { ref, onFocus: show }
+  if (hover) childProps = { ref, onMouseEnter: show, onMouseLeave: onClose, disabled }
+  if (focus) childProps = { ref, onFocus: show, disabled }
 
   return React.cloneElement(child, childProps)
 }

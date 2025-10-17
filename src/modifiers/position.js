@@ -1,7 +1,9 @@
 import { Platform } from '../abstractions/Platform'
 import { clearProps } from './_helpers'
+import { useGetSpace } from '../theme'
 
 export function usePositionModifier([values, props]) {
+  const getSpace = useGetSpace()
   let {
     position,
     absolute,
@@ -23,6 +25,11 @@ export function usePositionModifier([values, props]) {
   if (relative) position = 'relative'
   if (fixed || fixedFill) position = 'fixed'
   if (sticky) position = 'sticky'
+
+  top = getSpace(top)
+  bottom = getSpace(bottom)
+  right = getSpace(right)
+  left = getSpace(left)
 
   if (absoluteFill || fixedFill) {
     top = 0

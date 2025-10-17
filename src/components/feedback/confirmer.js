@@ -12,7 +12,7 @@ function Footer({ cancelLabel, confirmLabel, onConfirm, type, onClose }) {
   const color = RESULT_TYPES[type]?.color || 'primary'
 
   return (
-    <View row gap="sm" centerV>
+    <View row gap="xs" centerV>
       <Button sm label={cancelLabel || 'Cancel'} outline color="text_op40" onPress={onClose} flex disabled={loading} />
       <Button
         disabled={loading}
@@ -55,7 +55,7 @@ export function useConfirmer() {
           onClose={onClose}
         />
       ),
-      footerProps: { borderT: false },
+      footerProps: { borderT: false, paddingV: 'md' },
       width: width || 350,
     }))
   }

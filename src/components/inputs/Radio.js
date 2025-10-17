@@ -33,7 +33,7 @@ export function Radio({ value, onChange, disabled, initialValue, ...rootProps })
         size={sizeCode}
         gap={8}
         content={
-          <View height={size * 0.65} ratio={1} border={2} padding={3} borderColor={color} br={size} center>
+          <View height={size * 0.65} ratio={1} border={2} padding={2} borderColor={color} br={size} center>
             {!!value && <View bg={color} br={size} flex fullW fullH />}
           </View>
         }

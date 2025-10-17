@@ -1,4 +1,5 @@
 export * from './Button'
+export * from './FloatingButton'
 export * from './Link'
 export * from './Pressable'
 export * from './Dropdown'

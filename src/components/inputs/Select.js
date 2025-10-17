@@ -144,7 +144,7 @@ export function Select({
                 paddingV="xs"
                 minHeight={useBottomDrawer ? 'xl' : 'md'}
                 gap="sm"
-                onMouseDown={(e) => e.preventDefault()}
+                onMouseDown={(e) => !!multiple && e.preventDefault()}
                 onPress={onChange}
                 centerV
                 bg={selected && 'primary_op10'}

@@ -37,11 +37,15 @@ export const BASE_THEME = {
 
   // Buttons, inputs, etc.
   elementHeights: {
+    xxxs: 10,
+    xxs: 15,
     xs: 20,
     sm: 30,
     md: 35,
     lg: 40,
     xl: 50,
+    xxl: 60,
+    xxxl: 70,
   },
 
   texts: {

@@ -62,6 +62,10 @@ button {
   opacity: 0.95;
 }
 
+/* ::placeholder { */
+/* color: rgba(127, 127, 127, 0.4); */
+/* } */
+
 @keyframes wave-effect {
   0% {
     opacity: 1;

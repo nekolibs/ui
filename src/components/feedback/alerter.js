@@ -16,7 +16,7 @@ export function useAlerter() {
       footer: !hideClose && (
         <Button sm label={closeLabel || 'Close'} outline color="text_op40" onPress={onClose} fullW />
       ),
-      footerProps: { borderT: false },
+      footerProps: { borderT: false, paddingV: 'md' },
       width: width || 350,
     }))
   }
