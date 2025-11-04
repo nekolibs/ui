@@ -50,7 +50,7 @@ export function Result({
         {title}
       </Text>
       {!!description && (
-        <Text text3 sm {...textProps} {...descriptionProps}>
+        <Text text3 sm marginT="sm" {...textProps} {...descriptionProps}>
           {description}
         </Text>
       )}

@@ -17,40 +17,47 @@ import { useHoverConverter } from '../../modifiers/hover'
 import { useMarginModifier } from '../../modifiers/margin'
 import { usePaddingModifier } from '../../modifiers/padding'
 import { usePositionModifier } from '../../modifiers/position'
+import { useSafeAreaInsets } from '../../abstractions/helpers/useSafeAreaInsets'
 import { useSizeConverter } from '../../modifiers/sizeConverter'
 import { useSizeModifier } from '../../modifiers/size'
 import { useStateModifier } from '../../modifiers/state'
 import { useThemeComponentModifier } from '../../modifiers/themeComponent'
 
-const DEFAULT_PROPS = ([{ sizeCode }, { square }]) => {
-  sizeCode = moveScale(sizeCode, 1)
+const DEFAULT_PROPS =
+  ({ bottomInset }) =>
+  ([{ sizeCode }, { square }]) => {
+    sizeCode = moveScale(sizeCode, 1)
 
-  return {
-    absolute: true,
-    shadow: true,
-    bottom: 'md',
-    right: 'md',
-    round: !square,
-    ration: 1,
-    padding: 'xxxs',
-    height: sizeCode,
-    width: sizeCode,
-    br: sizeCode,
-    border: 1,
-    center: true,
-    pointer: true,
-    hover: {
-      opacity: 0.7,
-    },
+    return {
+      absolute: true,
+      shadow: true,
+      bottom: 'md',
+      marginB: bottomInset,
+      right: 'md',
+      round: !square,
+      ration: 1,
+      padding: 'xxxs',
+      height: sizeCode,
+      width: sizeCode,
+      br: sizeCode,
+      border: 1,
+      center: true,
+      pointer: true,
+      hover: {
+        opacity: 0.7,
+      },
+    }
   }
-}
 
-export function FloatingButton(rootProps) {
+export function FloatingButton({ useSafeArea = true, ...rootProps }) {
+  const insets = useSafeAreaInsets()
+  const bottomInset = useSafeArea ? insets.bottom : 0
+
   let [{ loading, fontColor, color, sizeCode }, formattedProps] = pipe(
     useColorConverter('primary'),
     useSizeConverter('elementHeights', 'md'),
     useThemeComponentModifier('FloatingButton'),
-    useDefaultModifier(DEFAULT_PROPS),
+    useDefaultModifier(DEFAULT_PROPS({ bottomInset })),
     useHoverConverter,
     useCursorModifier,
     useFullColorModifier,

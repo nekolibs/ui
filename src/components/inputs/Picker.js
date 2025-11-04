@@ -5,8 +5,6 @@ import { Col } from '../structure/Col'
 import { FlatList } from '../list/FlatList'
 import { LoadingView } from '../state/LoadingView'
 import { Row } from '../structure/Row'
-import { Text } from '../text'
-import { View } from '../structure'
 import { normalizeString } from '../../helpers/string'
 import { useOptions } from '../../helpers/options'
 
@@ -86,6 +84,27 @@ function PickerItem({ option, onChange, value, renderOption, useRawOption, multi
   return <Col {...props}>{renderOption({ option, selected, onChange: handleChange, valueKey, labelKey })}</Col>
 }
 
+function DefaultPickerWrapper({ renderItem, options, ...props }) {
+  return (
+    <Row className="neko-picker" gap="md" {...props}>
+      {options?.map?.((option) => renderItem(option))}
+    </Row>
+  )
+}
+
+function FlatListPickerWrapper({ renderItem, options, valueKey, ...props }) {
+  return (
+    <FlatList
+      keyExtractor={(i) => i[valueKey]}
+      data={options}
+      divider
+      fullH
+      renderItem={({ item: option }) => renderItem(option)}
+      {...props}
+    />
+  )
+}
+
 export function Picker({
   value,
   initialValue,
@@ -99,6 +118,7 @@ export function Picker({
   multiple,
   valueKey,
   labelKey,
+  Wrapper,
   ...rootProps
 }) {
   const [localValue, setLocalValue] = React.useState(initialValue)
@@ -120,38 +140,15 @@ export function Picker({
     return false
   }
 
-  if (useFlatList) {
-    return (
-      <LoadingView active={isFirstLoad} replaceChildren flex>
-        <FlatList
-          keyExtractor={(i) => i[valueKey]}
-          data={finalOptions}
-          divider
-          fullH
-          renderItem={({ item: option }) => (
-            <PickerItem
-              key={option.value}
-              option={option}
-              onChange={handleChange}
-              value={value}
-              renderOption={renderOption}
-              useRawOption={useRawOption}
-              multiple={multiple}
-              valueKey={valueKey}
-              labelKey={labelKey}
-              {...colProps}
-            />
-          )}
-          {...rootProps}
-        />
-      </LoadingView>
-    )
-  }
+  Wrapper = Wrapper || (useFlatList ? FlatListPickerWrapper : DefaultPickerWrapper)
 
   return (
     <LoadingView active={isFirstLoad} replaceChildren>
-      <Row className="neko-picker" gap="md" {...rootProps}>
-        {finalOptions?.map?.((option) => (
+      <Wrapper
+        {...rootProps}
+        valueKey={valueKey}
+        options={finalOptions}
+        renderItem={(option) => (
           <PickerItem
             key={option.value}
             option={option}
@@ -164,8 +161,8 @@ export function Picker({
             labelKey={labelKey}
             {...colProps}
           />
-        ))}
-      </Row>
+        )}
+      />
     </LoadingView>
   )
 }
