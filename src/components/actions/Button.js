@@ -33,7 +33,7 @@ const DEFAULT_PROPS = ([{ sizeCode }]) => ({
   },
 })
 
-export function Button(rootProps) {
+export function Button({ children, ...rootProps }) {
   const [{ loading, fontColor, sizeCode }, formattedProps] = pipe(
     useColorConverter('primary'),
     useSizeConverter('elementHeights', 'md'),
@@ -58,18 +58,20 @@ export function Button(rootProps) {
 
   return (
     <AbsTouchableOpacity className="neko-button neko-wave-click-effect" type="button" {...props}>
-      <IconLabel
-        center
-        color={fontColor}
-        size={sizeCode}
-        label={label}
-        icon={icon}
-        gap={gap}
-        invert={invert}
-        textProps={{ strong: true, ...textProps }}
-        iconProps={iconProps}
-        loading={loading}
-      />
+      {children || (
+        <IconLabel
+          center
+          color={fontColor}
+          size={sizeCode}
+          label={label}
+          icon={icon}
+          gap={gap}
+          invert={invert}
+          textProps={{ strong: true, ...textProps }}
+          iconProps={iconProps}
+          loading={loading}
+        />
+      )}
     </AbsTouchableOpacity>
   )
 }

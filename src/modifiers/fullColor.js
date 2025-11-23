@@ -3,7 +3,10 @@ import tinycolor from 'tinycolor2'
 import { getContrastColor } from '../theme/helpers/contrastColor'
 import { useGetColor } from '../theme/ThemeHandler'
 
-export function useFullColorModifier([{ color, ...values }, { outline, contrastTolerance, fill, ...props }]) {
+export function useFullColorModifier([
+  { color, ...values },
+  { outline, contrastTolerance, fill, bg: forcedBG, ...props },
+]) {
   const getColor = useGetColor()
 
   let bg = color
@@ -22,7 +25,7 @@ export function useFullColorModifier([{ color, ...values }, { outline, contrastT
     { ...values, fontColor },
     {
       ...props,
-      bg,
+      bg: forcedBG || bg,
       borderColor,
     },
   ]
