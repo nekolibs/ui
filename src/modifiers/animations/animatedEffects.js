@@ -24,7 +24,6 @@ export function useAnimatedEffects([values, { open, onClose, lazy = false, unmou
   const useAddTransition = (effect, transition) => {
     React.useEffect(() => {
       if (!effect?.duration) return
-
       setTransitions((v) => [...v, transition])
     }, [])
   }
