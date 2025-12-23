@@ -39,12 +39,11 @@ function LinkItem({
   return (
     <SubmenuWrapper item={item} onChange={handlePress} activeKey={activeKey} color={color}>
       <Link
-        fullW
+        flex
         center
         paddingH={linkPaddingH}
         paddingV={linkPaddingV}
         minHeight={linkMinHeight}
-        marginR={3}
         borderL={3}
         brColor={active ? activeColor : 'transparent'}
         bg={bg}
