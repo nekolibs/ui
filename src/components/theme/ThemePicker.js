@@ -7,7 +7,7 @@ import { Picker } from '../inputs'
 import { ThemeThumb } from './ThemeThumb'
 
 export function ThemePicker({ onChange, onlyKeys, hideKeys }) {
-  const { activeThemeKey, setActiveThemeKey, themes, onChangeTheme } = useThemeHandler()
+  const { activeThemeKey, themes, onChangeTheme } = useThemeHandler()
 
   let options = pipe(
     mergeDeepRight(DEFAULT_THEMES),
@@ -27,7 +27,6 @@ export function ThemePicker({ onChange, onlyKeys, hideKeys }) {
       gap="lg"
       value={activeThemeKey}
       onChange={(key) => {
-        setActiveThemeKey(key)
         onChangeTheme?.(key)
         onChange?.(key)
       }}

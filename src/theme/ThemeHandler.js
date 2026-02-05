@@ -57,18 +57,21 @@ export function ThemeHandler({ breakpoints, themes, initTheme, onChangeTheme, ch
   const [themePickerOpen, setThemePickerOpen] = React.useState(false)
   const openThemePicker = () => setThemePickerOpen(true)
   const [activeThemeKey, setActiveThemeKey] = React.useState(initTheme || 'light')
-  const toggleTheme = () => setActiveThemeKey(activeThemeKey === 'light' ? 'dark' : 'light')
+  const handleChangeTheme = (key) => {
+    setActiveThemeKey(key)
+    onChangeTheme?.(key)
+  }
+  const toggleTheme = () => handleChangeTheme(activeThemeKey === 'light' ? 'dark' : 'light')
   const theme = useFormattedTheme(themes, activeThemeKey)
 
   const value = {
     theme,
     themes,
     activeThemeKey,
-    setActiveThemeKey,
     toggleTheme,
     themePickerOpen,
     setThemePickerOpen,
-    onChangeTheme,
+    onChangeTheme: handleChangeTheme,
     openThemePicker,
     toggleTheme,
     breakpoints: breakpoints || DEFAULT_BREAKPOINTS,

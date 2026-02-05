@@ -32,4 +32,11 @@ export const DEFAULT_PAPER_THEME = mergeDeepRight(BASE_THEME, {
     lylac: '#C7B7D4',
     pink: '#E4A1B2',
   },
+
+  components: {
+    Card: {
+      border: 1,
+      borderColor: 'divider',
+    },
+  },
 })

@@ -3,21 +3,31 @@ import React from 'react'
 import { FormGroup, useRelativePath } from './FormGroup'
 import { Text } from '../text/Text'
 import { useFormInstance } from './Form'
+import { shouldValidateOn } from './validation'
 
 const FormListContext = React.createContext(null)
 const useFormList = () => React.useContext(FormListContext)
 
-export function FormList({ name, isAbsolutePath, children }) {
+export function FormList({ name, isAbsolutePath, children, rules, validateTrigger = 'onSubmit' }) {
   const form = useFormInstance()
   const listPath = useRelativePath(name, { isAbsolutePath })
-  // To avoid watch being recalled
   const listPathStr = listPath.join('$NEKOJOIN$')
-  const error = form.getError(listPath)
+  const [error, setError] = React.useState(form.getError(listPath))
 
   // Counter to generate unique keys
   const keyCounter = React.useRef(0)
   // Map to track keys by value reference
   const keysMap = React.useRef(new WeakMap())
+
+  // Register rules with the form
+  React.useEffect(() => {
+    return form.registerRules(listPath, rules, validateTrigger)
+  }, [listPathStr, JSON.stringify(rules), validateTrigger])
+
+  // Listen for error changes
+  React.useEffect(() => {
+    return form.registerErrorListener(listPath, (err) => setError(err))
+  }, [listPathStr])
 
   const generateFields = (items) => {
     if (!Array.isArray(items)) return []
@@ -47,14 +57,22 @@ export function FormList({ name, isAbsolutePath, children }) {
     })
   }, [listPathStr])
 
+  const validateOnChange = () => {
+    if (shouldValidateOn('onChange', rules, validateTrigger)) {
+      form.validateField(listPath, 'onChange')
+    }
+  }
+
   const add = (defaultValue = {}) => {
     const current = form.getFieldValue(listPath) || []
     form.setFieldValue(listPath, [...current, defaultValue])
+    validateOnChange()
   }
 
   const addOn = (index, defaultValue = {}) => {
     const current = form.getFieldValue(listPath) || []
     form.setFieldValue(listPath, [...current.slice(0, index), defaultValue, ...current.slice(index)])
+    validateOnChange()
   }
 
   const replace = (index, value) => {
@@ -91,6 +109,7 @@ export function FormList({ name, isAbsolutePath, children }) {
       listPath,
       current.filter((_, i) => i !== index)
     )
+    validateOnChange()
   }
 
   const actions = React.useMemo(
@@ -102,7 +121,7 @@ export function FormList({ name, isAbsolutePath, children }) {
       move,
       duplicate,
     }),
-    [listPathStr]
+    [listPathStr, rules, validateTrigger]
   )
 
   let content

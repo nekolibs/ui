@@ -17,6 +17,12 @@ export function useGetResponsiveValue() {
       const isWeb = value?.web !== undefined && Platform.OS === 'web'
       if (isWeb) return value?.web
 
+      const isIOS = value?.ios !== undefined && Platform.OS === 'ios'
+      if (isIOS) return value?.ios
+
+      const isAndroid = value?.android !== undefined && Platform.OS === 'android'
+      if (isAndroid) return value?.android
+
       const isObj = is(Object, value)
 
       if (!isObj) return value

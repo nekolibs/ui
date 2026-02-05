@@ -1,2 +1,5 @@
 export * from './AnimatedView'
 export * from './DraggableSlideView'
+export * from './ReanimatedScrollHandler'
+export * from './AnimatedTopBar'
+export * from './ParallaxHeader'

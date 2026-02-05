@@ -48,7 +48,7 @@ export function InputWrapper({
   if (!!suffix && is(String, suffix)) suffix = <Text>{suffix}</Text>
   if (!prefix && !!prefixIcon) prefix = <Icon name={prefixIcon} size={sizeCode} color={prefixIconColor} />
   if (!suffix && !!suffixIcon) suffix = <Icon name={suffixIcon} size={sizeCode} color={suffixIconColor} />
-  if (!prefix && !!error) suffix = <Icon name="close-circle-fill" size={sizeCode} red />
+  if (!prefix && !!error) suffix = <Icon name="alert-fill" size={sizeCode} red />
   if (!!loading) suffix = <Loading size={sizeCode} />
 
   let borderColor = !!hover ? 'primary_op40' : 'divider'

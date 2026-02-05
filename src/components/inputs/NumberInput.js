@@ -73,7 +73,7 @@ export function formatNumericValue(newValue, prevValue, options = {}) {
   return numericValue
 }
 
-export function NumberInput({ onChange, value, useInt, precision, min, max, error, ...props }) {
+export function NumberInput({ onChange, onBlur, value, useInt, precision, min, max, error, ...props }) {
   const [hasError, setHasError] = React.useState(false)
   const [inputValue, setInputValue] = React.useState(value)
   const [localValue, setLocalValue] = React.useState(value)
@@ -85,6 +85,7 @@ export function NumberInput({ onChange, value, useInt, precision, min, max, erro
 
   return (
     <TextInput
+      {...props}
       onChange={(newValue) => {
         const numericValue = formatNumericValue(newValue, localValue, opts)
         setInputValue(newValue?.toString() || '')
@@ -92,14 +93,14 @@ export function NumberInput({ onChange, value, useInt, precision, min, max, erro
         onChange?.(numericValue)
         setHasError(!isValidNumber(newValue, opts))
       }}
-      onBlur={() => {
+      onBlur={(e) => {
         setInputValue(localValue)
         setHasError(!isValidNumber(localValue, opts))
+        onBlur?.(e)
       }}
       value={inputValue}
       keyboardType={useInt ? 'number-pad' : 'decimal-pad'}
       error={error || hasError}
-      {...props}
     />
   )
 }

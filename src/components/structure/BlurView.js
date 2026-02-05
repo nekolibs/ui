@@ -25,6 +25,7 @@ const DEFAULT_PROPS =
     const isDark = tinycolor(colors?.overlayBG || colors?.bg).isDark()
 
     return {
+      width: 'auto',
       tint: isDark ? 'dark' : 'light',
     }
   }

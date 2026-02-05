@@ -10,14 +10,14 @@ function setAsync(key, value) {
   return AbsStorage.setAsync(key, JSON.stringify(value))
 }
 
-function get(key) {
+function get(key, defaultValue) {
   const value = AbsStorage.get(key)
-  return formatStoragedValue(value)
+  return formatStoragedValue(value) || defaultValue
 }
 
-function getAsync(key) {
-  return AbsStorage.setAsync(key).then((value) => {
-    return formatStoragedValue(value)
+function getAsync(key, defaultValue) {
+  return AbsStorage.getAsync(key).then((value) => {
+    return formatStoragedValue(value) || defaultValue
   })
 }
 

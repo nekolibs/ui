@@ -31,4 +31,11 @@ export const CYBERPUNK_DARK_THEME = mergeDeepRight(BASE_THEME, {
     lylac: '#B388FF',
     pink: '#FF80AB',
   },
+
+  components: {
+    Card: {
+      border: 1,
+      borderColor: 'divider',
+    },
+  },
 })

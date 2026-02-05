@@ -16,6 +16,7 @@ export const DEFAULT_BLACK_THEME = mergeDeepRight(BASE_THEME, {
     overlayBG: '#000000',
     backdrop: '#1f1f1f',
     shadow: 'rgba(216, 210, 203, 0.1)',
+    transparent: 'rgba(0, 0, 0, 0)',
     divider: '#383E44',
 
     blue: '#4DA3FF',
