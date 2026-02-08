@@ -77,7 +77,7 @@ export function NumberInput({ onChange, onBlur, value, useInt, precision, min, m
   const [hasError, setHasError] = React.useState(false)
   const [inputValue, setInputValue] = React.useState(value)
   const [localValue, setLocalValue] = React.useState(value)
-  React.useEffect(() => setInputValue(value), [value])
+  React.useEffect(() => setInputValue(value?.toString() || ''), [value])
 
   if (useInt) precision = 0
   if (!useInt && precision === 0) useInt = true
@@ -94,7 +94,7 @@ export function NumberInput({ onChange, onBlur, value, useInt, precision, min, m
         setHasError(!isValidNumber(newValue, opts))
       }}
       onBlur={(e) => {
-        setInputValue(localValue)
+        setInputValue(localValue?.toString() || '')
         setHasError(!isValidNumber(localValue, opts))
         onBlur?.(e)
       }}

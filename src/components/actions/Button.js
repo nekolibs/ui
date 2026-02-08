@@ -54,7 +54,7 @@ export function Button({ children, ...rootProps }) {
     useBorderModifier
   )([{}, rootProps])
 
-  const { label, icon, textProps, iconProps, gap, invert, size, ...props } = formattedProps
+  const { label, icon, textProps, iconProps, gap, invert, size, iconLabelProps, ...props } = formattedProps
 
   return (
     <AbsTouchableOpacity className="neko-button neko-wave-click-effect" type="button" {...props}>
@@ -70,6 +70,7 @@ export function Button({ children, ...rootProps }) {
           textProps={{ strong: true, ...textProps }}
           iconProps={iconProps}
           loading={loading}
+          {...iconLabelProps}
         />
       )}
     </AbsTouchableOpacity>

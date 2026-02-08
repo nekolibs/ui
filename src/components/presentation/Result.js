@@ -46,11 +46,11 @@ export function Result({
     <View className="neko-result" center padding="lg" {...props}>
       {!!icon && <Icon name={icon} color={iconColor} size={42} primary {...iconProps} />}
       {!!icon && <Divider height={10} />}
-      <Text h4 {...textProps} {...titleProps}>
+      <Text h4 center {...textProps} {...titleProps}>
         {title}
       </Text>
       {!!description && (
-        <Text text3 sm marginT="sm" {...textProps} {...descriptionProps}>
+        <Text text3 sm marginT="sm" center {...textProps} {...descriptionProps}>
           {description}
         </Text>
       )}

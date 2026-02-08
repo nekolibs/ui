@@ -11,11 +11,12 @@ export function useNewForm({ initialValues = {}, validate, onSubmit } = {}) {
 
   const formApi = React.useMemo(() => {
     const toKey = (name) => (Array.isArray(name) ? name.join('.') : name)
+    const toPath = (name) => (Array.isArray(name) ? name : [name])
 
     const notify = (name) => {
       const key = toKey(name)
       if (listenersRef.current[key]) {
-        listenersRef.current[key].forEach((cb) => cb(path(name, valuesRef.current)))
+        listenersRef.current[key].forEach((cb) => cb(path(toPath(name), valuesRef.current)))
       }
     }
 
@@ -27,11 +28,11 @@ export function useNewForm({ initialValues = {}, validate, onSubmit } = {}) {
     }
 
     const setFieldValue = (name, value) => {
-      valuesRef.current = assocPath(name, value, valuesRef.current)
+      valuesRef.current = assocPath(toPath(name), value, valuesRef.current)
       notify(name)
     }
 
-    const getFieldValue = (name) => path(name, valuesRef.current)
+    const getFieldValue = (name) => path(toPath(name), valuesRef.current)
 
     // Flat error lookup by key
     const getError = (name) => {

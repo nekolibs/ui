@@ -4,7 +4,7 @@ import { TopBar } from '../structure'
 import { useReanimatedScroll } from './ReanimatedScrollHandler'
 import { useSafeAreaInsets } from '../../abstractions/helpers/useSafeAreaInsets'
 
-export function AnimatedTopBar({ showAfter = 90, duration = 250, fade = true, slide, ...props }) {
+export function AnimatedTopBar({ showAfter = 90, duration = 300, fade = true, slide, ...props }) {
   const { scrollY } = useReanimatedScroll()
   const { top: safeTop } = useSafeAreaInsets()
 

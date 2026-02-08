@@ -21,7 +21,7 @@ export function TopBar({ right, left, WrapperView, children, ...rootProps }) {
             {left}
           </View>
 
-          <View center flex={4}>
+          <View center flex={3}>
             {children || (
               <Text center h6 numberOfLines={1}>
                 {title}

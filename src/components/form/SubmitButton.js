@@ -1,11 +1,13 @@
 import { Button } from '../actions/Button'
 import { useFormInstance, useFormState } from './Form'
 
-export function SubmitButton({ form, disabled, ...props }) {
+export function SubmitButton({ form, disabled, Wrapper, ...props }) {
   const formState = useFormState()
   const contextForm = useFormInstance()
   form = form || contextForm
   disabled = formState?.disabled || disabled
+
+  Wrapper = Wrapper || Button
 
   const handleSubmit = () => {
     if (!form) {
@@ -16,5 +18,5 @@ export function SubmitButton({ form, disabled, ...props }) {
     form.handleSubmit()
   }
 
-  return <Button {...props} disabled={disabled} onPress={handleSubmit} />
+  return <Wrapper {...props} disabled={disabled} onPress={handleSubmit} />
 }
