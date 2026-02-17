@@ -26,6 +26,7 @@ export function AvatarLabel(rootProps) {
     avatarProps,
     moveAvatarSizeScale,
     avatarSize,
+    iconSize,
     ...props
   } = formattedProps
   const hasAvatar = !!name || !!initials || !!src
@@ -47,6 +48,7 @@ export function AvatarLabel(rootProps) {
           dynamicColor={dynamicColor}
           square={square}
           marginH={2}
+          iconSize={iconSize}
           {...avatarProps}
         />
       }

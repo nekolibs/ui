@@ -1,3 +1,4 @@
+import { dissoc } from 'ramda'
 import React from 'react'
 
 import { Icon, IconLabel } from '../presentation'
@@ -93,7 +94,10 @@ export function Select({
   const finalRenderOption = React.useCallback(
     (params) => {
       if (!!renderOption) return renderOption(params)
-      const { option, labelKey, selected } = params
+      let { option, labelKey, selected } = params
+      if (option?.id) option = dissoc('id', option)
+      if (option?.color) option = { ...option, color: undefined, iconColor: option.color }
+
       return <IconLabel {...option} label={option?.[labelKey]} flex strong={selected} />
     },
     [renderOption]

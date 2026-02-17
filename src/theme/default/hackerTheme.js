@@ -33,11 +33,25 @@ export const DEFAULT_MATRIX_THEME = mergeDeepRight(BASE_THEME, {
     pink: '#C51162',
   },
 
+  radius: {
+    xxxs: 0,
+    xxs: 1,
+    xs: 2,
+    sm: 3,
+    md: 4,
+    lg: 5,
+    xl: 6,
+    xxl: 7,
+    xxxl: 8,
+  },
+
   components: {
     Card: {
-      border: 1,
-      br: 5,
-      borderColor: 'divider',
+      border: true,
+    },
+
+    Section: {
+      border: true,
     },
   },
 })

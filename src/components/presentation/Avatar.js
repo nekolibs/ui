@@ -54,7 +54,7 @@ export function Avatar(rootProps) {
     useOverflowModifier
   )([{}, rootProps])
 
-  let { initials, name, icon, src, invert, textProps, iconProps, ...props } = formattedProps
+  let { initials, name, icon, src, invert, textProps, iconProps, iconSize, ...props } = formattedProps
   initials = initials || getInitials(name)
 
   let content = (
@@ -66,7 +66,7 @@ export function Avatar(rootProps) {
       icon={icon}
       invert={invert}
       textProps={{ strong: true, ...textProps }}
-      iconProps={iconProps}
+      iconProps={{ size: iconSize, ...iconProps }}
     />
   )
   if (!!src) content = <Image br={0} src={src} width={sizeCode} height={sizeCode} />

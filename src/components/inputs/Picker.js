@@ -5,6 +5,7 @@ import { Col } from '../structure/Col'
 import { FlatList } from '../list/FlatList'
 import { LoadingView } from '../state/LoadingView'
 import { Row } from '../structure/Row'
+import { View } from '../structure'
 import { normalizeString } from '../../helpers/string'
 import { useOptions } from '../../helpers/options'
 

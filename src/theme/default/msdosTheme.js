@@ -34,21 +34,20 @@ export const DEFAULT_MSDOS_THEME = mergeDeepRight(BASE_THEME, {
   },
 
   radius: {
-    xxxs: 1,
-    xxs: 2,
-    xs: 3,
-    sm: 4,
-    md: 6,
-    lg: 8,
-    xl: 10,
-    xxl: 12,
-    xxxl: 14,
+    xxxs: 0,
+    xxs: 1,
+    xs: 2,
+    sm: 3,
+    md: 4,
+    lg: 5,
+    xl: 6,
+    xxl: 7,
+    xxxl: 8,
   },
 
   components: {
     Card: {
       border: 1,
-      br: 5,
       borderColor: 'divider',
     },
   },

@@ -4,11 +4,12 @@ import { IconLabel } from './IconLabel'
 import { Text } from '../text/Text'
 import { View } from '../structure/View'
 import { moveScale } from '../../theme/helpers/sizeScale'
+import { useColorConverter } from '../../modifiers/colorConverter'
 import { useDefaultModifier } from '../../modifiers/default'
 import { useSizeConverter } from '../../modifiers/sizeConverter'
 import { useThemeComponentModifier } from '../../modifiers/themeComponent'
 
-const DEFAULT_PROPS = ([{ sizeCode }, { vertical, spread }]) => {
+const DEFAULT_PROPS = ([{ sizeCode, color }, { vertical, spread }]) => {
   return {
     row: !vertical,
     centerV: !vertical,
@@ -17,7 +18,7 @@ const DEFAULT_PROPS = ([{ sizeCode }, { vertical, spread }]) => {
     labelProps: {
       size: moveScale(sizeCode, !vertical ? 0 : -2),
       moveIconSizeScale: !vertical ? -1 : -2,
-      color: 'text3',
+      color: color || 'text3',
     },
     valueProps: {
       size: sizeCode,
@@ -28,17 +29,18 @@ const DEFAULT_PROPS = ([{ sizeCode }, { vertical, spread }]) => {
 
 export function LabelValue({ children, ...rootProps }) {
   const [{ sizeCode, color }, formattedProps] = pipe(
-    // useColorConverter(),
+    useColorConverter(),
     useSizeConverter('elementHeights', 'md'),
     useThemeComponentModifier('Labelvalue'), //
     useDefaultModifier(DEFAULT_PROPS)
   )([{}, rootProps])
 
-  const { icon, label, iconColor, labelProps, value, valueProps, vertical, spread, ...props } = formattedProps
+  const { icon, label, iconColor, labelProps, value, valueColor, valueProps, vertical, spread, ...props } =
+    formattedProps
   let separator = !vertical && !spread ? ':' : ''
 
   let content = children || value
-  if (is(String, value)) content = <Text label={value} {...valueProps} />
+  if (is(String, value)) content = <Text label={value} color={valueColor || color} {...valueProps} />
 
   return (
     <View className="neko-label-value" {...props}>

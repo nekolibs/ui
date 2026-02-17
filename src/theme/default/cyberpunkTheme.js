@@ -34,8 +34,11 @@ export const CYBERPUNK_DARK_THEME = mergeDeepRight(BASE_THEME, {
 
   components: {
     Card: {
-      border: 1,
-      borderColor: 'divider',
+      border: true,
+    },
+
+    Section: {
+      border: true,
     },
   },
 })
