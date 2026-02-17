@@ -127,17 +127,6 @@ export function Select({
       maxHeight={popoverMaxHeight}
       {...popoverProps}
       renderContent={({ onClose }) => (
-        <>
-          {useBottomDrawer && useSearch && (
-            <View padding="md" paddingB="xs">
-              <TextInput
-                prefixIcon="search-line"
-                prefixIconColor="text4"
-                value={search}
-                onChange={handleChangeSearch}
-              />
-            </View>
-          )}
           <Picker
             row={false}
             options={searchOptions(options, search, { labelKey })}
@@ -152,6 +141,19 @@ export function Select({
               if (!multiple) onClose()
             }}
             {...pickerProps}
+            renderHeader={useBottomDrawer && useSearch ? () => (
+              <>
+                <View padding="md" paddingB="xs">
+                  <TextInput
+                    prefixIcon="search-line"
+                    prefixIconColor="text4"
+                    value={search}
+                    onChange={handleChangeSearch}
+                  />
+                </View>
+                {renderHeader?.()}
+              </>
+            ) : renderHeader}
             renderOption={({ option, selected, onChange }) => (
               <Link
                 row
@@ -171,7 +173,6 @@ export function Select({
               </Link>
             )}
           />
-        </>
       )}
     >
       <Input

@@ -21,21 +21,14 @@ const DEFAULT_PROPS = {
   },
 }
 
-export function ActionsDrawer({ items, onChange, title, subtitle, onClose, ...rootProps }) {
-  const [{}, formattedProps] = pipe(
-    useThemeComponentModifier('ActionsDrawer'), //
-    useDefaultModifier(DEFAULT_PROPS)
-  )([{}, rootProps])
-
-  const { topBarProps, menuProps, ...props } = formattedProps
-
+function Content({ items, title, subtitle, onClose, onChange, topBarProps, menuProps }) {
   const handleChange = (...params) => {
-    if (onChange) onChange(...params)
+    onChange?.(...params)
     onClose()
   }
 
   return (
-    <BottomDrawer onClose={onClose} {...props}>
+    <>
       <TopBar title={title} subtitle={subtitle} {...topBarProps} />
 
       <View flex>
@@ -47,6 +40,29 @@ export function ActionsDrawer({ items, onChange, title, subtitle, onClose, ...ro
           <View height={100} />
         </DrawerScrollView>
       </View>
+    </>
+  )
+}
+
+export function ActionsDrawer({ items, onChange, title, subtitle, onClose, ...rootProps }) {
+  const [{}, formattedProps] = pipe(
+    useThemeComponentModifier('ActionsDrawer'), //
+    useDefaultModifier(DEFAULT_PROPS)
+  )([{}, rootProps])
+
+  const { topBarProps, menuProps, ...props } = formattedProps
+
+  return (
+    <BottomDrawer onClose={onClose} {...props}>
+      <Content
+        onClose={onClose}
+        topBarProps={topBarProps}
+        menuProps={menuProps}
+        title={title}
+        subtitle={subtitle}
+        onChange={onChange}
+        items={items}
+      />
     </BottomDrawer>
   )
 }

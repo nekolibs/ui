@@ -101,7 +101,6 @@ function FlatListPickerWrapper({ renderItem, options, valueKey, ...props }) {
       divider
       fullH
       renderItem={({ item: option }) => renderItem(option)}
-      renderFooter={() => <View height={200} />}
       {...props}
     />
   )
