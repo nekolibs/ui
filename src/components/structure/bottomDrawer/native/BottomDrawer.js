@@ -6,7 +6,6 @@ import Animated, {
   useAnimatedStyle,
   withSpring,
   runOnJS,
-  useAnimatedReaction,
 } from 'react-native-reanimated'
 import React from 'react'
 
@@ -47,9 +46,6 @@ function InnerContent({
   const colors = useColors()
 
   const translateY = useSharedValue(SCREEN_HEIGHT)
-  const scrollOffset = useSharedValue(0)
-  const scrollEnabled = useSharedValue(false)
-  const isScrolling = useSharedValue(false)
   const snapIndex = useSharedValue(0)
   const velocityY = useSharedValue(0)
 
@@ -67,8 +63,6 @@ function InnerContent({
       snapIndex.value = 0
     } else {
       translateY.value = withSpring(SCREEN_HEIGHT, animationConfig, () => {
-        scrollOffset.value = 0
-        scrollEnabled.value = false
         runOnJS(setRender)(false)
       })
       snapIndex.value = -1
@@ -83,15 +77,6 @@ function InnerContent({
     })
     return () => backHandler.remove()
   }, [open, onClose])
-
-  useAnimatedReaction(
-    () => translateY.value,
-    (currentY) => {
-      const atMaxSnapPoint = currentY <= SCREEN_HEIGHT - maxSnapPoint
-      scrollEnabled.value = atMaxSnapPoint
-    },
-    []
-  )
 
   let handleClose = React.useCallback(() => {
     onClose?.()
@@ -112,9 +97,11 @@ function InnerContent({
 
   // contexto manual para gesto
   const gestureStartTranslateY = useSharedValue(0)
+  const panRef = React.useRef()
 
   const panGesture = React.useMemo(() => {
     return Gesture.Pan()
+      .withRef(panRef)
       .enabled(enableHandlePanningGesture || enableContentPanningGesture)
       .onStart(() => {
         gestureStartTranslateY.value = translateY.value
@@ -135,7 +122,11 @@ function InnerContent({
         const currentPosition = SCREEN_HEIGHT - translateY.value
         const shouldClose =
           !!handleClose &&
-          ((velocityY.value > 2000 && currentPosition < minSnapPoint * 0.75) || currentPosition < minSnapPoint * 0.25)
+          (
+            velocityY.value > 1500 ||
+            (velocityY.value > 800 && currentPosition < minSnapPoint) ||
+            currentPosition < minSnapPoint * 0.35
+          )
 
         if (shouldClose) {
           runOnJS(handleClose)()
@@ -168,15 +159,18 @@ function InnerContent({
   const contextValue = React.useMemo(
     () => ({
       translateY,
-      scrollOffset,
-      scrollEnabled,
-      isScrolling,
       snapIndex,
       maxSnapPoint,
       snapTo,
       animationConfig,
+      panRef,
+      normalizedSnapPoints,
+      SCREEN_HEIGHT,
+      minSnapPoint,
+      handleClose,
+      velocityY,
     }),
-    [maxSnapPoint]
+    [maxSnapPoint, normalizedSnapPoints, SCREEN_HEIGHT, minSnapPoint, handleClose]
   )
 
   return (

@@ -1,8 +1,8 @@
 import { pipe } from 'ramda'
 
 import { BottomDrawer, TopBar, View } from '../structure'
+import { DrawerScrollView } from '../structure/bottomDrawer'
 import { Menu } from './menu/Menu'
-import { ScrollView } from '../list'
 import { Section } from '../sections'
 import { useDefaultModifier } from '../../modifiers/default'
 import { useThemeComponentModifier } from '../../modifiers/themeComponent'
@@ -39,13 +39,13 @@ export function ActionsDrawer({ items, onChange, title, subtitle, onClose, ...ro
       <TopBar title={title} subtitle={subtitle} {...topBarProps} />
 
       <View flex>
-        <ScrollView>
+        <DrawerScrollView>
           {!title && <View paddingT="md" />}
           <Section>
             <Menu items={items} onChange={handleChange} {...menuProps} />
           </Section>
           <View height={100} />
-        </ScrollView>
+        </DrawerScrollView>
       </View>
     </BottomDrawer>
   )

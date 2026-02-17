@@ -2,7 +2,7 @@ import { is } from 'ramda'
 import React from 'react'
 
 import { Col } from '../structure/Col'
-import { FlatList } from '../list/FlatList'
+import { DrawerFlatList } from '../structure/bottomDrawer'
 import { LoadingView } from '../state/LoadingView'
 import { Row } from '../structure/Row'
 import { View } from '../structure'
@@ -95,12 +95,13 @@ function DefaultPickerWrapper({ renderItem, options, ...props }) {
 
 function FlatListPickerWrapper({ renderItem, options, valueKey, ...props }) {
   return (
-    <FlatList
+    <DrawerFlatList
       keyExtractor={(i) => i[valueKey]}
       data={options}
       divider
       fullH
       renderItem={({ item: option }) => renderItem(option)}
+      renderFooter={() => <View height={200} />}
       {...props}
     />
   )

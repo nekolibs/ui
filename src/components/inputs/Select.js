@@ -39,6 +39,7 @@ export function Select({
   pickerProps,
   popoverProps,
   popoverMaxHeight,
+  snapPoints,
   ...props
 }) {
   const [focus, setFocus] = React.useState(false)
@@ -53,7 +54,17 @@ export function Select({
   onEndReached = onEndReached || pickerProps?.onEndReached
   renderFooter = renderFooter || pickerProps?.renderFooter
   renderHeader = renderHeader || pickerProps?.renderHeader
-  pickerProps = { ...pickerProps, labelKey, valueKey, useRawOption, multiple, onEndReached, renderFooter, renderHeader }
+  pickerProps = {
+    ...pickerProps,
+
+    labelKey,
+    valueKey,
+    useRawOption,
+    multiple,
+    onEndReached,
+    renderFooter,
+    renderHeader,
+  }
 
   popoverMaxHeight = popoverMaxHeight || 300
 
@@ -107,7 +118,7 @@ export function Select({
     <Popover
       trigger="click"
       placement={placement || 'bottomLeft'}
-      snapPoints={[450]}
+      snapPoints={snapPoints || [450]}
       useBottomDrawer={useBottomDrawer}
       parentWidth
       padding={0}

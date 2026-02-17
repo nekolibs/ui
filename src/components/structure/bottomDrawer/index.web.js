@@ -1,4 +1,5 @@
 export { BottomDrawer } from './native/BottomDrawer'
-export { DrawerScrollView } from './native/DrawerScrollView'
+export { DrawerScrollView, DrawerFlatList } from './native/DrawerScrollView'
+export { createDrawerScrollComponent } from './native/createDrawerScrollComponent'
 export { DrawerHandle } from './native/DrawerHandle'
 export { DrawerProvider, useDrawerContext } from './native/DrawerContext'
