@@ -10,7 +10,7 @@ import { useThemeComponentModifier } from '../../modifiers/themeComponent'
 export function Tooltip(rootProps) {
   const [{ loading, fontColor, sizeCode }, formattedProps] = pipe(
     useColorConverter('overlayBG'),
-    useSizeConverter('text', 'md'),
+    useSizeConverter('text', 'sm'),
     useThemeComponentModifier('Tooltip'),
     useFullColorModifier
   )([{}, rootProps])
