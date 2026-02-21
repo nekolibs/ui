@@ -1,7 +1,7 @@
 import { FlatList } from 'react-native'
 
 export const AbsFlatList = ({
-  style: { height, width, ...style },
+  style: { height, width, flex, ...style },
   ItemSeparatorComponent,
   Separator,
   renderSeparator,
@@ -25,6 +25,7 @@ export const AbsFlatList = ({
     <FlatList
       height={height}
       width={width}
+      style={{ flex }}
       {...props}
       ItemSeparatorComponent={ItemSeparatorComponent}
       ListEmptyComponent={ListEmptyComponent}

@@ -6,7 +6,7 @@ import { ModalContent } from './ModalContent'
 import { ModalFooter } from './ModalFooter'
 import { ModalHeader } from './ModalHeader'
 import { Pressable } from '../../actions/Pressable'
-import { View } from '../View'
+import { View } from '../../structure/View'
 import { useDefaultModifier } from '../../../modifiers/default'
 import { useThemeComponentModifier } from '../../../modifiers/themeComponent'
 

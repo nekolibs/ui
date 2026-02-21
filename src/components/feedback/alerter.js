@@ -2,7 +2,7 @@ import { is } from 'ramda'
 
 import { Button } from '../actions'
 import { Result } from '../presentation'
-import { useModalOpener } from '../structure/modal'
+import { useModalOpener } from '../modals/modal'
 
 export function useAlerter() {
   const { open } = useModalOpener()

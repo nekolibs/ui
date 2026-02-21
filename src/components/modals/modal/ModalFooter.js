@@ -1,6 +1,6 @@
 import { pipe } from 'ramda'
 
-import { View } from '../View'
+import { View } from '../../structure/View'
 import { moveScale } from '../../../theme/helpers/sizeScale'
 import { useDefaultModifier } from '../../../modifiers/default'
 import { useSizeConverter } from '../../../modifiers/sizeConverter'

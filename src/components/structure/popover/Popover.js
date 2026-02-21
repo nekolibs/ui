@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { BottomDrawer } from '../bottomDrawer'
+import { BottomDrawer } from '../../modals/bottomDrawer'
 import { PopoverContent } from './PopoverContent'
 import { useRegisterOverlay } from '../overlay/OverlayHandler'
 import { useResponsiveValue } from '../../../responsive'

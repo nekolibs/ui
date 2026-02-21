@@ -12,7 +12,7 @@ import React from 'react'
 import { DrawerHandle } from './DrawerHandle'
 import { DrawerProvider } from './DrawerContext'
 import { Pressable } from '../../../actions/Pressable'
-import { View } from '../../View'
+import { View } from '../../../structure/View'
 import { normalizeSnapPoints, findClosestSnapPoint } from './utils'
 import { useColors } from '../../../../theme/ThemeHandler'
 

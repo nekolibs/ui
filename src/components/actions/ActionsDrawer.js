@@ -1,7 +1,7 @@
 import { pipe } from 'ramda'
 
-import { BottomDrawer, TopBar, View } from '../structure'
-import { DrawerScrollView } from '../structure/bottomDrawer'
+import { TopBar, View } from '../structure'
+import { BottomDrawer, DrawerScrollView } from '../modals/bottomDrawer'
 import { Menu } from './menu/Menu'
 import { Section } from '../sections'
 import { useDefaultModifier } from '../../modifiers/default'

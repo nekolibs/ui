@@ -1,5 +1,5 @@
 import { Divider } from '../../../helpers/Separator'
-import { View } from '../../View'
+import { View } from '../../../structure/View'
 
 export function DrawerHandle({ hide }) {
   if (!!hide) return false

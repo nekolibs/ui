@@ -1,7 +1,7 @@
 import { Modal, TouchableWithoutFeedback } from 'react-native'
 import React from 'react'
 
-import { BottomDrawer } from '../bottomDrawer'
+import { BottomDrawer } from '../../modals/bottomDrawer'
 import { PopoverContent } from './PopoverContent'
 import { View } from '../View'
 import { calculatePosition } from '../overlay/calculatePosition'

@@ -1,6 +1,6 @@
 import { DynamicStyleTag } from './DynamicStyleTag'
 import { I18nProvider } from './i18n'
-import { ModalsHandler } from './components/structure/modal/handler/ModalsHandler'
+import { ModalsHandler } from './components/modals/modal/handler/ModalsHandler'
 import { NotificationsHandler } from './components/feedback/notifications/NotificationsHandler'
 import { OverlayHandler } from './components/structure/overlay/OverlayHandler'
 import { PortalHandler } from './components/helpers/PortalHandler'

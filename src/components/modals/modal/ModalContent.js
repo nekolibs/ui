@@ -1,6 +1,6 @@
 import { pipe } from 'ramda'
 
-import { View } from '../View'
+import { View } from '../../structure/View'
 import { useDefaultModifier } from '../../../modifiers/default'
 import { useThemeComponentModifier } from '../../../modifiers/themeComponent'
 

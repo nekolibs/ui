@@ -5,7 +5,7 @@ import { Button } from '../actions'
 import { RESULT_TYPES } from '../presentation/Result'
 import { Result } from '../presentation'
 import { View } from '../structure/View'
-import { useModalOpener } from '../structure/modal'
+import { useModalOpener } from '../modals/modal'
 
 function Footer({ cancelLabel, confirmLabel, onConfirm, type, onClose }) {
   const [loading, setLoading] = React.useState(false)

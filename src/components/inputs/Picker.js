@@ -2,7 +2,7 @@ import { is } from 'ramda'
 import React from 'react'
 
 import { Col } from '../structure/Col'
-import { DrawerFlatList } from '../structure/bottomDrawer'
+import { DrawerFlatList } from '../modals/bottomDrawer'
 import { LoadingView } from '../state/LoadingView'
 import { Row } from '../structure/Row'
 import { View } from '../structure'

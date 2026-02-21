@@ -2,7 +2,7 @@ import { pipe } from 'ramda'
 import React from 'react'
 
 import { AnimatedView } from '../../animations/AnimatedView'
-import { SafeAreaView } from '../SafeAreaView'
+import { SafeAreaView } from '../../structure/SafeAreaView'
 import { useDefaultModifier } from '../../../modifiers/default'
 import { useThemeComponentModifier } from '../../../modifiers/themeComponent'
 
