@@ -1,4 +1,4 @@
-import { clearProps } from './_helpers'
+import { clearProps, flattenStyle } from './_helpers'
 import { useGetColor } from '../theme/ThemeHandler'
 
 export function useShadowModifier([values, props]) {
@@ -27,7 +27,7 @@ export function useShadowModifier([values, props]) {
     {
       ...restProps,
       style: {
-        ...props.style,
+        ...flattenStyle(props.style),
         ...style,
       },
     },

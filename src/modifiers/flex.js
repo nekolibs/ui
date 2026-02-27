@@ -1,4 +1,4 @@
-import { clearProps } from './_helpers'
+import { clearProps, flattenStyle } from './_helpers'
 
 export function useFlexModifier([values, props]) {
   let { flex, ...restProps } = props
@@ -12,7 +12,7 @@ export function useFlexModifier([values, props]) {
     {
       ...restProps,
       style: {
-        ...props.style,
+        ...flattenStyle(props.style),
         ...style,
       },
     },

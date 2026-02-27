@@ -1,4 +1,4 @@
-import { clearProps } from './_helpers'
+import { clearProps, flattenStyle } from './_helpers'
 import { useGetSpace } from '../theme/ThemeHandler'
 
 export function useFlexWrapperModifier([values, props]) {
@@ -79,7 +79,7 @@ export function useFlexWrapperModifier([values, props]) {
     {
       ...restProps,
       style: {
-        ...props.style,
+        ...flattenStyle(props.style),
         ...style,
       },
     },

@@ -1,5 +1,5 @@
 import { Platform } from '../abstractions/Platform'
-import { clearProps } from './_helpers'
+import { clearProps, flattenStyle } from './_helpers'
 import { useGetSpace } from '../theme'
 
 export function usePositionModifier([values, props]) {
@@ -49,7 +49,7 @@ export function usePositionModifier([values, props]) {
     {
       ...restProps,
       style: {
-        ...props.style,
+        ...flattenStyle(props.style),
         ...style,
       },
     },

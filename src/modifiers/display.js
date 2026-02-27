@@ -1,4 +1,4 @@
-import { clearProps } from './_helpers'
+import { clearProps, flattenStyle } from './_helpers'
 
 export function useDisplayModifier([values, props]) {
   let { opacity, hidden, display, inline, block, ...restProps } = props
@@ -14,7 +14,7 @@ export function useDisplayModifier([values, props]) {
     {
       ...restProps,
       style: {
-        ...props.style,
+        ...flattenStyle(props.style),
         ...style,
       },
     },

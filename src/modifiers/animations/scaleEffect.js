@@ -1,4 +1,5 @@
 import React from 'react'
+import { flattenStyle } from '../_helpers'
 
 const DEFAULT_EFFECT = { duration: 300, initialScale: 0 }
 
@@ -37,7 +38,7 @@ export function useScaleEffect([values, { scale, ...props }]) {
     {
       ...props,
       style: {
-        ...props.style,
+        ...flattenStyle(props.style),
         ...style,
       },
     },

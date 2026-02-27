@@ -1,5 +1,5 @@
 import { Platform } from '../abstractions/Platform'
-import { clearProps } from './_helpers'
+import { clearProps, flattenStyle } from './_helpers'
 import { useGetElementHeight } from '../theme/ThemeHandler'
 
 export function useSizeModifier([values, props]) {
@@ -50,7 +50,7 @@ export function useSizeModifier([values, props]) {
     values,
     {
       ...restProps,
-      style: { ...props.style, ...style },
+      style: { ...flattenStyle(props.style), ...style },
     },
   ]
 }

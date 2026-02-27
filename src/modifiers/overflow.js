@@ -1,4 +1,4 @@
-import { clearProps } from './_helpers'
+import { clearProps, flattenStyle } from './_helpers'
 
 export function useOverflowModifier([values, props]) {
   let { hiddenOverflow, scroll, noScroll, scrollY, scrollX, overflow, overflowY, overflowX, ...restProps } = props
@@ -20,7 +20,7 @@ export function useOverflowModifier([values, props]) {
     {
       ...restProps,
       style: {
-        ...props.style,
+        ...flattenStyle(props.style),
         ...style,
       },
     },

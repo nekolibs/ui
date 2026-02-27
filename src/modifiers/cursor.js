@@ -1,4 +1,4 @@
-import { clearProps } from './_helpers'
+import { clearProps, flattenStyle } from './_helpers'
 
 export function useCursorModifier([values, props]) {
   let { pointer, cursor, move, ...restProps } = props
@@ -13,7 +13,7 @@ export function useCursorModifier([values, props]) {
     {
       ...restProps,
       style: {
-        ...props.style,
+        ...flattenStyle(props.style),
         ...style,
       },
     },

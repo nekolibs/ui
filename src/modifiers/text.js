@@ -1,4 +1,4 @@
-import { clearProps } from './_helpers'
+import { clearProps, flattenStyle } from './_helpers'
 import { mergePreset } from '../theme/helpers/mergePreset'
 import { useGetColor, useTexts } from '../theme/ThemeHandler'
 
@@ -54,7 +54,7 @@ export function useTextModifier([{ color, textCode, ...values }, { ...props }]) 
     {
       ...restProps,
       style: {
-        ...props.style,
+        ...flattenStyle(props.style),
         ...style,
       },
     },

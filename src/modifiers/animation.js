@@ -1,4 +1,4 @@
-import { clearProps } from './_helpers'
+import { clearProps, flattenStyle } from './_helpers'
 
 export function useAnimationModifier([values, props]) {
   let { transition, ...restProps } = props
@@ -10,7 +10,7 @@ export function useAnimationModifier([values, props]) {
     {
       ...restProps,
       style: {
-        ...props.style,
+        ...flattenStyle(props.style),
         ...style,
       },
     },

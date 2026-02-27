@@ -1,10 +1,10 @@
 import { pipe } from 'ramda'
 
+import { DrawerScrollView } from '../modals'
 import { IconLabel } from '../presentation/IconLabel'
 import { Link } from './Link'
 import { Menu } from './menu/Menu'
 import { Popover } from '../structure/popover/Popover'
-import { ScrollView } from '../list'
 import { View } from '../structure/View'
 import { useResponsiveValue } from '../../responsive'
 import { useThemeComponentModifier } from '../../modifiers/themeComponent'
@@ -59,7 +59,7 @@ export function Dropdown({ items, ...rootProps }) {
             onClose()
           }
           return (
-            <ScrollView>
+            <DrawerScrollView>
               <Menu
                 vertical
                 items={items}
@@ -68,7 +68,7 @@ export function Dropdown({ items, ...rootProps }) {
                 linkMinHeight={useBottomDrawer ? 'xl' : 'md'}
                 withDivider={useBottomDrawer}
               />
-            </ScrollView>
+            </DrawerScrollView>
           )
         }}
       >

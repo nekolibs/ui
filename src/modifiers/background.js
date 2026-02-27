@@ -1,6 +1,6 @@
 import { is } from 'ramda'
 
-import { clearProps } from './_helpers'
+import { clearProps, flattenStyle } from './_helpers'
 import { useGetColor } from '../theme/ThemeHandler'
 
 export function useBackgroundModifier([values, props]) {
@@ -26,7 +26,7 @@ export function useBackgroundModifier([values, props]) {
     {
       ...restProps,
       style: {
-        ...props.style,
+        ...flattenStyle(props.style),
         ...style,
       },
     },

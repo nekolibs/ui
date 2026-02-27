@@ -1,4 +1,4 @@
-import { clearProps } from './_helpers'
+import { clearProps, flattenStyle } from './_helpers'
 import { useGetColor, useGetRadius } from '../theme/ThemeHandler'
 
 export function useBorderModifier([values, props]) {
@@ -72,7 +72,7 @@ export function useBorderModifier([values, props]) {
     {
       ...restProps,
       style: {
-        ...props.style,
+        ...flattenStyle(props.style),
         ...style,
       },
     },

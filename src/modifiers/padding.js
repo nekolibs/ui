@@ -1,4 +1,4 @@
-import { clearProps } from './_helpers'
+import { clearProps, flattenStyle } from './_helpers'
 import { useGetSpace } from '../theme/ThemeHandler'
 
 export function usePaddingModifier([values, props]) {
@@ -17,7 +17,7 @@ export function usePaddingModifier([values, props]) {
     {
       ...restProps,
       style: {
-        ...props.style,
+        ...flattenStyle(props.style),
         ...style,
       },
     },

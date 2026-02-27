@@ -1,4 +1,5 @@
 import React from 'react'
+import { flattenStyle } from '../_helpers'
 
 const DEFAULT_EFFECT = { duration: 400, from: 'top' }
 
@@ -55,7 +56,7 @@ export function useSlideEffect([values, { slide, ...props }]) {
     {
       ...props,
       style: {
-        ...props.style,
+        ...flattenStyle(props.style),
         ...style,
       },
     },

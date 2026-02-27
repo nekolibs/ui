@@ -1,4 +1,4 @@
-import { clearProps } from './_helpers'
+import { clearProps, flattenStyle } from './_helpers'
 
 export function useStateModifier([values, props]) {
   let { disabled, loading, onClick, onPress, onChange, ...restProps } = props
@@ -25,7 +25,7 @@ export function useStateModifier([values, props]) {
       ...newProps,
       ...restProps,
       style: {
-        ...props.style,
+        ...flattenStyle(props.style),
         ...style,
       },
     },
