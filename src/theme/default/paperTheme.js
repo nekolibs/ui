@@ -41,5 +41,9 @@ export const DEFAULT_PAPER_THEME = mergeDeepRight(BASE_THEME, {
     Section: {
       border: true,
     },
+
+    TopBar: {
+      borderB: true,
+    },
   },
 })

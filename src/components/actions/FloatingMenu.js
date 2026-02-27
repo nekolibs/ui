@@ -26,7 +26,7 @@ export function FloatingMenu({ fixed, onChange, items, activeIndex, size = 'md',
                 color={isActive ? 'primary' : 'text3'}
               />
               {!!item.label && (
-                <Text size="xxs" center color={isActive ? 'primary' : 'text3'} strong>
+                <Text size="xxs" center color={isActive ? 'primary' : 'text3'} strong numberOfLines={1}>
                   {item.label}
                 </Text>
               )}

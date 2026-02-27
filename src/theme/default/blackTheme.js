@@ -7,30 +7,41 @@ export const DEFAULT_BLACK_THEME = mergeDeepRight(BASE_THEME, {
 
   colors: {
     primary: '#818DF9',
-    text: '#FFFFFF',
-    text2: '#E0E0E0',
-    text3: '#B0B0B0',
-    text4: '#8A8A8A',
 
-    mainBG: '#0f0f0f',
-    overlayBG: '#000000',
+    text: '#F2F2F2',
+    text2: '#CFCFCF',
+    text3: '#A6A6A6',
+    text4: '#737373',
+
+    mainBG: '#0A0A0A',
+    overlayBG: '#141414',
     backdrop: '#1f1f1f',
-    shadow: 'rgba(216, 210, 203, 0.1)',
+    shadow: 'rgba(0, 0, 0, 0.7)',
     transparent: 'rgba(0, 0, 0, 0)',
-    divider: '#383E44',
+    divider: '#262626',
 
-    blue: '#4DA3FF',
-    yellow: '#FFD93B',
-    green: '#4CAF50',
-    purple: '#9B59B6',
-    orange: '#FF7F50',
-    cyan: '#00BCD4',
-    red: '#E74C3C',
-    navy: '#34495E',
+    blue: '#3A7BFF',
+    yellow: '#FFC857',
+    green: '#2ECC71',
+    purple: '#9B5DE5',
+    orange: '#FF8C42',
+    cyan: '#00C2D1',
+    red: '#FF4D4F',
+    navy: '#1F2A44',
     indigo: '#5C6BC0',
-    gray: '#9E9E9E',
-    brown: '#8D6E63',
-    lylac: '#B39DDB',
-    pink: '#F48FB1',
+    gray: '#8E8E93',
+    brown: '#8B5E3C',
+    lylac: '#C77DFF',
+    pink: '#FF6FAE',
   },
+
+  // components: {
+  // Card: {
+  // border: true,
+  // },
+
+  // Section: {
+  // border: true,
+  // },
+  // },
 })
