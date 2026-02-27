@@ -127,5 +127,13 @@ export function createDrawerScrollComponent(Component) {
     )
   }
 
-  return DrawerScrollComponent
+  function ConditionalDrawerScrollComponent(props) {
+    const { outOfContext } = useDrawerContext()
+
+    if (outOfContext) return <Component {...props} />
+
+    return <DrawerScrollComponent {...props} />
+  }
+
+  return ConditionalDrawerScrollComponent
 }
