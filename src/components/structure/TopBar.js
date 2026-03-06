@@ -16,7 +16,7 @@ export function TopBar({ right, left, WrapperView, children, ...rootProps }) {
   return (
     <WrapperView paddingT={useSafeArea && safeTop} {...props}>
       {!!hasContent && (
-        <View minH="md" centerV row paddingH="md" paddingV="sm" gap="sm" fullW>
+        <View minH="xxl" centerV row paddingH="md" paddingV="sm" gap="sm" fullW>
           <View flex={1} toLeft>
             {left}
           </View>

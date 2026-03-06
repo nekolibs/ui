@@ -10,7 +10,7 @@ export function generateColorVariants(colors) {
     result[key] = value
 
     variations.forEach((amount) => {
-      if (amount <= 60) {
+      if (amount <= 40) {
         const lightenSignal = !isDark ? '-' : '+'
         const darkenSignal = isDark ? '-' : '+'
         result[`${key}${lightenSignal}${amount}`] = tinycolor(value).lighten(amount).toString()

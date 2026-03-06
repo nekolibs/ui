@@ -15,6 +15,7 @@ import { useHoverConverter } from '../../modifiers/hover'
 import { useMarginModifier } from '../../modifiers/margin'
 import { usePaddingModifier } from '../../modifiers/padding'
 import { usePositionModifier } from '../../modifiers/position'
+import { useShadowModifier } from '../../modifiers/shadow'
 import { useSizeConverter } from '../../modifiers/sizeConverter'
 import { useSizeModifier } from '../../modifiers/size'
 import { useStateModifier } from '../../modifiers/state'
@@ -39,6 +40,7 @@ export function Button({ children, ...rootProps }) {
     useSizeConverter('elementHeights', 'md'),
     useThemeComponentModifier('Button'),
     useDefaultModifier(DEFAULT_PROPS),
+    useShadowModifier,
     useHoverConverter,
     useCursorModifier,
     useFullColorModifier,

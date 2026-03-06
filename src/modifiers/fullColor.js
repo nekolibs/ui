@@ -5,13 +5,13 @@ import { useGetColor } from '../theme/ThemeHandler'
 
 export function useFullColorModifier([
   { color, ...values },
-  { outline, contrastTolerance, fill, bg: forcedBG, ...props },
+  { outline, contrastTolerance, fill, bg: forcedBG, borderColor: explicitBorderColor, ...props },
 ]) {
   const getColor = useGetColor()
 
   let bg = color
   const bgObj = tinycolor(getColor(bg))
-  let borderColor = color
+  let borderColor = explicitBorderColor ?? color
   let fontColor = 'text'
 
   if (!!outline && fill !== true) {
