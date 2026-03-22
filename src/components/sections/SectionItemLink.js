@@ -14,7 +14,7 @@ const DEFAULT_PROPS = {
   icon: 'arrow-right-s-line',
 }
 
-export function SectionItemLink({ children, value, onPress, ...rootProps }) {
+export function SectionItemLink({ children, value, onPress, loading, ...rootProps }) {
   const [{ color }, formattedProps] = pipe(
     useColorConverter(),
     useThemeComponentModifier('SectionItemLink'), //
@@ -26,7 +26,9 @@ export function SectionItemLink({ children, value, onPress, ...rootProps }) {
   return (
     <Link className="neko-section-item-link" onPress={onPress}>
       <SectionItem color={color} {...props}>
-        {children || <IconLabel gap={2} invert color={color} {...iconLabelProps} label={value} icon={icon} />}
+        {children || (
+          <IconLabel gap={2} invert color={color} loading={loading} {...iconLabelProps} label={value} icon={icon} />
+        )}
       </SectionItem>
     </Link>
   )

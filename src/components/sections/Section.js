@@ -11,6 +11,7 @@ const DEFAULT_PROPS = {
   marginH: 'md',
   bg: 'overlayBG',
   br: 'md',
+  border: 'overlayDivider',
   titleProps: {
     strong: true,
     text4: true,

@@ -19,6 +19,7 @@ const DEFAULT_PROPS = {
   br: 'xl',
   bg: 'overlayBG',
   hiddenOverflow: true,
+  border: 'overlayDivider',
 }
 
 export function Card({ children, ...rootProps }) {

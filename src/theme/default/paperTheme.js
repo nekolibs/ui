@@ -4,6 +4,7 @@ import { BASE_THEME } from './base'
 
 export const DEFAULT_PAPER_THEME = mergeDeepRight(BASE_THEME, {
   label: 'Paper',
+  useOverlayDivider: true,
 
   colors: {
     primary: '#5A5A5A',
@@ -31,19 +32,5 @@ export const DEFAULT_PAPER_THEME = mergeDeepRight(BASE_THEME, {
     brown: '#8B7355',
     lylac: '#C7B7D4',
     pink: '#E4A1B2',
-  },
-
-  components: {
-    Card: {
-      border: true,
-    },
-
-    Section: {
-      border: true,
-    },
-
-    TopBar: {
-      borderB: true,
-    },
   },
 })

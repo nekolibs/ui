@@ -23,6 +23,7 @@ const DEFAULT_PROPS = ([{}, { sticky }]) => ({
   row: true,
   centerV: true,
   padding: 'md',
+  borderB: 'overlayDivider',
   top: 0,
   left: 0,
   right: 0,

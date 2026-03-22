@@ -35,11 +35,16 @@ export function DataTable({ data, columns, rowKey = 'key', stickyHeader, grid, .
   return (
     <Table {...props}>
       <TableHeaderRow sticky={stickyHeader}>
-        {columns.map(({ key, ...column }, index) => {
+        {columns.map((rawColumn, index) => {
+          const { key, render, renderHeader, field, label, ...column } = rawColumn
           const headerProps = { ...column, size: sizeCode }
           if (!column.borderR && columns.length - 1 > index && grid) headerProps.borderR = true
 
-          return <TableHeader key={column.key} {...headerProps} />
+          return (
+            <TableHeader key={key} {...headerProps}>
+              {renderHeader ? renderHeader(rawColumn) : label}
+            </TableHeader>
+          )
         })}
       </TableHeaderRow>
 

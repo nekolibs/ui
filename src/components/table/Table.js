@@ -18,10 +18,11 @@ const TableContext = React.createContext(null)
 export const useTable = () => React.useContext(TableContext) || {}
 
 const DEFAULT_PROPS = {
-  br: 'md', //
+  br: 'xxl', //
   overflow: 'scroll',
   width: '100%',
   relative: true,
+  border: 'overlayDivider',
 }
 
 export function Table({ children, ...rootProps }) {

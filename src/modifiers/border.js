@@ -1,9 +1,17 @@
 import { clearProps, flattenStyle } from './_helpers'
-import { useGetColor, useGetRadius } from '../theme/ThemeHandler'
+import { useGetColor, useGetRadius, useTheme } from '../theme/ThemeHandler'
+
+function resolveBorderWidth(value, theme) {
+  const base = theme.baseBorderWidth ?? 1
+  if (value === 'overlayDivider') return theme.useOverlayDivider ? base : 0
+  if (value === true) return base
+  return value
+}
 
 export function useBorderModifier([values, props]) {
   const getRadius = useGetRadius()
   const getColor = useGetColor()
+  const theme = useTheme()
   let {
     br,
     brT,
@@ -36,11 +44,11 @@ export function useBorderModifier([values, props]) {
 
   borderStyle = borderStyle
 
-  if (border === true) border = 1
-  if (borderT === true) borderT = 1
-  if (borderR === true) borderR = 1
-  if (borderB === true) borderB = 1
-  if (borderL === true) borderL = 1
+  border = resolveBorderWidth(border, theme)
+  borderT = resolveBorderWidth(borderT, theme)
+  borderR = resolveBorderWidth(borderR, theme)
+  borderB = resolveBorderWidth(borderB, theme)
+  borderL = resolveBorderWidth(borderL, theme)
   const borderTopWidth = borderT || border || 0
   const borderBottomWidth = borderB || border || 0
   const borderLeftWidth = borderL || border || 0

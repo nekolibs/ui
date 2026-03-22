@@ -4,6 +4,7 @@ import { BASE_THEME } from './base'
 
 export const DEFAULT_MATRIX_THEME = mergeDeepRight(BASE_THEME, {
   label: 'Hacker',
+  useOverlayDivider: true,
 
   colors: {
     primary: '#00FF41',
@@ -50,15 +51,5 @@ export const DEFAULT_MATRIX_THEME = mergeDeepRight(BASE_THEME, {
     xl: 6,
     xxl: 7,
     xxxl: 8,
-  },
-
-  components: {
-    Card: {
-      border: true,
-    },
-
-    Section: {
-      border: true,
-    },
   },
 })
