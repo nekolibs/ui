@@ -8,7 +8,6 @@ import { useDefaultModifier } from '../../modifiers/default'
 import { useThemeComponentModifier } from '../../modifiers/themeComponent'
 
 const DEFAULT_PROPS = {
-  marginH: 'md',
   bg: 'overlayBG',
   br: 'md',
   border: 'overlayDivider',

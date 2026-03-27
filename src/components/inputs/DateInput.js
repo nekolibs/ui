@@ -47,6 +47,7 @@ export function DateInput({
   placement,
   type = 'day',
   format,
+  open,
   useBottomDrawer = { native: true, sm: true, md: true },
   ...props
 }) {
@@ -88,6 +89,7 @@ export function DateInput({
   return (
     <Popover
       trigger="click"
+      startsOpen={open}
       placement={placement || 'bottomLeft'}
       snapPoints={[350]}
       useBottomDrawer={useBottomDrawer}

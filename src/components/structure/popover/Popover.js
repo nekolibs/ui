@@ -18,6 +18,7 @@ export function Popover({
   bottomDrawerProps = {},
   watch,
   disabled,
+  startsOpen,
   ...props
 }) {
   const shouldUseDrawer = useResponsiveValue(useBottomDrawer)
@@ -68,7 +69,10 @@ export function Popover({
     })
   }
 
-  React.useEffect(() => () => onClose(), [])
+  React.useEffect(() => {
+    if (startsOpen && ref.current) show()
+    return () => onClose()
+  }, [])
 
   React.useEffect(() => {
     if (!ref.current || !watch) return

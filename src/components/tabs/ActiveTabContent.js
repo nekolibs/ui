@@ -7,7 +7,10 @@ import { useTabs } from './TabsHandler'
 const duration = 100
 
 function Item({ item, active, ...props }) {
-  const Content = React.useMemo(() => item.renderContent || item.Content, [item.renderContent, item.Content])
+  const Content = React.useMemo(
+    () => item.render || item.renderContent || item.Content,
+    [item.renderContent, item.Content]
+  )
   const [open, setOpen] = React.useState(active)
 
   React.useEffect(() => {
