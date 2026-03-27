@@ -96,7 +96,7 @@ export function DateInput({
       bottomDrawerProps={{ contentProps: { padding: 'md' } }}
       watch={[value?.format?.('YYYYMMDD')]}
       renderContent={({ onClose }) => (
-        <View flex centerH>
+        <View flex centerH onMouseDown={(e) => e.preventDefault()}>
           <DatePicker
             value={value}
             onChange={(v) => {
