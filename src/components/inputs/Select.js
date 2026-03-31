@@ -40,6 +40,7 @@ export function Select({
   popoverProps,
   popoverMaxHeight,
   snapPoints,
+  startsOpen,
   ...props
 }) {
   const [focus, setFocus] = React.useState(false)
@@ -117,6 +118,7 @@ export function Select({
   return (
     <Popover
       trigger="click"
+      startsOpen={startsOpen}
       placement={placement || 'bottomLeft'}
       snapPoints={snapPoints || [450]}
       useBottomDrawer={useBottomDrawer}
