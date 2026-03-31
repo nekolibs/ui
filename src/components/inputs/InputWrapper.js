@@ -27,6 +27,7 @@ export function InputWrapper({
   suffixIconColor,
   loading,
   error,
+  multiline,
   children,
   ref,
   ...rootProps
@@ -63,7 +64,9 @@ export function InputWrapper({
   return (
     <View
       className="neko-input-wrapper"
-      height={size}
+      height={multiline ? undefined : size}
+      minHeight={multiline ? size : undefined}
+      paddingV={multiline ? 'sm' : undefined}
       onPress={handlePress}
       borderColor={borderColor}
       onMouseEnter={() => setHover(true)}
@@ -71,17 +74,17 @@ export function InputWrapper({
       {...props}
     >
       {!!prefix && (
-        <View paddingV={5} fullHeight center>
+        <View paddingV={5} fullHeight={!multiline} center={!multiline}>
           {prefix}
         </View>
       )}
 
-      <View flex fullH>
+      <View flex fullH={!multiline}>
         {childWithProps}
       </View>
 
       {!!suffix && (
-        <View paddingV={5} fullHeight center>
+        <View paddingV={5} fullHeight={!multiline} center={!multiline}>
           {suffix}
         </View>
       )}
