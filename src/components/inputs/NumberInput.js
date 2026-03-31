@@ -73,7 +73,8 @@ export function formatNumericValue(newValue, prevValue, options = {}) {
   return numericValue
 }
 
-export function NumberInput({ onChange, onBlur, value, useInt, precision, min, max, error, ...props }) {
+export function NumberInput({ onChange, onBlur, value, defaultValue, useInt, precision, min, max, error, ...props }) {
+  if (value === undefined || value === null) value = defaultValue ?? null
   const [hasError, setHasError] = React.useState(false)
   const [inputValue, setInputValue] = React.useState(value)
   const [localValue, setLocalValue] = React.useState(value)
