@@ -15,6 +15,11 @@ export function FormItem({
   useDefaultValue,
   rules,
   validateTrigger = 'onSubmit',
+  hidden,
+  valuePropName,
+  initialValue,
+  extra,
+  noStyle,
   ...props
 }) {
   const form = useFormInstance()
@@ -23,6 +28,13 @@ export function FormItem({
   const listPathStr = listPath.join('$NEKOJOIN$')
   const [value, setValue] = React.useState(form.getFieldValue(listPath))
   const [error, setError] = React.useState(form.getError(listPath))
+
+  // Set initial value on mount if provided and field has no value
+  React.useEffect(() => {
+    if (initialValue !== undefined && form.getFieldValue(listPath) === undefined) {
+      form.setFieldValue(listPath, initialValue)
+    }
+  }, [listPathStr])
 
   // Register rules with the form
   React.useEffect(() => {
@@ -56,7 +68,7 @@ export function FormItem({
     }
   }
 
-  let valueKey = 'value'
+  let valueKey = valuePropName || 'value'
   if (!!useDefaultValue) valueKey = 'defaultValue'
 
   const child = typeof children === 'function' ? null : React.Children.only(children)
@@ -77,6 +89,18 @@ export function FormItem({
     content = React.cloneElement(child, { ...child.props, ...childProps })
   }
 
+  if (hidden) {
+    return (
+      <FormGroup name={listPath}>
+        <View hidden>{content}</View>
+      </FormGroup>
+    )
+  }
+
+  if (noStyle) {
+    return <FormGroup name={listPath}>{content}</FormGroup>
+  }
+
   return (
     <FormGroup name={listPath}>
       <View {...props}>
@@ -87,6 +111,7 @@ export function FormItem({
         )}
         {content}
         {error && <Text color="red">{error}</Text>}
+        {extra && <View marginT="xxs">{extra}</View>}
       </View>
     </FormGroup>
   )

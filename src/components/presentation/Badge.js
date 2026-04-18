@@ -77,12 +77,13 @@ function Badge(rootProps) {
 
 function BadgeWrapper({ children, dot, ...props }) {
   if (!children) return <Badge dot={dot} {...props} />
-  if (!props.value && !props.label && !props.icon) return children
+  const hasContent = props.value || props.label || props.icon || (dot && props.value === undefined)
+  if (!hasContent) return children
 
   return (
     <View className="neko-badge-wrapper" relative>
       {children}
-      <Badge {...props} dot={dot} absolute top={dot ? -2 : -8} right={dot ? -5 : -12} />
+      <Badge dot={dot} absolute top={dot ? -2 : -8} right={dot ? -5 : -12} {...props} />
     </View>
   )
 }

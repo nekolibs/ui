@@ -11,9 +11,9 @@ export function TextInput({ onChange, multiline, rows, ...props }) {
     background: 'transparent',
     outline: 'none',
     color: colors.text,
-    fontFamily: 'inherit',
-    fontSize: 'inherit',
-    lineHeight: 'inherit',
+    // fontFamily: 'inherit',
+    // fontSize: 'inherit',
+    // lineHeight: 'inherit',
     ...(multiline ? { resize: 'none' } : { height: '100%' }),
   }
 

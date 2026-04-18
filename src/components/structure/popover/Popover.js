@@ -19,11 +19,15 @@ export function Popover({
   watch,
   disabled,
   startsOpen,
+  onOpenChange,
   ...props
 }) {
   const shouldUseDrawer = useResponsiveValue(useBottomDrawer)
   const ref = React.useRef(null)
-  const { onOpen, onUpdate, onClose, onFastClose, stopDelayedClosing } = useRegisterOverlay({ unmountOnClose })
+  const { onOpen, onUpdate, onClose, onFastClose, stopDelayedClosing } = useRegisterOverlay({
+    unmountOnClose,
+    onOpenChange,
+  })
 
   const click = trigger === 'click'
   const hover = trigger === 'hover'
@@ -88,6 +92,7 @@ export function Popover({
         content={content}
         renderContent={renderContent}
         children={children}
+        onOpenChange={onOpenChange}
         {...props}
         {...bottomDrawerProps}
       />
@@ -103,12 +108,20 @@ export function Popover({
   return React.cloneElement(child, childProps)
 }
 
-function DrawerPopover({ children, content, renderContent, snapPoints, ...props }) {
+function DrawerPopover({ children, content, renderContent, snapPoints, onOpenChange, ...props }) {
   const [open, setOpen] = React.useState(false)
-  const onClose = () => setOpen(false)
+  const onClose = () => {
+    setOpen(false)
+    onOpenChange?.(false)
+  }
 
   const child = React.Children.only(children)
-  let childProps = { onClick: () => setOpen(true) }
+  let childProps = {
+    onClick: () => {
+      setOpen(true)
+      onOpenChange?.(true)
+    },
+  }
 
   return (
     <>

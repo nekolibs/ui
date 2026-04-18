@@ -1,4 +1,6 @@
 export const BASE_THEME = {
+  baseMaxWidth: 1800,
+
   spaces: {
     xxxs: 1,
     xxs: 3,

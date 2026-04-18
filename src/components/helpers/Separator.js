@@ -11,12 +11,19 @@ import { useSizeConverter } from '../../modifiers/sizeConverter'
 import { useSizeModifier } from '../../modifiers/size'
 import { useThemeComponentModifier } from '../../modifiers/themeComponent'
 
-const DEFAULT_PROPS = ([{ size, sizeCode }, { line }]) => ({
-  height: !!line ? 2 * size : size,
-  br: sizeCode,
-  center: true,
-  fullW: true,
-})
+const DEFAULT_PROPS = ([{ size, sizeCode }, { line, vertical }]) => {
+  const lineSize = is(Number, line) ? line : 1
+  return {
+    ...(vertical
+      ? { width: !!line ? 2 * size : size, fullH: true, row: true }
+      : { height: !!line ? 2 * size : size, fullW: true }),
+    br: sizeCode,
+    center: true,
+    lineProps: vertical
+      ? { width: lineSize, fullH: true, br: lineSize }
+      : { height: lineSize, fullW: true, br: lineSize },
+  }
+}
 
 export function Separator(rootProps) {
   const [{ color }, formattedProps] = pipe(
@@ -30,14 +37,11 @@ export function Separator(rootProps) {
     useFlexWrapperModifier
   )([{}, rootProps])
 
-  const { line, lineProps, ...props } = formattedProps
-  const lineHeight = is(Number, line) ? line : 1
+  const { line, vertical, lineProps, ...props } = formattedProps
 
   return (
     <AbsView className="neko-separator" {...props}>
-      {!!line && (
-        <View bg={color} br={lineHeight} height={lineHeight} fullW className="neko-separator-line" {...lineProps} />
-      )}
+      {!!line && <View bg={color} className="neko-separator-line" {...lineProps} />}
     </AbsView>
   )
 }

@@ -32,7 +32,7 @@ export function ContentLabel(rootProps) {
   return (
     <View className="neko-content-label" row gap={gap || AUTO_GAP_SCALE[sizeCode] || 5} centerV {...props}>
       {!invert && content}
-      {!!label && (
+      {label != null && label !== '' && (
         <Text color={color} size={sizeCode} strong={strong} {...textProps}>
           {label}
         </Text>

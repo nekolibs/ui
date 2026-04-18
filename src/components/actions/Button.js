@@ -34,7 +34,9 @@ const DEFAULT_PROPS = ([{ sizeCode }]) => ({
   },
 })
 
-export function Button({ children, ...rootProps }) {
+export function Button({ children, dashed, ...rootProps }) {
+  if (dashed) rootProps = { outline: true, ...rootProps, borderStyle: 'dashed' }
+
   const [{ loading, fontColor, sizeCode }, formattedProps] = pipe(
     useColorConverter('primary'),
     useSizeConverter('elementHeights', 'md'),

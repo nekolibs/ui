@@ -10,13 +10,13 @@ import { normalizeString } from '../../helpers/string'
 import { useOptions } from '../../helpers/options'
 
 export function getOption(options, value, config = {}) {
-  if (!options?.length) return value
+  if (!Array.isArray(options) || !options.length) return value
   const option = options.find((option) => compareOptionsValues(option, value, config))
   return option || value
 }
 
 export function getOptionLabel(options, value, config = {}) {
-  if (!options?.length) return ''
+  if (!Array.isArray(options) || !options.length) return ''
   const { labelKey } = config
   const selectedOption = getOption(options, value, config)
   const label = selectedOption?.[labelKey] || value

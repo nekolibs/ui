@@ -2,12 +2,16 @@ import { assocPath, path } from 'ramda'
 import React from 'react'
 import { validateRules, validateAllFields, normalizeRules } from './validation'
 
-export function useNewForm({ initialValues = {}, validate, onSubmit } = {}) {
+export function useNewForm({ initialValues = {}, validate, onSubmit, onValuesChange } = {}) {
   const valuesRef = React.useRef({ ...initialValues })
+  const initialValuesRef = React.useRef({ ...initialValues })
   const errorsRef = React.useRef({}) // Flat structure: { 'users': 'error', 'users.0.name': 'error' }
   const listenersRef = React.useRef({})
   const errorListenersRef = React.useRef({})
   const rulesRegistryRef = React.useRef(new Map())
+  const callbacksRef = React.useRef({ onSubmit, validate, onValuesChange })
+
+  callbacksRef.current = { onSubmit, validate, onValuesChange }
 
   const formApi = React.useMemo(() => {
     const toKey = (name) => (Array.isArray(name) ? name.join('.') : name)
@@ -20,6 +24,14 @@ export function useNewForm({ initialValues = {}, validate, onSubmit } = {}) {
       }
     }
 
+    const notifyAll = () => {
+      Object.keys(listenersRef.current).forEach((key) => {
+        const keyPath = key.split('.')
+        const value = path(keyPath, valuesRef.current)
+        listenersRef.current[key]?.forEach((cb) => cb(value))
+      })
+    }
+
     const notifyError = (name) => {
       const key = toKey(name)
       if (errorListenersRef.current[key]) {
@@ -27,12 +39,39 @@ export function useNewForm({ initialValues = {}, validate, onSubmit } = {}) {
       }
     }
 
+    const notifyAllErrors = () => {
+      Object.keys(errorListenersRef.current).forEach((key) => {
+        errorListenersRef.current[key]?.forEach((cb) => cb(errorsRef.current[key]))
+      })
+    }
+
     const setFieldValue = (name, value) => {
       valuesRef.current = assocPath(toPath(name), value, valuesRef.current)
       notify(name)
+      const fn = callbacksRef.current.onValuesChange
+      if (fn) fn(name, valuesRef.current)
     }
 
     const getFieldValue = (name) => path(toPath(name), valuesRef.current)
+
+    const getFieldsValue = () => ({ ...valuesRef.current })
+
+    const setFieldsValue = (obj) => {
+      if (!obj) return
+      Object.entries(obj).forEach(([key, value]) => {
+        valuesRef.current = assocPath(toPath(key), value, valuesRef.current)
+      })
+      notifyAll()
+      const fn = callbacksRef.current.onValuesChange
+      if (fn) fn(null, valuesRef.current)
+    }
+
+    const resetFields = () => {
+      valuesRef.current = { ...initialValuesRef.current }
+      errorsRef.current = {}
+      notifyAll()
+      notifyAllErrors()
+    }
 
     // Flat error lookup by key
     const getError = (name) => {
@@ -112,6 +151,7 @@ export function useNewForm({ initialValues = {}, validate, onSubmit } = {}) {
       const rulesErrors = await validateAllFields(valuesRef.current, rulesRegistryRef.current)
 
       // Run legacy validate function if provided
+      const { validate } = callbacksRef.current
       const legacyErrors = validate ? validate(valuesRef.current) || {} : {}
 
       // Store errors in flat structure
@@ -134,16 +174,25 @@ export function useNewForm({ initialValues = {}, validate, onSubmit } = {}) {
       return Object.keys(errorsRef.current).length === 0
     }
 
+    const validateFields = async () => {
+      const isValid = await validateForm()
+      if (!isValid) return Promise.reject(errorsRef.current)
+      return { ...valuesRef.current }
+    }
+
     const handleSubmit = async () => {
       const isValid = await validateForm()
       if (!isValid) return
-      console.log('SUBMIT')
-      onSubmit(valuesRef.current)
+      const { onSubmit } = callbacksRef.current
+      if (onSubmit) onSubmit({ ...valuesRef.current })
     }
 
     return {
       setFieldValue,
       getFieldValue,
+      getFieldsValue,
+      setFieldsValue,
+      resetFields,
       getError,
       setError,
       clearErrors,
@@ -151,10 +200,12 @@ export function useNewForm({ initialValues = {}, validate, onSubmit } = {}) {
       registerErrorListener,
       registerRules,
       validateField,
+      validateFields,
       handleSubmit,
       valuesRef,
+      _callbacksRef: callbacksRef,
     }
-  }, [validate, onSubmit])
+  }, [])
 
   return formApi
 }

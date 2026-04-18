@@ -1,4 +1,5 @@
 export * from './Accordion'
+export * from './Affix'
 export * from './AccordionGroup'
 export * from './View'
 export * from './GradientView'

@@ -82,7 +82,8 @@ export function NumberInput({ onChange, onBlur, value, defaultValue, useInt, pre
 
   if (useInt) precision = 0
   if (!useInt && precision === 0) useInt = true
-  const opts = { useInt, precision, min, max }
+  const opts = { useInt, precision }
+  const optsWithMinMax = { ...opts, min, max }
 
   return (
     <TextInput
@@ -92,11 +93,14 @@ export function NumberInput({ onChange, onBlur, value, defaultValue, useInt, pre
         setInputValue(newValue?.toString() || '')
         setLocalValue(numericValue)
         onChange?.(numericValue)
-        setHasError(!isValidNumber(newValue, opts))
+        setHasError(!isValidNumber(newValue, optsWithMinMax))
       }}
       onBlur={(e) => {
-        setInputValue(localValue?.toString() || '')
-        setHasError(!isValidNumber(localValue, opts))
+        const clamped = formatNumericValue(localValue, localValue, optsWithMinMax)
+        setLocalValue(clamped)
+        setInputValue(clamped?.toString() || '')
+        setHasError(!isValidNumber(clamped, optsWithMinMax))
+        onChange?.(clamped)
         onBlur?.(e)
       }}
       value={inputValue}

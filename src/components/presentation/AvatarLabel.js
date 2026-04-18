@@ -46,6 +46,7 @@ export function AvatarLabel(rootProps) {
           size={avatarSize || moveScale(sizeCode, moveAvatarSizeScale || -1)}
           color={avatarColor || color}
           dynamicColor={dynamicColor}
+          {...(!dynamicColor && { color: avatarColor || color })}
           square={square}
           marginH={2}
           iconSize={iconSize}

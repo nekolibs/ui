@@ -41,6 +41,7 @@ export function Select({
   popoverMaxHeight,
   snapPoints,
   startsOpen,
+  onOpenChange,
   ...props
 }) {
   const [focus, setFocus] = React.useState(false)
@@ -71,7 +72,7 @@ export function Select({
 
   useBottomDrawer = useResponsiveValue(useBottomDrawer)
 
-  value = value || localValue
+  value = value ?? localValue
 
   const handleChange = React.useCallback(
     (value, option) => {
@@ -119,6 +120,10 @@ export function Select({
     <Popover
       trigger="click"
       startsOpen={startsOpen}
+      onOpenChange={(open) => {
+        if (open) handleChangeSearch('')
+        onOpenChange?.(open)
+      }}
       placement={placement || 'bottomLeft'}
       snapPoints={snapPoints || [450]}
       useBottomDrawer={useBottomDrawer}
@@ -129,52 +134,59 @@ export function Select({
       maxHeight={popoverMaxHeight}
       {...popoverProps}
       renderContent={({ onClose }) => (
-          <Picker
-            row={false}
-            options={searchOptions(options, search, { labelKey })}
-            value={value}
-            gap={0}
-            maxHeight={!useBottomDrawer && popoverMaxHeight}
-            useFlatList
-            onlyOnScreen
-            itemMinHeight={30}
-            onChange={(v, option) => {
-              handleChange(v, option)
-              if (!multiple) onClose()
-            }}
-            {...pickerProps}
-            renderHeader={useBottomDrawer && useSearch ? () => (
-              <>
-                <View padding="md" paddingB="xs">
-                  <TextInput
-                    prefixIcon="search-line"
-                    prefixIconColor="text4"
-                    value={search}
-                    onChange={handleChangeSearch}
-                  />
-                </View>
-                {renderHeader?.()}
-              </>
-            ) : renderHeader}
-            renderOption={({ option, selected, onChange }) => (
-              <Link
-                row
-                paddingH={useBottomDrawer ? 'md' : 'sm'}
-                paddingV="xs"
-                minHeight={useBottomDrawer ? 'xl' : 'md'}
-                gap="sm"
-                onMouseDown={(e) => !!multiple && e.preventDefault()}
-                onPress={onChange}
-                centerV
-                bg={selected && 'primary_op10'}
-              >
-                <View flex row>
-                  {finalRenderOption({ option, labelKey, selected })}
-                </View>
-                {selected && <Icon name="checkbox-circle-fill" primary />}
-              </Link>
-            )}
-          />
+        <Picker
+          row={false}
+          options={searchOptions(options, search, { labelKey })}
+          value={value}
+          gap={0}
+          maxHeight={!useBottomDrawer && popoverMaxHeight}
+          useFlatList
+          onlyOnScreen
+          itemMinHeight={30}
+          onChange={(v, option) => {
+            handleChange(v, option)
+            if (!multiple) {
+              setFocus(false)
+              onClose()
+            }
+          }}
+          {...pickerProps}
+          renderHeader={
+            useBottomDrawer && useSearch
+              ? () => (
+                  <>
+                    <View padding="md" paddingB="xs">
+                      <TextInput
+                        prefixIcon="search-line"
+                        prefixIconColor="text4"
+                        value={search}
+                        onChange={handleChangeSearch}
+                      />
+                    </View>
+                    {renderHeader?.()}
+                  </>
+                )
+              : renderHeader
+          }
+          renderOption={({ option, selected, onChange }) => (
+            <Link
+              row
+              paddingH={useBottomDrawer ? 'md' : 'sm'}
+              paddingV="xs"
+              minHeight={useBottomDrawer ? 'xl' : 'md'}
+              gap="sm"
+              onMouseDown={(e) => !!multiple && e.preventDefault()}
+              onPress={onChange}
+              centerV
+              bg={selected && 'primary_op10'}
+            >
+              <View flex row>
+                {finalRenderOption({ option, labelKey, selected })}
+              </View>
+              {selected && <Icon name="checkbox-circle-fill" primary />}
+            </Link>
+          )}
+        />
       )}
     >
       <Input

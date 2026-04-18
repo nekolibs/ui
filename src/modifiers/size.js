@@ -1,8 +1,9 @@
 import { Platform } from '../abstractions/Platform'
 import { clearProps, flattenStyle } from './_helpers'
-import { useGetElementHeight } from '../theme/ThemeHandler'
+import { useGetElementHeight, useTheme } from '../theme/ThemeHandler'
 
 export function useSizeModifier([values, props]) {
+  const theme = useTheme()
   const getHeight = useGetElementHeight()
   let {
     width,
@@ -26,11 +27,13 @@ export function useSizeModifier([values, props]) {
     ...restProps
   } = props || {}
 
-  minHeight = getHeight(minHeight || minH)
-  minWidth = getHeight(minWidth || minW)
+  minHeight = getHeight(minHeight ?? minH)
+  minWidth = getHeight(minWidth ?? minW)
 
-  maxHeight = getHeight(maxHeight || maxH)
-  maxWidth = getHeight(maxWidth || maxW)
+  maxHeight = getHeight(maxHeight ?? maxH)
+
+  maxWidth = maxWidth ?? maxW
+  maxWidth = maxWidth === 'base' ? theme.baseMaxWidth : getHeight(maxWidth || maxW)
 
   height = getHeight(height)
   width = getHeight(width)

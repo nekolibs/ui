@@ -12,7 +12,7 @@ import { usePositionModifier } from '../../modifiers/position'
 import { useShadowModifier } from '../../modifiers/shadow'
 import { useSizeModifier } from '../../modifiers/size'
 
-export function FormWrapperComponent({ children, form, ...rootProps }) {
+export function FormWrapperComponent({ children, form, onSubmit, ...rootProps }) {
   const formState = useFormState()
   const [_, props] = pipe(
     useDisplayModifier, //
@@ -28,10 +28,19 @@ export function FormWrapperComponent({ children, form, ...rootProps }) {
     useShadowModifier
   )([{}, rootProps])
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     if (formState?.loading || formState?.disabled) return
-    form.handleSubmit()
+    if (onSubmit) {
+      try {
+        const values = await form.validateFields()
+        onSubmit(values)
+      } catch (e) {
+        // Validation failed, errors already set on fields
+      }
+    } else {
+      form.handleSubmit()
+    }
   }
 
   return (

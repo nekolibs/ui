@@ -10,8 +10,9 @@ const OverlayContext = React.createContext(null)
 export const useOverlay = () => React.useContext(OverlayContext)
 
 export const useRegisterOverlay = (opts = {}) => {
-  const { unmountOnClose } = opts
+  const { unmountOnClose, onOpenChange } = opts
   const timeout = React.useRef(null)
+  const wasOpen = React.useRef(false)
   const { overlays, setOverlays } = useOverlay()
   const randomId = React.useMemo(() => genRandonId(), [])
   const overlay = overlays[randomId] || {}
@@ -20,12 +21,19 @@ export const useRegisterOverlay = (opts = {}) => {
   const removeOverlay = () => setOverlays((data) => dissoc(randomId, data))
   const stopDelayedClosing = () => !!timeout?.current && clearTimeout(timeout.current)
 
+  const isOpen = !!overlay.open
+  React.useEffect(() => {
+    if (wasOpen.current && !isOpen) onOpenChange?.(false)
+    wasOpen.current = isOpen
+  }, [isOpen])
+
   React.useEffect(() => {
     return () => removeOverlay()
   }, [])
 
   const onOpen = ({ content, triggerRect, placement, options = {} }) => {
     stopDelayedClosing()
+    onOpenChange?.(true)
     mergeOverlay({ open: true, content, triggerRect, placement, ...options })
   }
 

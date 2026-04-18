@@ -36,7 +36,7 @@ function Content({ items, title, subtitle, onClose, onChange, topBarProps, menuP
       <View flex>
         <DrawerScrollView>
           {!title && <View paddingT="md" />}
-          <Section>
+          <Section marginH="md">
             <Menu items={items} onChange={handleChange} {...menuProps} />
           </Section>
           <View height={100} />
