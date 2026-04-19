@@ -23,7 +23,7 @@ function Item({
   ...props
 }) {
   activeColor = activeColor || 'primary'
-  let { active, key, ...childProps } = omit(['onClick', 'onPress'], item)
+  let { active, key, disabled, ...childProps } = omit(['onClick', 'onPress'], item)
   if (!active && activeIndex >= 0) active = activeIndex === index
   if (!active && activeKey !== undefined) active = activeKey === item.key
 
@@ -41,6 +41,7 @@ function Item({
         fullH
         center
         paddingH={linkPaddingH}
+        disabled={disabled}
         {...linkProps}
         onPress={() => handlePress(item, index)}
       >
