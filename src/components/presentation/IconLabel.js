@@ -24,6 +24,7 @@ export function IconLabel(rootProps) {
       content={
         !!icon && (
           <Icon
+            center
             name={icon}
             size={iconSize || moveScale(sizeCode, moveIconSizeScale || -1)}
             color={iconColor || color}
