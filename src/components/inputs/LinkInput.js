@@ -6,7 +6,7 @@ import { useColors } from '../../theme/ThemeHandler'
 
 export function LinkInput({ ref, onPress, onClick, placeholder, value, disabled, ...props }) {
   return (
-    <Link ref={ref} onPress={!props.loading ? onPress || onClick : undefined} flex fullW centerV disabled={disabled}>
+    <Link ref={ref} onPress={!props.loading ? onPress || onClick : undefined} fullW centerV disabled={disabled}>
       <InputWrapper {...props}>
         <View centerV flex fullW>
           <Text color={!!value ? 'text' : 'text_op30'} label={value || placeholder} numberOfLines={1} />

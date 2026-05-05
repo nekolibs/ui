@@ -144,7 +144,7 @@ export function Picker({
   Wrapper = Wrapper || (useFlatList ? FlatListPickerWrapper : DefaultPickerWrapper)
 
   return (
-    <LoadingView active={isFirstLoad} replaceChildren>
+    <LoadingView active={isFirstLoad} replaceChildren flex>
       <Wrapper
         {...rootProps}
         valueKey={valueKey}

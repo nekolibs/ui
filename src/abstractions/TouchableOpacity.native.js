@@ -1,3 +1,9 @@
-import { TouchableOpacity as RNTouchableOpacity } from 'react-native'
+import { Linking, TouchableOpacity as RNTouchableOpacity } from 'react-native'
 
-export const AbsTouchableOpacity = RNTouchableOpacity
+export function AbsTouchableOpacity({ href, target, link, onPress, ...props }) {
+  const handlePress = href
+    ? (e) => { onPress?.(e); Linking.openURL(href) }
+    : onPress
+
+  return <RNTouchableOpacity onPress={handlePress} {...props} />
+}
