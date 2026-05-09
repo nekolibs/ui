@@ -1,7 +1,8 @@
-import { mergeDeepRight } from 'ramda'
+import { keys, mergeDeepRight, omit, pick, pickBy } from 'ramda'
 import React from 'react'
 
 import { DEFAULT_LIGHT_THEME } from './default/lightTheme'
+import { DEFAULT_THEMES } from './default/themes'
 import { getThemeValue } from './helpers/relatedScales'
 import { useFormattedTheme } from './format/formatTheme'
 
@@ -52,8 +53,33 @@ export function useMergeThemeComponent(name, props) {
   const themeProps = useThemeComponent(name)
   return mergeDeepRight(themeProps, props)
 }
+export function useAllThemes() {
+  const { disableDefaultThemes, enableOnlyThemes, rawThemesParam } = useThemeHandler()
+  const themes = rawThemesParam || {}
+  const themesParamKeys = keys(themes)
 
-export function ThemeHandler({ breakpoints, themes, initTheme, onChangeTheme, children }) {
+  let allThemes = mergeDeepRight(DEFAULT_THEMES, themes)
+  if (disableDefaultThemes === true) {
+    allThemes = pickBy((_, key) => themesParamKeys.includes(key), allThemes)
+  } else if (disableDefaultThemes?.length) {
+    allThemes = omit(disableDefaultThemes, allThemes)
+  }
+  if (enableOnlyThemes?.length) {
+    allThemes = pick(enableOnlyThemes, allThemes)
+  }
+
+  return allThemes
+}
+
+export function ThemeHandler({
+  breakpoints,
+  themes,
+  initTheme,
+  onChangeTheme,
+  children,
+  disableDefaultThemes,
+  enableOnlyThemes,
+}) {
   const [themePickerOpen, setThemePickerOpen] = React.useState(false)
   const openThemePicker = () => setThemePickerOpen(true)
   const [activeThemeKey, setActiveThemeKey] = React.useState(initTheme || 'light')
@@ -66,7 +92,9 @@ export function ThemeHandler({ breakpoints, themes, initTheme, onChangeTheme, ch
 
   const value = {
     theme,
-    themes,
+    rawThemesParam: themes,
+    disableDefaultThemes,
+    enableOnlyThemes,
     activeThemeKey,
     toggleTheme,
     themePickerOpen,

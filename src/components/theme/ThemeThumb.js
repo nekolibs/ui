@@ -4,7 +4,7 @@ import { useResponsiveValue } from '../../responsive'
 import { useThemeHandler } from '../../theme'
 
 export function ThemeThumb({ value }) {
-  const { themes } = useThemeHandler()
+  const { rawThemesParam: themes } = useThemeHandler()
   const { colors, label } = useFormattedTheme(themes, value)
   const isMobile = useResponsiveValue({ smd: true, df: false })
 

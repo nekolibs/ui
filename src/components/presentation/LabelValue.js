@@ -18,7 +18,7 @@ const DEFAULT_PROPS = ([{ sizeCode, color }, { vertical, spread }]) => {
     labelProps: {
       size: moveScale(sizeCode, !vertical ? 0 : -2),
       moveIconSizeScale: !vertical ? -1 : -2,
-      color: color || 'text3',
+      color: color || 'text2',
     },
     valueProps: {
       size: sizeCode,

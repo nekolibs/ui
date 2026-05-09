@@ -1,25 +1,20 @@
-import { mapObjIndexed, mergeDeepRight, values, pipe, filter } from 'ramda'
+import { mapObjIndexed, values, pipe, reject, propEq } from 'ramda'
 
-import { DEFAULT_THEMES, useThemeHandler } from '../../theme'
+import { useAllThemes, useThemeHandler } from '../../theme'
 import { IconLabel } from '../presentation'
 import { Link } from '../actions'
 import { Picker } from '../inputs'
 import { ThemeThumb } from './ThemeThumb'
 
-export function ThemePicker({ onChange, onlyKeys, hideKeys }) {
-  const { activeThemeKey, themes, onChangeTheme } = useThemeHandler()
+export function ThemePicker({ onChange }) {
+  const { activeThemeKey, onChangeTheme } = useThemeHandler()
+  const allThemes = useAllThemes()
 
-  let options = pipe(
-    mergeDeepRight(DEFAULT_THEMES),
+  const options = pipe(
     mapObjIndexed((obj, key) => ({ ...obj, value: key, key })),
     values,
-    filter((item) => {
-      if (item.value === '_all') return false
-      if (onlyKeys && onlyKeys.includes(item.value)) return true
-      if (hideKeys && hideKeys.includes(item.value)) return false
-      return true
-    })
-  )(themes)
+    reject(propEq('_all', 'value'))
+  )(allThemes)
 
   return (
     <Picker

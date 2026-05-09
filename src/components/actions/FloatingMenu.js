@@ -14,7 +14,7 @@ export function FloatingMenu({ fixed, onChange, items, activeIndex, size = 'md',
 
   return (
     <View absolute={!fixed} fixed={fixed} left="md" right="md" centerH bottom={Math.max(insets.bottom / 2, 16)}>
-      <WrapperView height={height} shadow round row paddingH="sm" bg={bg} {...props}>
+      <WrapperView height={height} shadow round row paddingH="sm" bg={bg} border="overlayDivider" {...props}>
         {items.map((item, index) => {
           const isActive = index === activeIndex
 
