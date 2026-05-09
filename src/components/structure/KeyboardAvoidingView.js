@@ -1,6 +1,7 @@
 import { pipe } from 'ramda'
 
 import { AbsKeyboardAvoidingView } from '../../abstractions/KeyboardAvoidingView'
+import { AbsKeyboardDismissView } from '../../abstractions/KeyboardDismissView'
 import { Platform } from '../../abstractions/Platform'
 import { useSafeAreaInsets } from '../../abstractions/helpers/useSafeAreaInsets'
 import { useAnimationModifier } from '../../modifiers/animation'
@@ -19,7 +20,7 @@ import { useSizeModifier } from '../../modifiers/size'
 import { useStateModifier } from '../../modifiers/state'
 import { useThemeComponentModifier } from '../../modifiers/themeComponent'
 
-export function KeyboardAvoidingView({ children, keyboardVerticalOffset = 0, ...rootProps }) {
+export function KeyboardAvoidingView({ children, keyboardVerticalOffset = 0, dismissOnTap = true, ...rootProps }) {
   const { bottom } = useSafeAreaInsets()
 
   const [_, props] = pipe(
@@ -46,7 +47,13 @@ export function KeyboardAvoidingView({ children, keyboardVerticalOffset = 0, ...
       keyboardVerticalOffset={keyboardVerticalOffset + bottom}
       {...props}
     >
-      {children}
+      {dismissOnTap ? (
+        <AbsKeyboardDismissView style={{ flex: 1 }}>
+          {children}
+        </AbsKeyboardDismissView>
+      ) : (
+        children
+      )}
     </AbsKeyboardAvoidingView>
   )
 }

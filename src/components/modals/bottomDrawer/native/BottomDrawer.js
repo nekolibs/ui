@@ -4,6 +4,8 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
+  useAnimatedKeyboard,
+  KeyboardState,
   withSpring,
   runOnJS,
 } from 'react-native-reanimated'
@@ -27,6 +29,7 @@ function InnerContent({
   enableOverScroll = true,
   enableHandlePanningGesture = true,
   enableContentPanningGesture = true,
+  keyboardBehavior = 'interactive',
   animationConfig = {
     damping: 50,
     stiffness: 500,
@@ -44,6 +47,7 @@ function InnerContent({
   const bottomInset = useSafeArea ? insets.bottom : 0
 
   const colors = useColors()
+  const keyboard = useAnimatedKeyboard()
 
   const translateY = useSharedValue(SCREEN_HEIGHT)
   const snapIndex = useSharedValue(0)
@@ -146,10 +150,27 @@ function InnerContent({
     handleClose,
   ])
 
+  const topInset = insets.top
   const animatedSheetStyle = useAnimatedStyle(() => {
-    const currentHeight = SCREEN_HEIGHT - translateY.value
+    let kbShift = 0
+
+    if (keyboardBehavior !== 'none' && keyboard.state.value === KeyboardState.OPEN) {
+      const kbHeight = keyboard.height.value
+
+      if (keyboardBehavior === 'interactive') {
+        // Shift up by keyboard height, but don't go above safe area
+        const maxShift = Math.max(0, translateY.value - topInset)
+        kbShift = Math.min(kbHeight, maxShift)
+      } else if (keyboardBehavior === 'extend') {
+        // Snap to fill available space above keyboard
+        kbShift = Math.max(0, translateY.value - topInset)
+      }
+    }
+
+    const adjustedY = translateY.value - kbShift
+    const currentHeight = SCREEN_HEIGHT - adjustedY
     return {
-      transform: [{ translateY: translateY.value }],
+      transform: [{ translateY: adjustedY }],
       maxHeight: currentHeight,
     }
   })
