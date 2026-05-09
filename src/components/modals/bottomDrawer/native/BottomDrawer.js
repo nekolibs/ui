@@ -122,11 +122,9 @@ function InnerContent({
         const currentPosition = SCREEN_HEIGHT - translateY.value
         const shouldClose =
           !!handleClose &&
-          (
-            velocityY.value > 1500 ||
+          (velocityY.value > 1500 ||
             (velocityY.value > 800 && currentPosition < minSnapPoint) ||
-            currentPosition < minSnapPoint * 0.35
-          )
+            currentPosition < minSnapPoint * 0.35)
 
         if (shouldClose) {
           runOnJS(handleClose)()
@@ -200,6 +198,7 @@ function InnerContent({
               marginR="auto"
               fullW
               {...props}
+              minH={minSnapPoint}
             >
               <DrawerHandle hide={hideHandle} />
               <View flex {...contentProps}>
