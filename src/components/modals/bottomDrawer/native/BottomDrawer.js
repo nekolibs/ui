@@ -154,7 +154,8 @@ function InnerContent({
   const animatedSheetStyle = useAnimatedStyle(() => {
     let kbShift = 0
 
-    if (keyboardBehavior !== 'none' && keyboard.state.value === KeyboardState.OPEN) {
+    const kbVisible = keyboard.state.value === KeyboardState.OPEN || keyboard.state.value === KeyboardState.OPENING
+    if (keyboardBehavior !== 'none' && kbVisible) {
       const kbHeight = keyboard.height.value
 
       if (keyboardBehavior === 'interactive') {

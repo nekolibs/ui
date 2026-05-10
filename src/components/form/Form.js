@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { FormWrapperComponent } from './FormWrapperComponent'
+import { KeyboardDismissButton } from '../keyboard/KeyboardDismissButton'
 import { LoadingView } from '../state/LoadingView'
 import { useNewForm } from './useNewForm'
 
@@ -24,6 +25,7 @@ export function Form({ form, onSubmit, onValuesChange, initialValues, children, 
       <LoadingView active={loading} noWrapper>
         <FormWrapperComponent form={form} onSubmit={onSubmit} gap="md" {...props}>
           {children}
+          <KeyboardDismissButton />
         </FormWrapperComponent>
       </LoadingView>
     </FormContext.Provider>
