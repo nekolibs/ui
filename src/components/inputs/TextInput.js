@@ -1,9 +1,11 @@
 import { AbsTextInput } from '../../abstractions/TextInput'
 import { InputWrapper } from './InputWrapper'
 import { useColors } from '../../theme/ThemeHandler'
+import { useSpaces } from '../../theme'
 
 export function TextInput({ onChange, multiline, rows, ...props }) {
   const colors = useColors()
+  const spaces = useSpaces()
 
   const STYLE = {
     width: '100%',
@@ -11,10 +13,9 @@ export function TextInput({ onChange, multiline, rows, ...props }) {
     background: 'transparent',
     outline: 'none',
     color: colors.text,
-    // fontFamily: 'inherit',
-    // fontSize: 'inherit',
-    // lineHeight: 'inherit',
-    ...(multiline ? { resize: 'none' } : { height: '100%' }),
+    flex: 1,
+    height: '100%',
+    ...(multiline ? { paddingTop: spaces.sm, resize: 'none', flex: 1, textAlignVertical: 'top' } : {}),
   }
 
   return (

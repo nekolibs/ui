@@ -65,8 +65,7 @@ export function InputWrapper({
     <View
       className="neko-input-wrapper"
       height={multiline ? undefined : size}
-      minHeight={multiline ? size : undefined}
-      paddingV={multiline ? 'sm' : undefined}
+      minHeight={multiline ? 1.5 * size : undefined}
       onPress={handlePress}
       borderColor={borderColor}
       onMouseEnter={() => setHover(true)}
