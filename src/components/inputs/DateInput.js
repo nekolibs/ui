@@ -91,7 +91,7 @@ export function DateInput({
       trigger="click"
       startsOpen={startsOpen}
       placement={placement || 'bottomLeft'}
-      snapPoints={[350]}
+      snapPoints={[450]}
       useBottomDrawer={useBottomDrawer}
       bottomDrawerProps={{ contentProps: { padding: 'md' } }}
       watch={[value?.format?.('YYYYMMDD')]}
@@ -103,6 +103,7 @@ export function DateInput({
               handleChange(v)
               onClose()
             }}
+            width={useBottomDrawer ? '100%' : 275}
             {...validations}
             type={type}
           />

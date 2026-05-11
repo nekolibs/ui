@@ -30,7 +30,7 @@ export function DayPicker({ value, onChange, min, max, onCheckDisabled, ...props
   const { cells } = useCalendarDays(currentMonth)
 
   return (
-    <View className="neko-day-picker" width={275} {...props}>
+    <View className="neko-day-picker" width={275} maxW={350} {...props}>
       <CalendarNav value={currentMonth} onChange={setCurrentMonth} />
       <WeekDaysBar />
 

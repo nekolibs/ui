@@ -20,7 +20,7 @@ export function CalendarNav({ value, onChange, level, ...props }) {
 
     return (
       <View className="neko-calendar-nav" row centerV gap="xxs" height={30} {...props}>
-        <Link onPress={prevDecade} aria-label="Previous decade" padding="xxs" paddingL={0}>
+        <Link onPress={prevDecade} aria-label="Previous decade" padding="sm" paddingL={0}>
           <Icon name="arrow-left-double-line" />
         </Link>
 
@@ -28,7 +28,7 @@ export function CalendarNav({ value, onChange, level, ...props }) {
           {year}-{year + 9}
         </Text>
 
-        <Link onPress={nextDecade} aria-label="Next decade" padding="xxs" paddingR={0}>
+        <Link onPress={nextDecade} aria-label="Next decade" padding="sm" paddingR={0}>
           <Icon name="arrow-right-double-line" />
         </Link>
       </View>
@@ -37,12 +37,12 @@ export function CalendarNav({ value, onChange, level, ...props }) {
 
   return (
     <View className="neko-calendar-nav" row centerV gap="xxs" height={30} {...props}>
-      <Link onPress={prevYear} aria-label="Previous year" padding="xxs" paddingL={0}>
+      <Link onPress={prevYear} aria-label="Previous year" padding="sm" paddingR={0}>
         <Icon name="arrow-left-double-line" />
       </Link>
 
       {showMonth && (
-        <Link onPress={prevMonth} aria-label="Previous month" padding="xxs">
+        <Link onPress={prevMonth} aria-label="Previous month" padding="sm">
           <Icon name="arrow-left-s-line" />
         </Link>
       )}
@@ -54,12 +54,12 @@ export function CalendarNav({ value, onChange, level, ...props }) {
       </View>
 
       {showMonth && (
-        <Link onPress={nextMonth} aria-label="Next month" padding="xxs">
+        <Link onPress={nextMonth} aria-label="Next month" padding="sm">
           <Icon name="arrow-right-s-line" />
         </Link>
       )}
 
-      <Link onPress={nextYear} aria-label="Next year" padding="xxs" paddingR={0}>
+      <Link onPress={nextYear} aria-label="Next year" padding="sm" paddingL={0}>
         <Icon name="arrow-right-double-line" />
       </Link>
     </View>
