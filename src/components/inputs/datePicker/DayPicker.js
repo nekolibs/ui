@@ -2,6 +2,7 @@ import React from 'react'
 import dayjs from 'dayjs'
 
 import { CalendarNav } from '../../calendar/CalendarNav'
+import { ClearLink } from '../../actions/ClearLink'
 import { Col } from '../../structure/Col'
 import { Grid } from '../../structure/Row'
 import { InfiniteCarousel } from '../../carousel/InfiniteCarousel'
@@ -58,7 +59,7 @@ function MonthDays({ month, selectedValue, onSelect, min, max, onCheckDisabled }
   )
 }
 
-export function DayPicker({ value, onChange, min, max, onCheckDisabled, ...props }) {
+export function DayPicker({ value, onChange, min, max, onCheckDisabled, allowClear, ...props }) {
   if (!!value) value = dayjs(value)
   const [localValue, setLocalValue] = React.useState(value)
   const [currentMonth, setCurrentMonth] = React.useState(() => dayjs(value || undefined).startOf('month'))
@@ -99,6 +100,7 @@ export function DayPicker({ value, onChange, min, max, onCheckDisabled, ...props
         min={minMonth}
         max={maxMonth}
       />
+      <ClearLink hide={!allowClear} value={value} onChange={onChange} />
     </View>
   )
 }

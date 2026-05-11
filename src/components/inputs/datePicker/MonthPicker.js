@@ -2,6 +2,7 @@ import React from 'react'
 import dayjs from 'dayjs'
 
 import { CalendarNav } from '../../calendar/CalendarNav'
+import { ClearLink } from '../../actions/ClearLink'
 import { Col } from '../../structure/Col'
 import { Divider } from '../../helpers'
 import { Grid } from '../../structure/Row'
@@ -44,7 +45,7 @@ function MonthGrid({ year, selectedValue, onSelect, min, max, onCheckDisabled })
   )
 }
 
-export function MonthPicker({ value, onChange, min, max, onCheckDisabled, ...props }) {
+export function MonthPicker({ value, onChange, min, max, onCheckDisabled, allowClear, ...props }) {
   const [localValue, setLocalValue] = React.useState(value)
   const [currentYear, setCurrentYear] = React.useState(() => dayjs(value || undefined).startOf('year'))
   value = value === undefined ? localValue : value
@@ -79,6 +80,7 @@ export function MonthPicker({ value, onChange, min, max, onCheckDisabled, ...pro
         min={minYear}
         max={maxYear}
       />
+      <ClearLink hide={!allowClear} value={value} onChange={onChange} />
     </View>
   )
 }

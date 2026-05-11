@@ -3,6 +3,7 @@ import React from 'react'
 import dayjs from 'dayjs'
 
 import { CalendarNav } from '../../calendar/CalendarNav'
+import { ClearLink } from '../../actions/ClearLink'
 import { Col } from '../../structure/Col'
 import { Divider } from '../../helpers'
 import { Grid } from '../../structure/Row'
@@ -52,7 +53,7 @@ function DecadeGrid({ decadeIndex, selectedValue, onSelect, min, max, onCheckDis
   )
 }
 
-export function YearPicker({ value, onChange, min, max, onCheckDisabled, ...props }) {
+export function YearPicker({ value, onChange, min, max, onCheckDisabled, allowClear, ...props }) {
   const [localValue, setLocalValue] = React.useState(value)
   const [currentDecade, setCurrentDecade] = React.useState(() => getDecadeIndex(value))
 
@@ -87,6 +88,7 @@ export function YearPicker({ value, onChange, min, max, onCheckDisabled, ...prop
         min={minDecade}
         max={maxDecade}
       />
+      <ClearLink hide={!allowClear} value={value} onChange={onChange} />
     </View>
   )
 }

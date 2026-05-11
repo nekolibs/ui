@@ -3,6 +3,7 @@ import React from 'react'
 import dayjs from 'dayjs'
 
 import { CalendarNav } from '../../calendar/CalendarNav'
+import { ClearLink } from '../../actions/ClearLink'
 import { Col } from '../../structure/Col'
 import { InfiniteCarousel } from '../../carousel/InfiniteCarousel'
 import { Link } from '../../actions/Link'
@@ -68,7 +69,7 @@ function MonthWeeks({ month, selectedValue, onSelect, min, max, onCheckDisabled 
   )
 }
 
-export function WeekPicker({ value, onChange, min, max, onCheckDisabled, ...props }) {
+export function WeekPicker({ value, onChange, min, max, onCheckDisabled, allowClear, ...props }) {
   const [localValue, setLocalValue] = React.useState(value)
   const [currentMonth, setCurrentMonth] = React.useState(() => dayjs(value || undefined).startOf('month'))
   value = value === undefined ? localValue : value
@@ -102,6 +103,7 @@ export function WeekPicker({ value, onChange, min, max, onCheckDisabled, ...prop
         min={minMonth}
         max={maxMonth}
       />
+      <ClearLink hide={!allowClear} value={value} onChange={onChange} />
     </View>
   )
 }

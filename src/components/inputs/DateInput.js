@@ -48,6 +48,7 @@ export function DateInput({
   type = 'day',
   format,
   startsOpen,
+  allowClear,
   useBottomDrawer = { native: true, sm: true, md: true },
   ...props
 }) {
@@ -104,6 +105,7 @@ export function DateInput({
               onClose()
             }}
             width={useBottomDrawer ? '100%' : 275}
+            allowClear={allowClear}
             {...validations}
             type={type}
           />
