@@ -44,45 +44,56 @@ export function CarouselSlider() {
     isDragging && containerRef.current ? (dragOffset / containerRef.current.offsetWidth) * (100 / itemsCount) : 0
   const transformX = baseTranslate + dragPercent
 
+  const dragStateRef = React.useRef({ isDragging: false, dragOffset: 0 })
+
   const handlePointerDown = (e) => {
     if (!draggable) return
     startXRef.current = e.clientX
     startTimeRef.current = Date.now()
+    dragStateRef.current = { isDragging: true, dragOffset: 0 }
     setIsDragging(true)
     setDragOffset(0)
-    e.target.setPointerCapture(e.pointerId)
     pauseAutoplay()
-  }
 
-  const handlePointerMove = (e) => {
-    if (!isDragging) return
-    const raw = e.clientX - startXRef.current
-    if (loop) {
-      setDragOffset(raw)
-    } else {
+    const onMove = (ev) => {
+      const raw = ev.clientX - startXRef.current
+      let offset = raw
+      if (!loop) {
+        const containerWidth = containerRef.current?.offsetWidth || 1
+        const atStart = activeIndex === 0 && raw > 0
+        const atEnd = activeIndex === itemsCount - 1 && raw < 0
+        if (atStart || atEnd) offset = raw * 0.3
+      }
+      dragStateRef.current.dragOffset = offset
+      setDragOffset(offset)
+    }
+
+    const onUp = () => {
+      window.removeEventListener('pointermove', onMove)
+      window.removeEventListener('pointerup', onUp)
+      window.removeEventListener('pointercancel', onUp)
+
+      const offset = dragStateRef.current.dragOffset
       const containerWidth = containerRef.current?.offsetWidth || 1
-      const atStart = activeIndex === 0 && raw > 0
-      const atEnd = activeIndex === itemsCount - 1 && raw < 0
-      setDragOffset(atStart || atEnd ? raw * 0.3 : raw)
-    }
-  }
+      const threshold = containerWidth * 0.25
+      const elapsed = Date.now() - startTimeRef.current
+      const velocity = Math.abs(offset) / (elapsed || 1)
 
-  const handlePointerUp = () => {
-    if (!isDragging) return
-    const containerWidth = containerRef.current?.offsetWidth || 1
-    const threshold = containerWidth * 0.25
-    const elapsed = Date.now() - startTimeRef.current
-    const velocity = Math.abs(dragOffset) / (elapsed || 1)
+      if (offset < -threshold || (offset < 0 && velocity > 0.5)) {
+        goToNext()
+      } else if (offset > threshold || (offset > 0 && velocity > 0.5)) {
+        goToPrev()
+      }
 
-    if (dragOffset < -threshold || (dragOffset < 0 && velocity > 0.5)) {
-      goToNext()
-    } else if (dragOffset > threshold || (dragOffset > 0 && velocity > 0.5)) {
-      goToPrev()
+      dragStateRef.current = { isDragging: false, dragOffset: 0 }
+      setIsDragging(false)
+      setDragOffset(0)
+      resumeAutoplay()
     }
 
-    setIsDragging(false)
-    setDragOffset(0)
-    resumeAutoplay()
+    window.addEventListener('pointermove', onMove)
+    window.addEventListener('pointerup', onUp)
+    window.addEventListener('pointercancel', onUp)
   }
 
   return (
@@ -101,9 +112,6 @@ export function CarouselSlider() {
           if (e.propertyName === 'transform') afterChange(items?.[activeIndex]?.key, activeIndex)
         } : undefined}
         onPointerDown={draggable ? handlePointerDown : undefined}
-        onPointerMove={draggable ? handlePointerMove : undefined}
-        onPointerUp={draggable ? handlePointerUp : undefined}
-        onPointerCancel={draggable ? handlePointerUp : undefined}
       >
         {items.map((item) => (
           <View key={item.key} style={{ width: `${100 / itemsCount}%` }}>
