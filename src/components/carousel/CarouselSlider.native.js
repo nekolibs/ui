@@ -55,6 +55,8 @@ export function CarouselSlider() {
   const maxTranslate = 0
 
   const panGesture = Gesture.Pan()
+    .activeOffsetX([-10, 10])
+    .failOffsetY([-10, 10])
     .onStart(() => {
       gestureStartX.value = translateX.value
       runOnJS(pauseAutoplay)()
