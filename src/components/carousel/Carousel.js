@@ -9,6 +9,7 @@ export function Carousel({
   activeIndex,
   activeKey,
   onChange,
+  afterChange,
   autoplay,
   autoplaySpeed,
   draggable,
@@ -27,6 +28,7 @@ export function Carousel({
       activeIndex={activeIndex}
       activeKey={activeKey}
       onChange={onChange}
+      afterChange={afterChange}
       autoplay={autoplay}
       autoplaySpeed={autoplaySpeed}
       draggable={draggable}

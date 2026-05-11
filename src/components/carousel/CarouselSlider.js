@@ -12,7 +12,7 @@ function SlideContent({ item }) {
 }
 
 export function CarouselSlider() {
-  const { items, activeIndex, itemsCount, draggable, loop, goToNext, goToPrev, pauseAutoplay, resumeAutoplay } =
+  const { items, activeIndex, itemsCount, draggable, loop, afterChange, goToNext, goToPrev, pauseAutoplay, resumeAutoplay } =
     useCarousel()
 
   const containerRef = React.useRef(null)
@@ -20,6 +20,22 @@ export function CarouselSlider() {
   const [dragOffset, setDragOffset] = React.useState(0)
   const startXRef = React.useRef(0)
   const startTimeRef = React.useRef(0)
+  const prevItemsRef = React.useRef(items)
+  const skipTransitionRef = React.useRef(false)
+
+  if (items !== prevItemsRef.current) {
+    skipTransitionRef.current = true
+    prevItemsRef.current = items
+  }
+
+  React.useEffect(() => {
+    if (skipTransitionRef.current) {
+      const id = requestAnimationFrame(() => {
+        skipTransitionRef.current = false
+      })
+      return () => cancelAnimationFrame(id)
+    }
+  })
 
   if (!items?.length) return null
 
@@ -76,11 +92,14 @@ export function CarouselSlider() {
         style={{
           width: `${itemsCount * 100}%`,
           transform: `translateX(${transformX}%)`,
-          transition: isDragging ? 'none' : 'transform 300ms ease-in-out',
+          transition: isDragging || skipTransitionRef.current ? 'none' : 'transform 300ms ease-in-out',
           touchAction: 'pan-y',
           cursor: draggable ? (isDragging ? 'grabbing' : 'grab') : undefined,
           userSelect: 'none',
         }}
+        onTransitionEnd={afterChange ? (e) => {
+          if (e.propertyName === 'transform') afterChange(items?.[activeIndex]?.key, activeIndex)
+        } : undefined}
         onPointerDown={draggable ? handlePointerDown : undefined}
         onPointerMove={draggable ? handlePointerMove : undefined}
         onPointerUp={draggable ? handlePointerUp : undefined}

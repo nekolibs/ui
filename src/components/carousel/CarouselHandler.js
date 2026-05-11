@@ -9,6 +9,7 @@ export function CarouselHandler({
   activeIndex: controlledIndex,
   activeKey,
   onChange,
+  afterChange,
   autoplay,
   autoplaySpeed = 3000,
   draggable,
@@ -19,12 +20,12 @@ export function CarouselHandler({
 
   const [internalIndex, setInternalIndex] = React.useState(() => {
     if (controlledIndex !== undefined) return controlledIndex
-    if (activeKey) return Math.max(0, items?.findIndex((i) => i.key === activeKey) || 0)
+    if (activeKey !== undefined) return Math.max(0, items?.findIndex((i) => i.key === activeKey) || 0)
     return 0
   })
 
   const resolvedIndex = isControlled
-    ? activeKey
+    ? activeKey !== undefined
       ? Math.max(0, items?.findIndex((i) => i.key === activeKey) || 0)
       : controlledIndex
     : internalIndex
@@ -40,7 +41,7 @@ export function CarouselHandler({
       else next = Math.max(0, Math.min(next, itemsCount - 1))
 
       if (!isControlled) setInternalIndex(next)
-      onChange?.(next, items?.[next]?.key)
+      onChange?.(items?.[next]?.key, next)
     },
     [loop, itemsCount, isControlled, onChange, items]
   )
@@ -74,6 +75,7 @@ export function CarouselHandler({
     goTo,
     goToNext,
     goToPrev,
+    afterChange,
     draggable,
     loop,
     pauseAutoplay,

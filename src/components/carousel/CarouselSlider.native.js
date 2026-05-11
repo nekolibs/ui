@@ -20,17 +20,26 @@ function clampIndex(index, count, loop) {
 }
 
 export function CarouselSlider() {
-  const { items, activeIndex, itemsCount, draggable, goTo, pauseAutoplay, resumeAutoplay, loop } = useCarousel()
+  const { items, activeIndex, itemsCount, draggable, goTo, afterChange, pauseAutoplay, resumeAutoplay, loop } =
+    useCarousel()
 
   const [slideWidth, setSlideWidth] = React.useState(0)
   const translateX = useSharedValue(0)
   const gestureStartX = useSharedValue(0)
+  const prevItemsRef = React.useRef(items)
 
   React.useEffect(() => {
     if (slideWidth > 0) {
-      translateX.value = withTiming(-activeIndex * slideWidth, { duration: 300 })
+      if (prevItemsRef.current !== items) {
+        prevItemsRef.current = items
+        translateX.value = -activeIndex * slideWidth
+      } else {
+        translateX.value = withTiming(-activeIndex * slideWidth, { duration: 300 }, (finished) => {
+          if (finished && afterChange) runOnJS(afterChange)(items?.[activeIndex]?.key, activeIndex)
+        })
+      }
     }
-  }, [activeIndex, slideWidth])
+  }, [activeIndex, slideWidth, items])
 
   const onLayout = React.useCallback((e) => {
     setSlideWidth(e.nativeEvent.layout.width)
