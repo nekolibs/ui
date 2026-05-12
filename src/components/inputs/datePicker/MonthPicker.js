@@ -14,14 +14,15 @@ import { isDateDisabled } from '../../calendar/_helpers/dateDisabled'
 
 const months = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
 
-function MonthGrid({ year, selectedValue, onSelect, min, max, onCheckDisabled }) {
+const MonthGrid = React.memo(function MonthGrid({ year, selectedKey, onSelect, min, max, onCheckDisabled }) {
   const yearDate = dayjs().year(year).startOf('year')
+  const selectedValue = selectedKey ? dayjs(selectedKey) : null
 
   return (
     <Grid colSpan={8} gap="xs">
       {months.map((month) => {
         const dateVal = yearDate.month(month)
-        const isActive = !!selectedValue && dateVal.isSame(selectedValue, 'week')
+        const isActive = !!selectedValue && dateVal.isSame(selectedValue, 'month')
         const disabled = isDateDisabled(dateVal, { min, max, onCheckDisabled })
 
         return (
@@ -43,7 +44,7 @@ function MonthGrid({ year, selectedValue, onSelect, min, max, onCheckDisabled })
       })}
     </Grid>
   )
-}
+})
 
 export function MonthPicker({ value, onChange, min, max, onCheckDisabled, allowClear, ...props }) {
   const [localValue, setLocalValue] = React.useState(value)
@@ -55,18 +56,22 @@ export function MonthPicker({ value, onChange, min, max, onCheckDisabled, allowC
     if (value?.isValid?.()) setCurrentYear(value.startOf('year'))
   }, [value?.month?.(), value?.year?.()])
 
-  const handleChange = (v) => {
-    const newValue = v.startOf('month')
-    setLocalValue(newValue)
-    onChange?.(newValue)
-  }
+  const handleChange = React.useCallback(
+    (v) => {
+      const newValue = v.startOf('month')
+      setLocalValue(newValue)
+      onChange?.(newValue)
+    },
+    [onChange]
+  )
 
   const yearValue = currentYear.year()
   const minYear = min ? dayjs(min).year() : undefined
   const maxYear = max ? dayjs(max).year() : undefined
+  const selectedKey = value?.valueOf?.()
 
   const renderSlide = (v) => (
-    <MonthGrid year={v} selectedValue={value} onSelect={handleChange} min={min} max={max} onCheckDisabled={onCheckDisabled} />
+    <MonthGrid year={v} selectedKey={selectedKey} onSelect={handleChange} min={min} max={max} onCheckDisabled={onCheckDisabled} />
   )
 
   return (

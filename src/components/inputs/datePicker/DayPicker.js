@@ -24,7 +24,9 @@ function fromMonthValue(v) {
     .startOf('month')
 }
 
-function MonthDays({ month, selectedValue, onSelect, min, max, onCheckDisabled }) {
+const MonthDays = React.memo(function MonthDays({ monthValue, selectedKey, onSelect, min, max, onCheckDisabled }) {
+  const month = fromMonthValue(monthValue)
+  const selectedValue = selectedKey ? dayjs(selectedKey) : null
   const { cells } = useCalendarDays(month)
 
   return (
@@ -57,7 +59,7 @@ function MonthDays({ month, selectedValue, onSelect, min, max, onCheckDisabled }
       </Grid>
     </View>
   )
-}
+})
 
 export function DayPicker({ value, onChange, min, max, onCheckDisabled, allowClear, ...props }) {
   if (!!value) value = dayjs(value)
@@ -70,19 +72,23 @@ export function DayPicker({ value, onChange, min, max, onCheckDisabled, allowCle
     if (value?.isValid?.()) setCurrentMonth(value.startOf('month'))
   }, [value?.day?.(), value?.month?.(), value?.year?.()])
 
-  const handleChange = (v) => {
-    setLocalValue(v)
-    onChange?.(v)
-  }
+  const handleChange = React.useCallback(
+    (v) => {
+      setLocalValue(v)
+      onChange?.(v)
+    },
+    [onChange]
+  )
 
   const monthValue = toMonthValue(currentMonth)
   const minMonth = min ? toMonthValue(dayjs(min).startOf('month')) : undefined
   const maxMonth = max ? toMonthValue(dayjs(max).startOf('month')) : undefined
+  const selectedKey = value?.valueOf?.()
 
   const renderSlide = (v) => (
     <MonthDays
-      month={fromMonthValue(v)}
-      selectedValue={value}
+      monthValue={v}
+      selectedKey={selectedKey}
       onSelect={handleChange}
       min={min}
       max={max}

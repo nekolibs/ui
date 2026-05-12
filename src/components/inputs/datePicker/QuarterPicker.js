@@ -17,14 +17,15 @@ dayjs.extend(quarterOfYear)
 
 const quarters = [1, 2, 3, 4]
 
-function QuarterGrid({ year, selectedValue, onSelect, min, max, onCheckDisabled }) {
+const QuarterGrid = React.memo(function QuarterGrid({ year, selectedKey, onSelect, min, max, onCheckDisabled }) {
   const yearDate = dayjs().year(year).startOf('year')
+  const selectedValue = selectedKey ? dayjs(selectedKey) : null
 
   return (
     <Grid colSpan={6} gap="xs">
       {quarters.map((quarter) => {
         const dateVal = yearDate.quarter(quarter)
-        const isActive = !!selectedValue && dateVal.isSame(selectedValue, 'week')
+        const isActive = !!selectedValue && dateVal.isSame(selectedValue, 'quarter')
         const disabled = isDateDisabled(dateVal, { min, max, onCheckDisabled })
 
         return (
@@ -46,7 +47,7 @@ function QuarterGrid({ year, selectedValue, onSelect, min, max, onCheckDisabled 
       })}
     </Grid>
   )
-}
+})
 
 export function QuarterPicker({ value, onChange, min, max, onCheckDisabled, allowClear, ...props }) {
   const [localValue, setLocalValue] = React.useState(value)
@@ -58,18 +59,22 @@ export function QuarterPicker({ value, onChange, min, max, onCheckDisabled, allo
     if (value?.isValid?.()) setCurrentYear(value.startOf('year'))
   }, [value?.quarter?.(), value?.year?.()])
 
-  const handleChange = (v) => {
-    const newValue = v.startOf('quarter')
-    setLocalValue(newValue)
-    onChange?.(newValue)
-  }
+  const handleChange = React.useCallback(
+    (v) => {
+      const newValue = v.startOf('quarter')
+      setLocalValue(newValue)
+      onChange?.(newValue)
+    },
+    [onChange]
+  )
 
   const yearValue = currentYear.year()
   const minYear = min ? dayjs(min).year() : undefined
   const maxYear = max ? dayjs(max).year() : undefined
+  const selectedKey = value?.valueOf?.()
 
   const renderSlide = (v) => (
-    <QuarterGrid year={v} selectedValue={value} onSelect={handleChange} min={min} max={max} onCheckDisabled={onCheckDisabled} />
+    <QuarterGrid year={v} selectedKey={selectedKey} onSelect={handleChange} min={min} max={max} onCheckDisabled={onCheckDisabled} />
   )
 
   return (

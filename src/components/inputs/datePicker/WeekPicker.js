@@ -25,7 +25,9 @@ function fromMonthValue(v) {
     .startOf('month')
 }
 
-function MonthWeeks({ month, selectedValue, onSelect, min, max, onCheckDisabled }) {
+const MonthWeeks = React.memo(function MonthWeeks({ monthValue, selectedKey, onSelect, min, max, onCheckDisabled }) {
+  const month = fromMonthValue(monthValue)
+  const selectedValue = selectedKey ? dayjs(selectedKey) : null
   const { cells } = useCalendarDays(month)
   const weeks = splitEvery(7, cells)
 
@@ -67,7 +69,7 @@ function MonthWeeks({ month, selectedValue, onSelect, min, max, onCheckDisabled 
       </View>
     </View>
   )
-}
+})
 
 export function WeekPicker({ value, onChange, min, max, onCheckDisabled, allowClear, ...props }) {
   const [localValue, setLocalValue] = React.useState(value)
@@ -79,18 +81,22 @@ export function WeekPicker({ value, onChange, min, max, onCheckDisabled, allowCl
     if (value?.isValid?.()) setCurrentMonth(value.startOf('month'))
   }, [value?.day?.(), value?.month?.(), value?.year?.()])
 
-  const handleChange = (v) => {
-    const newValue = v.startOf('week')
-    setLocalValue(newValue)
-    onChange?.(newValue)
-  }
+  const handleChange = React.useCallback(
+    (v) => {
+      const newValue = v.startOf('week')
+      setLocalValue(newValue)
+      onChange?.(newValue)
+    },
+    [onChange]
+  )
 
   const monthValue = toMonthValue(currentMonth)
   const minMonth = min ? toMonthValue(dayjs(min).startOf('month')) : undefined
   const maxMonth = max ? toMonthValue(dayjs(max).startOf('month')) : undefined
+  const selectedKey = value?.valueOf?.()
 
   const renderSlide = (v) => (
-    <MonthWeeks month={fromMonthValue(v)} selectedValue={value} onSelect={handleChange} min={min} max={max} onCheckDisabled={onCheckDisabled} />
+    <MonthWeeks monthValue={v} selectedKey={selectedKey} onSelect={handleChange} min={min} max={max} onCheckDisabled={onCheckDisabled} />
   )
 
   return (

@@ -21,15 +21,16 @@ function decadeFromIndex(i) {
   return dayjs().year(i * 10).startOf('year')
 }
 
-function DecadeGrid({ decadeIndex, selectedValue, onSelect, min, max, onCheckDisabled }) {
+const DecadeGrid = React.memo(function DecadeGrid({ decadeIndex, selectedKey, onSelect, min, max, onCheckDisabled }) {
   const decadeStart = decadeFromIndex(decadeIndex)
+  const selectedValue = selectedKey ? dayjs(selectedKey) : null
   const years = range(decadeStart.year(), decadeStart.year() + 10)
 
   return (
     <Grid colSpan={12} gap="xs">
       {years.map((year) => {
         const dateVal = decadeStart.year(year)
-        const isActive = !!selectedValue && dateVal.isSame(selectedValue, 'week')
+        const isActive = !!selectedValue && dateVal.isSame(selectedValue, 'year')
         const disabled = isDateDisabled(dateVal, { min, max, onCheckDisabled })
 
         return (
@@ -51,7 +52,7 @@ function DecadeGrid({ decadeIndex, selectedValue, onSelect, min, max, onCheckDis
       })}
     </Grid>
   )
-}
+})
 
 export function YearPicker({ value, onChange, min, max, onCheckDisabled, allowClear, ...props }) {
   const [localValue, setLocalValue] = React.useState(value)
@@ -64,17 +65,21 @@ export function YearPicker({ value, onChange, min, max, onCheckDisabled, allowCl
     if (value?.isValid?.()) setCurrentDecade(getDecadeIndex(value))
   }, [value?.year?.()])
 
-  const handleChange = (v) => {
-    const newValue = v.startOf('year')
-    setLocalValue(newValue)
-    onChange?.(newValue)
-  }
+  const handleChange = React.useCallback(
+    (v) => {
+      const newValue = v.startOf('year')
+      setLocalValue(newValue)
+      onChange?.(newValue)
+    },
+    [onChange]
+  )
 
   const minDecade = min ? getDecadeIndex(min) : undefined
   const maxDecade = max ? getDecadeIndex(max) : undefined
+  const selectedKey = value?.valueOf?.()
 
   const renderSlide = (v) => (
-    <DecadeGrid decadeIndex={v} selectedValue={value} onSelect={handleChange} min={min} max={max} onCheckDisabled={onCheckDisabled} />
+    <DecadeGrid decadeIndex={v} selectedKey={selectedKey} onSelect={handleChange} min={min} max={max} onCheckDisabled={onCheckDisabled} />
   )
 
   return (
