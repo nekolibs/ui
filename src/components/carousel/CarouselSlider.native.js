@@ -27,12 +27,20 @@ export function CarouselSlider() {
   const translateX = useSharedValue(0)
   const gestureStartX = useSharedValue(0)
   const prevItemsRef = React.useRef(items)
+  const gestureAnimatingRef = React.useRef(false)
+
+  const setGestureAnimating = React.useCallback((v) => {
+    gestureAnimatingRef.current = v
+  }, [])
 
   React.useEffect(() => {
     if (slideWidth > 0) {
       if (prevItemsRef.current !== items) {
         prevItemsRef.current = items
         translateX.value = -activeIndex * slideWidth
+      } else if (gestureAnimatingRef.current) {
+        // Gesture onEnd already animating — skip to avoid double animation
+        gestureAnimatingRef.current = false
       } else {
         translateX.value = withTiming(-activeIndex * slideWidth, { duration: 300 }, (finished) => {
           if (finished && afterChange) runOnJS(afterChange)(items?.[activeIndex]?.key, activeIndex)
@@ -87,7 +95,10 @@ export function CarouselSlider() {
       }
 
       const clamped = clampIndex(targetIndex, itemsCount, loop)
-      translateX.value = withTiming(-clamped * slideWidth, { duration: 300 })
+      translateX.value = withTiming(-clamped * slideWidth, { duration: 300 }, (finished) => {
+        if (finished && afterChange) runOnJS(afterChange)(items?.[clamped]?.key, clamped)
+      })
+      runOnJS(setGestureAnimating)(true)
       runOnJS(goTo)(targetIndex)
       runOnJS(resumeAutoplay)()
     })
