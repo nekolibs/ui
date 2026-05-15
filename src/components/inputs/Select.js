@@ -2,6 +2,7 @@ import { dissoc } from 'ramda'
 import React from 'react'
 
 import { Icon, IconLabel } from '../presentation'
+import { KeyboardDismissButton } from '../keyboard'
 import { Link } from '../actions'
 import { LinkInput } from './LinkInput'
 import { Picker, getOptionLabel, searchOptions } from './Picker'
@@ -134,6 +135,8 @@ export function Select({
       maxHeight={popoverMaxHeight}
       {...popoverProps}
       renderContent={({ onClose }) => (
+        <>
+        {useBottomDrawer && useSearch && <KeyboardDismissButton />}
         <Picker
           row={false}
           options={searchOptions(options, search, { labelKey })}
@@ -187,6 +190,7 @@ export function Select({
             </Link>
           )}
         />
+        </>
       )}
     >
       <Input
