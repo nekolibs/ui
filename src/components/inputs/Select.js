@@ -152,21 +152,21 @@ export function Select({
           }}
           {...pickerProps}
           renderHeader={
-            useBottomDrawer && useSearch
-              ? () => (
-                  <>
-                    <View padding="md" paddingB="xs">
-                      <TextInput
-                        prefixIcon="search-line"
-                        prefixIconColor="text4"
-                        value={search}
-                        onChange={handleChangeSearch}
-                      />
-                    </View>
-                    {renderHeader?.()}
-                  </>
-                )
-              : renderHeader
+            useBottomDrawer && useSearch ? (
+              <>
+                <View padding="md" paddingB="xs">
+                  <TextInput
+                    prefixIcon="search-line"
+                    prefixIconColor="text4"
+                    value={search}
+                    onChange={handleChangeSearch}
+                  />
+                </View>
+                {renderHeader?.()}
+              </>
+            ) : (
+              renderHeader
+            )
           }
           renderOption={({ option, selected, onChange }) => (
             <Link
