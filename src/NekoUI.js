@@ -1,3 +1,4 @@
+import { initFirstDayOfWeek } from './helpers/weekStartSetup'
 import { DynamicStyleTag } from './DynamicStyleTag'
 import { I18nProvider } from './i18n'
 import { ModalsHandler } from './components/modals/modal/handler/ModalsHandler'
@@ -8,6 +9,8 @@ import { ResponsiveHandler } from './responsive/ResponsiveHandler'
 import { ThemeHandler } from './theme/ThemeHandler'
 import { ThemePickerDrawer } from './components/theme'
 import { useThemeHandler } from './theme'
+
+initFirstDayOfWeek()
 
 export function NekoUI({ children, i18n, ...props }) {
   return (

@@ -33,7 +33,7 @@ function formatValue(value, type) {
     case 'month':
       return [date.startOf('month'), date.endOf('month')]
     case 'week':
-      return [date.startOf('isoWeek'), date.endOf('isoWeek')]
+      return [date.startOf('week'), date.endOf('week')]
     default:
       return [date.startOf('day'), date.endOf('day')]
   }

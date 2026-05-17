@@ -37,6 +37,7 @@ export function Dropdown({ items, ...rootProps }) {
     placement,
     gap,
     useBottomDrawer,
+    snapPoints,
     ...props
   } = formattedProps
 
@@ -52,6 +53,7 @@ export function Dropdown({ items, ...rootProps }) {
         // In case its web use the Drawer component
         contentProps={{ padding: 0 }}
         useBottomDrawer={useBottomDrawer}
+        snapPoints={snapPoints}
         {...popoverProps}
         renderContent={({ onClose }) => {
           const handleChange = (...params) => {

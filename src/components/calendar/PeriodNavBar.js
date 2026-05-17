@@ -10,17 +10,19 @@ import { isDateDisabled } from './_helpers/dateDisabled'
 
 dayjs.extend(quarterOfYear)
 
-const WEEK_EPOCH = dayjs('2000-01-01').startOf('week')
+function getWeekEpoch() {
+  return dayjs('2000-01-01').startOf('week')
+}
 
 const TYPES = {
   day: {
     count: 7,
     unit: 'day',
     toPageValue(date) {
-      return date.startOf('week').diff(WEEK_EPOCH, 'week')
+      return date.startOf('week').diff(getWeekEpoch(), 'week')
     },
     getItems(pageValue) {
-      const weekStart = WEEK_EPOCH.add(pageValue, 'week')
+      const weekStart = getWeekEpoch().add(pageValue, 'week')
       return Array.from({ length: 7 }, (_, i) => {
         const d = weekStart.add(i, 'day')
         return { key: d.valueOf(), date: d, label: d.format('ddd'), sublabel: String(d.date()) }
@@ -31,13 +33,13 @@ const TYPES = {
     count: 7,
     unit: 'week',
     toPageValue(date) {
-      const weekIndex = date.startOf('week').diff(WEEK_EPOCH, 'week')
+      const weekIndex = date.startOf('week').diff(getWeekEpoch(), 'week')
       return Math.floor(weekIndex / 7)
     },
     getItems(pageValue) {
       return Array.from({ length: 7 }, (_, i) => {
         const weekIndex = pageValue * 7 + i
-        const d = WEEK_EPOCH.add(weekIndex, 'week')
+        const d = getWeekEpoch().add(weekIndex, 'week')
         const end = d.add(6, 'day')
         return { key: d.valueOf(), date: d, label: `${d.date()}-${end.date()}`, sublabel: d.format('MMM') }
       })
