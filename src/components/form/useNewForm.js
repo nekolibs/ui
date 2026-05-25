@@ -6,6 +6,8 @@ export function useNewForm({ initialValues = {}, validate, onSubmit, onValuesCha
   const valuesRef = React.useRef({ ...initialValues })
   const initialValuesRef = React.useRef({ ...initialValues })
   const errorsRef = React.useRef({}) // Flat structure: { 'users': 'error', 'users.0.name': 'error' }
+  const touchedRef = React.useRef(new Set())
+  const dirtyRef = React.useRef(new Set())
   const listenersRef = React.useRef({})
   const errorListenersRef = React.useRef({})
   const rulesRegistryRef = React.useRef(new Map())
@@ -45,8 +47,37 @@ export function useNewForm({ initialValues = {}, validate, onSubmit, onValuesCha
       })
     }
 
+    const markTouched = (name) => {
+      touchedRef.current.add(toKey(name))
+    }
+
+    const updateDirty = (name) => {
+      const key = toKey(name)
+      const current = path(toPath(name), valuesRef.current)
+      const initial = path(toPath(name), initialValuesRef.current)
+      if (current === initial) {
+        dirtyRef.current.delete(key)
+      } else {
+        dirtyRef.current.add(key)
+      }
+    }
+
+    const isTouched = (name) => {
+      if (!name) return touchedRef.current.size > 0
+      return touchedRef.current.has(toKey(name))
+    }
+
+    const isDirty = (name) => {
+      if (!name) return dirtyRef.current.size > 0
+      return dirtyRef.current.has(toKey(name))
+    }
+
+    const getTouchedFields = () => [...touchedRef.current]
+    const getDirtyFields = () => [...dirtyRef.current]
+
     const setFieldValue = (name, value) => {
       valuesRef.current = assocPath(toPath(name), value, valuesRef.current)
+      updateDirty(name)
       notify(name)
       const fn = callbacksRef.current.onValuesChange
       if (fn) fn(name, valuesRef.current)
@@ -69,6 +100,8 @@ export function useNewForm({ initialValues = {}, validate, onSubmit, onValuesCha
     const resetFields = () => {
       valuesRef.current = { ...initialValuesRef.current }
       errorsRef.current = {}
+      touchedRef.current.clear()
+      dirtyRef.current.clear()
       notifyAll()
       notifyAllErrors()
     }
@@ -196,6 +229,11 @@ export function useNewForm({ initialValues = {}, validate, onSubmit, onValuesCha
       getError,
       setError,
       clearErrors,
+      markTouched,
+      isTouched,
+      isDirty,
+      getTouchedFields,
+      getDirtyFields,
       registerListener,
       registerErrorListener,
       registerRules,

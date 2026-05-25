@@ -62,6 +62,7 @@ export function FormItem({
 
   const handleBlur = (e, originalOnBlur) => {
     if (originalOnBlur) originalOnBlur(e)
+    form.markTouched(listPath)
 
     if (shouldValidateOn('onBlur', rules, validateTrigger)) {
       form.validateField(listPath, 'onBlur')
