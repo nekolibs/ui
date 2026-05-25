@@ -64,11 +64,13 @@ export function useNewForm({ initialValues = {}, validate, onSubmit, onValuesCha
 
     const isTouched = (name) => {
       if (!name) return touchedRef.current.size > 0
+      if (Array.isArray(name)) return name.some((n) => touchedRef.current.has(toKey(n)))
       return touchedRef.current.has(toKey(name))
     }
 
     const isDirty = (name) => {
       if (!name) return dirtyRef.current.size > 0
+      if (Array.isArray(name)) return name.some((n) => dirtyRef.current.has(toKey(n)))
       return dirtyRef.current.has(toKey(name))
     }
 
