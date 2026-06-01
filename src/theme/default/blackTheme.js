@@ -33,6 +33,8 @@ export const DEFAULT_BLACK_THEME = mergeDeepRight(BASE_THEME, {
     brown: '#8B5E3C',
     lylac: '#C77DFF',
     pink: '#FF6FAE',
+    white: '#FFFFFF',
+    black: '#000000',
   },
 
   // components: {

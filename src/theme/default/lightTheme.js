@@ -31,5 +31,7 @@ export const DEFAULT_LIGHT_THEME = mergeDeepRight(BASE_THEME, {
     brown: '#8D6E63',
     lylac: '#B39DDB',
     pink: '#F48FB1',
+    white: '#FFFFFF',
+    black: '#000000',
   },
 })

@@ -32,5 +32,7 @@ export const CYBERPUNK_DARK_THEME = mergeDeepRight(BASE_THEME, {
     brown: '#8B5CF6',
     lylac: '#C77DFF',
     pink: '#FF4FD8',
+    white: '#FFFFFF',
+    black: '#000000',
   },
 })

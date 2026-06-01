@@ -32,5 +32,7 @@ export const DEFAULT_PAPER_THEME = mergeDeepRight(BASE_THEME, {
     brown: '#8B7355',
     lylac: '#C7B7D4',
     pink: '#E4A1B2',
+    white: '#FFFFFF',
+    black: '#000000',
   },
 })

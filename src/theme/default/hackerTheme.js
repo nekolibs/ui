@@ -39,6 +39,8 @@ export const DEFAULT_MATRIX_THEME = mergeDeepRight(BASE_THEME, {
     brown: '#5C4033',
     lylac: '#C084FC',
     pink: '#FF4FD8',
+    white: '#FFFFFF',
+    black: '#000000',
   },
 
   radius: {
