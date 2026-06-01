@@ -18,8 +18,9 @@ const DEFAULT_PROPS = ([{ sizeCode }]) => ({
   row: true,
   border: true,
   buttonProps: {
-    fullH: true,
     size: sizeCode,
+    height: null,
+    flex: true,
   },
 })
 

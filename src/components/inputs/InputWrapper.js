@@ -9,14 +9,15 @@ import { useDefaultModifier } from '../../modifiers/default'
 import { useSizeConverter } from '../../modifiers/sizeConverter'
 import { useThemeComponentModifier } from '../../modifiers/themeComponent'
 
-const DEFAULT_PROPS = {
+const DEFAULT_PROPS = ([{ sizeCode }]) => ({
   paddingH: 'sm',
   bg: 'overlayBG',
   border: true,
   br: 'md',
   row: true,
   gap: 'sm',
-}
+  br: sizeCode,
+})
 
 export function InputWrapper({
   prefix,
