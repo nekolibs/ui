@@ -54,7 +54,7 @@ export function Avatar(rootProps) {
     useOverflowModifier
   )([{}, rootProps])
 
-  let { initials, name, icon, src, invert, textProps, iconProps, iconSize, ...props } = formattedProps
+  let { initials, name, icon, src, invert, textProps, iconProps, iconSize, imageProps, ...props } = formattedProps
   initials = initials || getInitials(name)
 
   let content = (
@@ -69,7 +69,7 @@ export function Avatar(rootProps) {
       iconProps={{ size: iconSize, ...iconProps }}
     />
   )
-  if (!!src) content = <Image br={0} src={src} width={sizeCode} height={sizeCode} />
+  if (!!src) content = <Image br={0} src={src} width={sizeCode} height={sizeCode} {...imageProps} />
 
   return (
     <AbsView className="neko-avatar" {...props}>
