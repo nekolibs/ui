@@ -17,6 +17,11 @@ try {
   DocumentPicker = require('expo-document-picker')
 } catch {}
 
+let FS
+try {
+  FS = require('expo-file-system')
+} catch {}
+
 function acceptsImages(accept) {
   if (!accept) return true
   return accept.includes('image/') || accept.includes('image/*')
@@ -56,53 +61,118 @@ function getMediaTypes(accept) {
   return undefined
 }
 
-export function Upload({ children, onChange, onUpload, value: valueProp, accept, multiple = false, maxCount, disabled = false, ...props }) {
+// `persistTo="<base>/<subdir>"`, base is 'document' | 'cache'. Resolves to a
+// permanent Directory using the modern (sync) expo-file-system API.
+function resolveDir(persistTo) {
+  const [base, ...rest] = persistTo.split('/').filter(Boolean)
+  if (base !== 'cache' && base !== 'document') {
+    console.warn(`[UploadInput] persistTo base "${base}" unknown — using document dir. Use "document" or "cache".`)
+  }
+  const root = base === 'cache' ? FS.Paths.cache : FS.Paths.document
+  const dir = new FS.Directory(root, ...rest)
+  try {
+    dir.create({ intermediates: true, idempotent: true })
+  } catch (e) {
+    console.warn('[UploadInput] persistTo dir create failed:', e?.message)
+  }
+  return dir
+}
+
+// Copies a picked asset out of the temp/cache uri into `dir`, returning the
+// asset with its uri replaced by the durable path. Expects a `file://` source
+// (what expo-image-picker returns on iOS/Android); `content://` sources from the
+// document picker can't be copied and fall back to the original uri below.
+// Falls back to the original asset if anything goes wrong, so picking never
+// hard-fails.
+function persistAsset(asset, dir, index = 0) {
+  try {
+    const ext =
+      asset.name?.split('.').pop() || asset.uri?.split('?')[0].split('.').pop() || 'jpg'
+    const dest = new FS.File(dir, `${Date.now()}_${index}_${Math.round(Math.random() * 1e6)}.${ext}`)
+    new FS.File(asset.uri).copy(dest)
+    return { ...asset, uri: dest.uri }
+  } catch (e) {
+    console.warn('[UploadInput] persistTo failed, keeping temp uri:', e?.message)
+    return asset
+  }
+}
+
+export function Upload({ children, onChange, onUpload, value: valueProp, accept, multiple = false, maxCount, disabled = false, persistTo, ...props }) {
   const { value, addFiles, remove } = useUploadState({ onUpload, onChange, multiple, maxCount, value: valueProp })
   const [open, setOpen] = useState(false)
+
+  // Persist picked files locally (durable uri) when `persistTo` is set and
+  // there's no server upload. Otherwise hand the temp/picked assets straight to
+  // the upload state (uploaded by onUpload, or kept as-is).
+  const commit = useCallback(
+    (assets) => {
+      if (persistTo && FS && !onUpload) {
+        const dir = resolveDir(persistTo)
+        addFiles(assets.map((a, i) => persistAsset(a, dir, i)))
+      } else {
+        addFiles(assets)
+      }
+    },
+    [persistTo, onUpload, addFiles]
+  )
 
   const handlePress = useCallback(() => {
     if (disabled) return
     setOpen(true)
   }, [disabled])
 
+  // NOTE: keep the drawer OPEN while presenting the native picker, and close it
+  // only after the picker returns. The drawer is a RN <Modal>; closing it first
+  // makes the picker present from a modal that's mid-dismiss (and then unmounts
+  // under the picker) -> iOS present/dismiss collision that freezes the screen on
+  // the second open. Closing in `finally` avoids any concurrent modal transition.
   const handleCamera = useCallback(async () => {
-    setOpen(false)
-    if (!ImagePicker) return
-    const permission = await ImagePicker.requestCameraPermissionsAsync()
-    if (!permission.granted) return
-    const result = await ImagePicker.launchCameraAsync({
-      allowsMultipleSelection: multiple,
-      selectionLimit: maxCount || 0,
-      mediaTypes: getMediaTypes(accept),
-    })
-    if (result.canceled) return
-    addFiles(result.assets.map(normalizeImageResult))
-  }, [multiple, maxCount, accept, addFiles])
+    if (!ImagePicker) return setOpen(false)
+    try {
+      const permission = await ImagePicker.requestCameraPermissionsAsync()
+      if (!permission.granted) return
+      const result = await ImagePicker.launchCameraAsync({
+        allowsMultipleSelection: multiple,
+        selectionLimit: maxCount || 0,
+        mediaTypes: getMediaTypes(accept),
+      })
+      if (result.canceled) return
+      commit(result.assets.map(normalizeImageResult))
+    } finally {
+      setOpen(false)
+    }
+  }, [multiple, maxCount, accept, commit])
 
   const handleLibrary = useCallback(async () => {
-    setOpen(false)
-    if (!ImagePicker) return
-    const permission = await ImagePicker.requestMediaLibraryPermissionsAsync()
-    if (!permission.granted) return
-    const result = await ImagePicker.launchImageLibraryAsync({
-      allowsMultipleSelection: multiple,
-      selectionLimit: maxCount || 0,
-      mediaTypes: getMediaTypes(accept),
-    })
-    if (result.canceled) return
-    addFiles(result.assets.map(normalizeImageResult))
-  }, [multiple, maxCount, accept, addFiles])
+    if (!ImagePicker) return setOpen(false)
+    try {
+      const permission = await ImagePicker.requestMediaLibraryPermissionsAsync()
+      if (!permission.granted) return
+      const result = await ImagePicker.launchImageLibraryAsync({
+        allowsMultipleSelection: multiple,
+        selectionLimit: maxCount || 0,
+        mediaTypes: getMediaTypes(accept),
+      })
+      if (result.canceled) return
+      commit(result.assets.map(normalizeImageResult))
+    } finally {
+      setOpen(false)
+    }
+  }, [multiple, maxCount, accept, commit])
 
   const handleFiles = useCallback(async () => {
-    setOpen(false)
-    if (!DocumentPicker) return
-    const result = await DocumentPicker.getDocumentAsync({
-      multiple,
-      type: accept || '*/*',
-    })
-    if (result.canceled) return
-    addFiles(result.assets.map(normalizeDocumentResult))
-  }, [multiple, accept, addFiles])
+    if (!DocumentPicker) return setOpen(false)
+    try {
+      const result = await DocumentPicker.getDocumentAsync({
+        multiple,
+        type: accept || '*/*',
+      })
+      if (result.canceled) return
+      commit(result.assets.map(normalizeDocumentResult))
+    } finally {
+      setOpen(false)
+    }
+  }, [multiple, accept, commit])
 
   const showCamera = acceptsImages(accept)
   const showLibrary = acceptsImages(accept)
