@@ -1,4 +1,6 @@
 export * from './debounce'
+export * from './files'
+export * from './media'
 export * from './string'
 export * from './random'
 export * from './storage'
