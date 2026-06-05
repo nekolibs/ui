@@ -13,10 +13,9 @@ const DEFAULT_PROPS = ([{ sizeCode }]) => ({
   paddingH: 'sm',
   bg: 'overlayBG',
   border: true,
-  br: 'md',
+  br: sizeCode,
   row: true,
   gap: 'sm',
-  br: sizeCode,
 })
 
 export function InputWrapper({
