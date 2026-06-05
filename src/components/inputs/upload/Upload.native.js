@@ -22,6 +22,11 @@ try {
   FS = require('expo-file-system')
 } catch {}
 
+let MediaLibrary
+try {
+  MediaLibrary = require('expo-media-library')
+} catch {}
+
 function acceptsImages(accept) {
   if (!accept) return true
   return accept.includes('image/') || accept.includes('image/*')
@@ -97,7 +102,27 @@ function persistAsset(asset, dir, index = 0) {
   }
 }
 
-export function Upload({ children, onChange, onUpload, value: valueProp, accept, multiple = false, maxCount, disabled = false, persistTo, ...props }) {
+// Saves captured photos to the device Photos library (WhatsApp-style). Only used
+// for camera captures — library picks are already in Photos. Opt-in via the
+// `saveToLibrary` prop; no-op if expo-media-library isn't installed.
+async function saveAssetsToLibrary(assets) {
+  if (!MediaLibrary || !assets?.length) return
+  try {
+    const perm = await MediaLibrary.requestPermissionsAsync(true) // write-only
+    if (!perm.granted) return
+    for (const a of assets) {
+      try {
+        await MediaLibrary.saveToLibraryAsync(a.uri)
+      } catch (e) {
+        console.warn('[UploadInput] saveToLibrary failed:', e?.message)
+      }
+    }
+  } catch (e) {
+    console.warn('[UploadInput] saveToLibrary permission error:', e?.message)
+  }
+}
+
+export function Upload({ children, onChange, onUpload, value: valueProp, accept, multiple = false, maxCount, disabled = false, persistTo, saveToLibrary, ...props }) {
   const { value, addFiles, remove } = useUploadState({ onUpload, onChange, multiple, maxCount, value: valueProp })
   const [open, setOpen] = useState(false)
 
@@ -137,11 +162,12 @@ export function Upload({ children, onChange, onUpload, value: valueProp, accept,
         mediaTypes: getMediaTypes(accept),
       })
       if (result.canceled) return
+      if (saveToLibrary) await saveAssetsToLibrary(result.assets)
       commit(result.assets.map(normalizeImageResult))
     } finally {
       setOpen(false)
     }
-  }, [multiple, maxCount, accept, commit])
+  }, [multiple, maxCount, accept, commit, saveToLibrary])
 
   const handleLibrary = useCallback(async () => {
     if (!ImagePicker) return setOpen(false)
