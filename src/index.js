@@ -6,4 +6,4 @@ export * from './i18n'
 export * from './NekoUI'
 export * from './abstractions'
 
-export const version = 41
+export const version = 42
