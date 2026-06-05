@@ -5,6 +5,13 @@ function toArray(val) {
   return Array.isArray(val) ? val : [val]
 }
 
+// Stable identity for a file item. Newly picked files get an internal `_id`;
+// externally-provided value items (e.g. persisted records) are keyed by their
+// own `id`, so consumers never need to stamp `_id` themselves.
+function keyOf(file) {
+  return file?._id ?? file?.id
+}
+
 export function useUploadState({ onUpload, onChange, multiple, maxCount, value: valueProp }) {
   const [inFlight, setInFlight] = useState([])
   const [committed, setCommitted] = useState(null)
@@ -125,12 +132,13 @@ export function useUploadState({ onUpload, onChange, multiple, maxCount, value: 
   const remove = useCallback(
     (file) => {
       if (!file) return
+      const key = keyOf(file)
 
-      setInFlight((prev) => prev.filter((f) => f._id !== file._id))
+      setInFlight((prev) => prev.filter((f) => keyOf(f) !== key))
 
       const ext = externalArrayRef.current
-      if (ext.some((f) => f._id === file._id)) {
-        const next = ext.filter((f) => f._id !== file._id)
+      if (ext.some((f) => keyOf(f) === key)) {
+        const next = ext.filter((f) => keyOf(f) !== key)
         const val = multiple ? next : next[0] || null
         if (!isControlled) setCommitted(val)
         onChangeRef.current?.(val)

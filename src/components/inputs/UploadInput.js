@@ -111,7 +111,7 @@ function Content({ value, open, remove, isDragging, multiple, area, grid, maxCou
     return (
       <View row wrap gap="sm">
         {items.map((item) => (
-          <GridItem key={item._id} value={item} remove={remove} />
+          <GridItem key={item._id ?? item.id} value={item} remove={remove} />
         ))}
         {showAdd && <AddTile onPress={open} isDragging={isDragging} />}
       </View>
@@ -129,7 +129,7 @@ function Content({ value, open, remove, isDragging, multiple, area, grid, maxCou
     <View gap="xs">
       {showAdd && link}
       {items.map((item) => (
-        <ListItem key={item._id} value={item} remove={remove} />
+        <ListItem key={item._id ?? item.id} value={item} remove={remove} />
       ))}
     </View>
   )
