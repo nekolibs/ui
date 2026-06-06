@@ -3,7 +3,7 @@ import { ThemePicker } from './ThemePicker'
 
 export function ThemePickerDrawer({ open, onClose, onChange }) {
   return (
-    <BottomDrawer open={open} onClose={onClose} maxWidth={550} snapPoints={['50%', '85%']}>
+    <BottomDrawer open={open} onClose={onClose} maxWidth={550} snapPoints={['60%', '85%']} useSafeArea={false}>
       <DrawerScrollView padding="md">
         <ThemePicker onChange={onChange} />
       </DrawerScrollView>
