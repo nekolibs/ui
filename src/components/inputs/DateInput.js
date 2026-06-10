@@ -11,6 +11,7 @@ dayjs.extend(advancedFormat)
 dayjs.extend(weekOfYear)
 
 import { DatePicker } from './datePicker/DatePicker'
+import { DateWheelPicker } from './dateWheelPicker/DateWheelPicker'
 import { MaskInput } from './MaskInput'
 import { Popover } from '../structure/popover/Popover'
 import { isValidDate } from '../calendar/_helpers/dateDisabled'
@@ -46,6 +47,7 @@ export function DateInput({
   onCheckDisabled,
   placement,
   type = 'day',
+  presentation = 'calendar',
   format,
   startsOpen,
   allowClear,
@@ -85,26 +87,28 @@ export function DateInput({
     setInputValue(!!value ? dayjs(value).format(format) : '')
   }, [value])
 
+  const isWheel = presentation === 'wheel'
   const Input = useBottomDrawer ? LinkInput : FullWidthInputWrapper
+  const Picker = isWheel ? DateWheelPicker : DatePicker
 
   return (
     <Popover
       trigger="click"
       startsOpen={startsOpen}
       placement={placement || 'bottomLeft'}
-      snapPoints={[450]}
+      snapPoints={[isWheel ? 275 : 450]}
       useBottomDrawer={useBottomDrawer}
       bottomDrawerProps={{ contentProps: { padding: 'md' } }}
       watch={[value?.format?.('YYYYMMDD')]}
       renderContent={({ onClose }) => (
         <View flex centerH onMouseDown={(e) => e.preventDefault()}>
-          <DatePicker
+          <Picker
             value={value}
             onChange={(v) => {
               handleChange(v)
-              onClose()
+              if (!isWheel) onClose()
             }}
-            width={useBottomDrawer ? '100%' : 275}
+            width={!isWheel && (useBottomDrawer ? '100%' : 275)}
             allowClear={allowClear}
             {...validations}
             type={type}
