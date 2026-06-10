@@ -13,9 +13,20 @@ try {
   QuidoneWheelPicker = null
 }
 
-export function WheelPicker({ value, onChange, options, suffix, range, step = 1, useRawValue, ...props }) {
+export function WheelPicker({
+  value,
+  onChange,
+  options,
+  suffix,
+  range,
+  step = 1,
+  labelKey = 'label',
+  valueKey = 'value',
+  useRawOption,
+  formatLabel,
+  ...props
+}) {
   const colors = useColors()
-  useRawValue = useRawValue || !!range
   const handleChange = React.useMemo(() => debounce(onChange, 300), [onChange])
 
   if (!!range || !options) {
@@ -23,13 +34,26 @@ export function WheelPicker({ value, onChange, options, suffix, range, step = 1,
     const count = Math.floor((to - from) / step) + 1
     options = Array.from({ length: count }, (_, i) => {
       const v = from + i * step
-      return { label: v, value: v }
+      return { [labelKey]: formatLabel ? formatLabel(v) : v, [valueKey]: v }
     })
   }
+
+  const data = React.useMemo(() => {
+    if (!options) return []
+    return options.map((opt) => ({
+      value: opt[valueKey],
+      label: String(opt[labelKey] ?? opt[valueKey]),
+    }))
+  }, [options, labelKey, valueKey])
 
   if (!QuidoneWheelPicker) {
     console.warn('@quidone/react-native-wheel-picker not installed.')
     return null
+  }
+
+  const resolveValue = (item) => {
+    if (useRawOption) return options.find((o) => o[valueKey] === item.value)
+    return item.value
   }
 
   return (
@@ -43,7 +67,7 @@ export function WheelPicker({ value, onChange, options, suffix, range, step = 1,
         </View>
       )}
       <QuidoneWheelPicker
-        data={options}
+        data={data}
         value={value}
         itemTextStyle={{ color: colors.text }}
         itemHeight={40}
@@ -55,13 +79,8 @@ export function WheelPicker({ value, onChange, options, suffix, range, step = 1,
           borderColor: colors.divider,
           opacity: 1,
         }}
-        _onValueChanging={({ item }) => {
-          handleChange(useRawValue ? item : item?.value)
-        }}
-        onValueChanged={({ item }) => {
-          console.log('change', useRawValue ? item : item?.value)
-          onChange(useRawValue ? item : item?.value)
-        }}
+        _onValueChanging={({ item }) => handleChange(resolveValue(item))}
+        onValueChanged={({ item }) => onChange(resolveValue(item))}
         {...props}
       />
     </View>

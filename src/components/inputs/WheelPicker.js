@@ -4,9 +4,16 @@ export function WheelPicker({ value, onChange, options, suffix, range, step = 1,
   let min = 0
   let max = 100
 
-  if (range) {
-    ;[min, max] = range
-  } else if (options?.length) {
+  if (!!range || !options) {
+    const [from, to] = range || [0, 100]
+    const count = Math.floor((to - from) / step) + 1
+    options = Array.from({ length: count }, (_, i) => {
+      const v = from + i * step
+      return { value: v, label: v }
+    })
+  }
+
+  if (options?.length) {
     const values = options.map((o) => o.value).filter((v) => typeof v === 'number')
     min = Math.min(...values)
     max = Math.max(...values)
