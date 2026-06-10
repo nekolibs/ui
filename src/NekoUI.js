@@ -1,6 +1,7 @@
 import { initFirstDayOfWeek } from './helpers/weekStartSetup'
 import { DynamicStyleTag } from './DynamicStyleTag'
 import { I18nProvider } from './i18n'
+import { MeasurementHandler } from './components/measurements/MeasurementHandler'
 import { ModalsHandler } from './components/modals/modal/handler/ModalsHandler'
 import { NotificationsHandler } from './components/feedback/notifications/NotificationsHandler'
 import { OverlayHandler } from './components/structure/overlay/OverlayHandler'
@@ -12,23 +13,25 @@ import { useThemeHandler } from './theme'
 
 initFirstDayOfWeek()
 
-export function NekoUI({ children, i18n, ...props }) {
+export function NekoUI({ children, i18n, measurementSystem, ...props }) {
   return (
     <ThemeHandler {...props}>
       <DynamicStyleTag />
       <ResponsiveHandler>
-        <PortalHandler>
-          <ModalsHandler>
-            <I18nProvider i18n={i18n}>
-              <NotificationsHandler>
-                <OverlayHandler>
-                  {children}
-                  <FixedComponents />
-                </OverlayHandler>
-              </NotificationsHandler>
-            </I18nProvider>
-          </ModalsHandler>
-        </PortalHandler>
+        <MeasurementHandler measurementSystem={measurementSystem}>
+          <PortalHandler>
+            <ModalsHandler>
+              <I18nProvider i18n={i18n}>
+                <NotificationsHandler>
+                  <OverlayHandler>
+                    {children}
+                    <FixedComponents />
+                  </OverlayHandler>
+                </NotificationsHandler>
+              </I18nProvider>
+            </ModalsHandler>
+          </PortalHandler>
+        </MeasurementHandler>
       </ResponsiveHandler>
     </ThemeHandler>
   )
