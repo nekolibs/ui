@@ -41,6 +41,21 @@ function getAsync(key, defaultValue) {
   })
 }
 
+function notifyAll(value) {
+  Object.keys(listeners).forEach((key) => notify(key, value))
+}
+
+function clear() {
+  AbsStorage.clear()
+  notifyAll(undefined)
+}
+
+function clearAsync() {
+  return AbsStorage.clearAsync().then(() => {
+    notifyAll(undefined)
+  })
+}
+
 function formatStoragedValue(value) {
   try {
     if (!value) return value
@@ -73,5 +88,7 @@ export const Storage = {
   setAsync,
   get,
   getAsync,
+  clear,
+  clearAsync,
   useState,
 }

@@ -3,7 +3,7 @@ function set(key, value) {
 }
 
 function setAsync(key, value) {
-  return Promise.resulve(set(key, value))
+  return Promise.resolve(set(key, value))
 }
 
 function get(key) {
@@ -11,7 +11,7 @@ function get(key) {
 }
 
 function getAsync(key) {
-  return Promise.resulve(get(key))
+  return Promise.resolve(get(key))
 }
 
 function remove(key) {
@@ -19,7 +19,15 @@ function remove(key) {
 }
 
 function removeAsync(key) {
-  return Promise.resulve(remove(key))
+  return Promise.resolve(remove(key))
+}
+
+function clear() {
+  return localStorage.clear()
+}
+
+function clearAsync() {
+  return Promise.resolve(clear())
 }
 
 export const AbsStorage = {
@@ -29,4 +37,6 @@ export const AbsStorage = {
   getAsync,
   remove,
   removeAsync,
+  clear,
+  clearAsync,
 }

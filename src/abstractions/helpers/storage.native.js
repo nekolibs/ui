@@ -7,6 +7,9 @@ let getAsync = () => Promise.resolve(get())
 let remove = () => console.warn('expo-sqlite not installed. Neko Storage needs expo-sqlite to work properly')
 let removeAsync = () => Promise.resolve(remove())
 
+let clear = () => console.warn('expo-sqlite not installed. Neko Storage needs expo-sqlite to work properly')
+let clearAsync = () => Promise.resolve(clear())
+
 try {
   const StorageModule = require('expo-sqlite/kv-store')
   if (StorageModule?.default) {
@@ -19,6 +22,9 @@ try {
 
     remove = Storage.removeItemSync.bind(Storage)
     removeAsync = Storage.removeItem.bind(Storage)
+
+    clear = Storage.clearSync.bind(Storage)
+    clearAsync = Storage.clearAsync.bind(Storage)
   }
 } catch (e) {
   console.log('expo-sqlite not available:', e)
@@ -31,4 +37,6 @@ export const AbsStorage = {
   getAsync,
   remove,
   removeAsync,
+  clear,
+  clearAsync,
 }
