@@ -1,10 +1,11 @@
 import { is } from 'ramda'
 import React from 'react'
 
+import { AbsWindowOverlay } from '../../../abstractions/WindowOverlay'
 import { Notification } from './Notification'
-import { SafeAreaView } from '../../structure/SafeAreaView'
 import { View } from '../../structure/View'
 import { useResponsiveValue } from '../../../responsive/responsiveHooks'
+import { useSafeAreaInsets } from '../../../abstractions/helpers/useSafeAreaInsets'
 
 const NotificationsContext = React.createContext(null)
 
@@ -35,6 +36,7 @@ export function useNotifier() {
 
 export function NotificationsHandler({ children }) {
   const width = useResponsiveValue({ sm: '100%', df: 400 })
+  const insets = useSafeAreaInsets()
   const [messages, setMessages] = React.useState([])
 
   const add = React.useCallback((key, data) => {
@@ -52,13 +54,15 @@ export function NotificationsHandler({ children }) {
       {children}
 
       {!!messages.length && (
-        <View fixed top={0} right={0} padding="md" width={width} maxWidth="100%" pointerEvents="box-none" zIndex={600}>
-          <SafeAreaView gap="xs">
-            {messages.map(({ key, ...item }) => (
-              <Notification key={key} {...item} />
-            ))}
-          </SafeAreaView>
-        </View>
+        <AbsWindowOverlay>
+          <View fixed top={0} right={0} padding="md" width={width} maxWidth="100%" pointerEvents="box-none" zIndex={600}>
+            <View paddingT={insets.top} paddingR={insets.right} gap="xs" pointerEvents="box-none">
+              {messages.map(({ key, ...item }) => (
+                <Notification key={key} {...item} />
+              ))}
+            </View>
+          </View>
+        </AbsWindowOverlay>
       )}
     </NotificationsContext.Provider>
   )
