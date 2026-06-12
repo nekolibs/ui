@@ -27,15 +27,19 @@ export function ftToCm(feet) {
 export function cmToFtIn(cm) {
   if (!cm) return false
   const totalInches = cmToIn(cm)
-  const feet = Math.floor(totalInches / 12)
-  const inches = Math.round(totalInches % 12)
+  let feet = Math.floor(totalInches / 12)
+  let inches = Math.round(totalInches % 12)
+  if (inches === 12) {
+    feet += 1
+    inches = 0
+  }
   return { feet, inches }
 }
 
 export function ftInToCm(value) {
   if (!value) return false
   const { feet, inches } = value || {}
-  const totalInches = feet * 12 + (inches || 0)
+  const totalInches = (feet || 0) * 12 + (inches || 0)
   return inToCm(totalInches)
 }
 

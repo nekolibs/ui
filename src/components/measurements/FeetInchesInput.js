@@ -15,17 +15,18 @@ function formatFeetInches(value) {
   return `${feet}'${inches}"`
 }
 
-function FeetInchesInline({ value, onChange, ...props }) {
+function FeetInchesInline({ value, onChange, label, ...props }) {
   const { feet, inches } = value || {}
 
   return (
-    <View row gap="sm">
+    <View row gap="sm" toBottom>
       <NumberInput
         value={feet}
         onChange={(newFeet) => onChange({ feet: newFeet, inches })}
         min={0}
         precision={0}
         flex
+        label={label}
         {...props}
         suffix="ft"
       />
