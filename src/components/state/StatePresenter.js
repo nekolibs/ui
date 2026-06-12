@@ -24,7 +24,7 @@ export function StatePresenter({
   if (error) {
     return (
       <View flex center {...props}>
-        <Result type="error" title={errorTitle} description={errorDescription || error.message} />
+        <Result type="error" title={errorTitle} description={errorDescription || (typeof error === 'string' ? error : error.message)} />
       </View>
     )
   }
