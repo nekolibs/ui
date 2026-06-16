@@ -26,7 +26,7 @@ export class I18n {
   }
 
   t(key, opts = {}) {
-    let { ns = 'common', context, ...vars } = opts
+    let { ns = 'common', context, default: defaultVal, ...vars } = opts
     const count = vars?.count
     if (key.includes(':')) {
       const splittedKey = key.split(':')
@@ -39,7 +39,7 @@ export class I18n {
 
     if (!value) {
       const fallbackData = this.resources[this.fallback]?.[ns]
-      value = this._resolveKey(fallbackData, key, count, context) || key
+      value = this._resolveKey(fallbackData, key, count, context) ?? defaultVal ?? key
     }
 
     return this._interpolate(value, vars)
