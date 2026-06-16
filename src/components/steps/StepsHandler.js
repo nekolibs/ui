@@ -8,6 +8,7 @@ export function StepsHandler({ children, items, onSubmit, onValidateStep, onStep
   const [maxIndexReleased, setMaxIndexReleased] = React.useState(0)
   const [loading, setLoading] = React.useState(false)
   const activeStep = items[activeIndex]
+  const isFirstStep = activeIndex === 0
   const isLastStep = activeIndex === items.length - 1
 
   const moveToIndex = async (index) => {
@@ -44,6 +45,7 @@ export function StepsHandler({ children, items, onSubmit, onValidateStep, onStep
     activeStep,
     maxIndexReleased,
     loading,
+    isFirstStep,
     isLastStep,
     moveToNextStep,
     moveToPrevStep,
