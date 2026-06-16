@@ -27,6 +27,20 @@ export function useGetResponsiveValue() {
 
       if (!isObj) return value
 
+      // Only treat the object as a responsive descriptor when it actually
+      // carries breakpoint / platform / df keys. Otherwise it is a plain
+      // object prop (e.g. titleProps) and must pass through untouched.
+      const bpNames = breakpoints.map((b) => b.name)
+      const isResponsiveKey = (k) =>
+        k === 'df' ||
+        k === 'native' ||
+        k === 'web' ||
+        k === 'ios' ||
+        k === 'android' ||
+        bpNames.includes(k) ||
+        (/^(\w+)[du]$/.test(k) && bpNames.includes(k.slice(0, -1)))
+      if (!Object.keys(value).some(isResponsiveKey)) return value
+
       if (value[screen]) return value[screen]
 
       const keys = Object.keys(value)

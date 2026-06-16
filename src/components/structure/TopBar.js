@@ -4,14 +4,24 @@ import { Text } from '../text'
 import { View } from './View'
 import { useDefaultModifier } from '../../modifiers/default'
 import { useResponsiveConverter } from '../../modifiers/responsiveConverter'
-import { useThemeComponentModifier } from '../../modifiers/themeComponent'
 import { useSafeAreaInsets } from '../../abstractions/helpers/useSafeAreaInsets'
+import { useThemeComponentModifier } from '../../modifiers/themeComponent'
 
 const DEFAULT_PROPS = {
   borderB: 'overlayDivider',
+  titleProps: {
+    center: true,
+    size: 'h6',
+    numberOfLines: 1,
+  },
+  subtitleProps: {
+    center: true,
+    size: 'xs',
+    numberOfLines: 1,
+  },
 }
 
-export function TopBar({ right, left, WrapperView, children, ...rootProps }) {
+export function TopBar({ title, subtitle, right, left, WrapperView, children, ...rootProps }) {
   const { top: safeTop } = useSafeAreaInsets()
 
   const [_, props] = pipe(
@@ -19,7 +29,7 @@ export function TopBar({ right, left, WrapperView, children, ...rootProps }) {
     useDefaultModifier(DEFAULT_PROPS),
     useResponsiveConverter([])
   )([{}, rootProps])
-  let { useSafeArea = true, title, subtitle } = props
+  let { useSafeArea = true, titleProps, subtitleProps } = props
 
   const hasContent = !!title || !!subtitle || !!children || !!right || !!left
 
@@ -34,17 +44,9 @@ export function TopBar({ right, left, WrapperView, children, ...rootProps }) {
           </View>
 
           <View center flex={3}>
-            {children || (
-              <Text center h6 numberOfLines={1}>
-                {title}
-              </Text>
-            )}
+            {children || <Text {...titleProps}>{title}</Text>}
 
-            {subtitle && (
-              <Text center xs numberOfLines={1}>
-                {subtitle}
-              </Text>
-            )}
+            {subtitle && <Text {...subtitleProps}>{subtitle}</Text>}
           </View>
 
           <View flex={1} toRight>
