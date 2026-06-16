@@ -9,8 +9,8 @@ export function PopoverContent({ children, placement = 'bottom', ...props }) {
       className="neko-popover-content"
       bg="overlayBG"
       border
-      borderColor="divider_op40"
       {...props}
+      borderColor="divider"
     >
       {children}
     </Card>
