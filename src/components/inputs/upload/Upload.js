@@ -13,7 +13,7 @@ function normalizeFile(file) {
   }
 }
 
-export function Upload({ children, onChange, onUpload, value: valueProp, accept, multiple = false, maxCount, disabled = false, dnd = true, ...props }) {
+export function Upload({ children, onChange, onUpload, value: valueProp, accept, multiple = false, maxCount, disabled = false, dnd = true, onAddPress, ...props }) {
   const { value, addFiles, remove } = useUploadState({ onUpload, onChange, multiple, maxCount, value: valueProp })
   const inputRef = useRef()
   const [isDragging, setIsDragging] = useState(false)
@@ -21,8 +21,10 @@ export function Upload({ children, onChange, onUpload, value: valueProp, accept,
 
   const handleClick = useCallback(() => {
     if (disabled) return
-    inputRef.current?.click()
-  }, [disabled])
+    const open = () => inputRef.current?.click()
+    if (onAddPress) return onAddPress(open)
+    open()
+  }, [disabled, onAddPress])
 
   const handleInputChange = useCallback(
     (e) => {

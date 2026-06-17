@@ -43,7 +43,7 @@ function getMediaTypes(accept) {
   return undefined
 }
 
-export function Upload({ children, onChange, onUpload, value: valueProp, accept, multiple = false, maxCount, disabled = false, persistTo, saveToLibrary, compress = true, ...props }) {
+export function Upload({ children, onChange, onUpload, value: valueProp, accept, multiple = false, maxCount, disabled = false, onAddPress, persistTo, saveToLibrary, compress = true, ...props }) {
   const { value, addFiles, remove } = useUploadState({ onUpload, onChange, multiple, maxCount, value: valueProp })
   const [open, setOpen] = useState(false)
 
@@ -62,8 +62,10 @@ export function Upload({ children, onChange, onUpload, value: valueProp, accept,
 
   const handlePress = useCallback(() => {
     if (disabled) return
-    setOpen(true)
-  }, [disabled])
+    const open = () => setOpen(true)
+    if (onAddPress) return onAddPress(open)
+    open()
+  }, [disabled, onAddPress])
 
   // NOTE: keep the drawer OPEN while presenting the native picker, and close it
   // only after the picker returns. The drawer is a RN <Modal>; closing it first
