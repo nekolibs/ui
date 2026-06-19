@@ -35,7 +35,6 @@ export class I18n {
     }
     const langData = this.resources[this.language]?.[ns]
     let value = this._resolveKey(langData, key, count, context)
-    if (context) console.log(context, value)
 
     if (!value) {
       const fallbackData = this.resources[this.fallback]?.[ns]
