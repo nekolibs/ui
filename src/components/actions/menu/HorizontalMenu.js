@@ -6,8 +6,17 @@ import { Link } from '../Link'
 import { SubmenuWrapper } from './SubmenuWrapper'
 import { View } from '../../structure/View'
 import { useColorConverter } from '../../../modifiers/colorConverter'
+import { useDefaultModifier } from '../../../modifiers/default'
 import { useSizeConverter } from '../../../modifiers/sizeConverter'
 import { useThemeComponentModifier } from '../../../modifiers/themeComponent'
+
+const DEFAULT_PROPS = ([{ sizeCode }]) => ({
+  gap: 'sm',
+  height: sizeCode,
+  size: sizeCode,
+  linkPaddingH: 'md',
+  activeColor: 'primary',
+})
 
 function Item({
   item,
@@ -18,6 +27,7 @@ function Item({
   activeKey,
   activeColor = 'primary',
   color,
+  height,
   sizeCode,
   index,
   ...props
@@ -35,24 +45,25 @@ function Item({
       color={color}
       placement="bottomRight"
       hideIcon
+      height={height}
     >
       <Link
         key={key || index}
-        fullH
         center
         paddingH={linkPaddingH}
         disabled={disabled}
+        height={height}
         {...linkProps}
         onPress={() => handlePress(item, index)}
       >
         <IconText
           color={active ? activeColor : color}
-          fullH
           marginT={3}
           borderB={3}
           borderColor={active ? activeColor : 'transparent'}
           transition="border-color 0.6s ease"
           size={sizeCode}
+          height={height}
           {...childProps}
         />
       </Link>
@@ -63,11 +74,12 @@ function Item({
 export function HorizontalMenu(rootProps) {
   const [{ sizeCode, color }, formattedProps] = pipe(
     useColorConverter(),
-    useSizeConverter('icons', 'md'),
-    useThemeComponentModifier('HorizontalMenu') //
+    useSizeConverter('elementHeights', 'md'),
+    useThemeComponentModifier('HorizontalMenu'),
+    useDefaultModifier(DEFAULT_PROPS)
   )([{}, rootProps])
 
-  let { gap = 'sm', height = 50, items, onChange, onChangeIndex, activeIndex, ...props } = formattedProps
+  let { gap, height, items, onChange, onChangeIndex, activeIndex, ...props } = formattedProps
 
   const handlePress = React.useCallback(
     (item, index) => {
@@ -88,6 +100,7 @@ export function HorizontalMenu(rootProps) {
           handlePress={handlePress}
           color={color}
           sizeCode={sizeCode}
+          height={height}
           index={index}
           activeIndex={activeIndex}
           {...props}
