@@ -69,19 +69,15 @@ export class I18n {
       }
     }
 
-    // Support for pluralization - tries key_one for singular
+    // Support for pluralization - i18next-style suffixes: _zero (0), _one (1), _other (fallback)
     if (typeof count === 'number') {
-      if (count === 0) {
-        const singularKey = `${baseKey}_zero`
-        if (parent[singularKey] != null) {
-          return parent[singularKey]
-        }
-      }
-      if (count === 1) {
-        const singularKey = `${baseKey}_one`
-        if (parent[singularKey] != null) {
-          return parent[singularKey]
-        }
+      const suffixes = []
+      if (count === 0) suffixes.push('_zero')
+      if (count === 1) suffixes.push('_one')
+      suffixes.push('_other')
+      for (const suffix of suffixes) {
+        const pluralKey = `${baseKey}${suffix}`
+        if (parent[pluralKey] != null) return parent[pluralKey]
       }
     }
 
