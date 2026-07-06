@@ -121,7 +121,7 @@ export function Editable({ children, hidden, disabled, visibleIcon, emptyLabel, 
       </View>
       {!hidden && (visibleIcon || hovered) && (
         <View>
-          <Icon name="RiEditLine" text4 />
+          <Icon name="edit-line" text4 />
         </View>
       )}
     </View>

@@ -9,16 +9,11 @@ export function PasswordInput({ hideToggle, suffix, ...props }) {
 
   const toggle = !hideToggle ? (
     <Link onPress={() => setVisible((v) => !v)}>
-      <Icon name={visible ? 'RiEyeOffLine' : 'RiEyeLine'} color="text3" />
+      <Icon name={!visible ? 'eye-off-line' : 'eye-line'} color="text3" />
     </Link>
   ) : null
 
   return (
-    <TextInput
-      type={visible ? 'text' : 'password'}
-      secureTextEntry={!visible}
-      suffix={suffix || toggle}
-      {...props}
-    />
+    <TextInput type={visible ? 'text' : 'password'} secureTextEntry={!visible} suffix={suffix || toggle} {...props} />
   )
 }

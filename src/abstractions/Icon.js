@@ -4,7 +4,7 @@ import { capitalizeFirstLetter, toCamelCase } from '../helpers/string'
 
 export function AbsIcon({ name, ...props }) {
   if (!!name && !name.startsWith?.('Ri')) name = 'Ri' + capitalizeFirstLetter(toCamelCase(name))
-  const IconComponent = Icons[name] || Icons['RiCircleFill']
+  const IconComponent = Icons[name] || Icons['circle-fill']
 
   return <IconComponent {...props} />
 }
