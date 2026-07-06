@@ -19,18 +19,22 @@ export function NekoUI({ children, i18n, measurementSystem, ...props }) {
       <DynamicStyleTag />
       <ResponsiveHandler>
         <MeasurementHandler measurementSystem={measurementSystem}>
-          <PortalHandler>
-            <ModalsHandler>
-              <I18nProvider i18n={i18n}>
-                <NotificationsHandler>
-                  <OverlayHandler>
+          <I18nProvider i18n={i18n}>
+            {/* Overlay + Notifications must sit ABOVE PortalHandler: modal/drawer
+                bodies teleport through <Portal> to PortalHandler's level, so any
+                context below it (overlays, toasts) is unreachable from inside a
+                modal. ModalsHandler stays BELOW Portal — its Modals use <Portal>. */}
+            <OverlayHandler>
+              <NotificationsHandler>
+                <PortalHandler>
+                  <ModalsHandler>
                     {children}
                     <FixedComponents />
-                  </OverlayHandler>
-                </NotificationsHandler>
-              </I18nProvider>
-            </ModalsHandler>
-          </PortalHandler>
+                  </ModalsHandler>
+                </PortalHandler>
+              </NotificationsHandler>
+            </OverlayHandler>
+          </I18nProvider>
         </MeasurementHandler>
       </ResponsiveHandler>
     </ThemeHandler>
