@@ -1,3 +1,5 @@
-import { BottomDrawer } from '../bottomDrawer/native/BottomDrawer'
+import { Modal } from '../modal/Modal'
 
-export const Drawer = BottomDrawer
+export function Drawer(props) {
+  return <Modal position="bottom" {...props} />
+}
