@@ -7,6 +7,7 @@ import { Link } from '../actions'
 import { LinkInput } from './LinkInput'
 import { Picker, getOptionLabel, searchOptions } from './Picker'
 import { Popover } from '../structure/popover/Popover'
+import { Text } from '../text'
 import { TextInput } from './TextInput'
 import { View } from '../structure'
 import { useResponsiveValue } from '../../responsive'
@@ -136,60 +137,58 @@ export function Select({
       {...popoverProps}
       renderContent={({ onClose }) => (
         <>
-        {useBottomDrawer && useSearch && <KeyboardDismissButton />}
-        <Picker
-          row={false}
-          options={searchOptions(options, search, { labelKey })}
-          value={value}
-          gap={0}
-          maxHeight={!useBottomDrawer && popoverMaxHeight}
-          useFlatList
-          onlyOnScreen
-          itemMinHeight={30}
-          onChange={(v, option) => {
-            handleChange(v, option)
-            if (!multiple) {
-              setFocus(false)
-              onClose()
-            }
-          }}
-          {...pickerProps}
-          renderHeader={
-            useBottomDrawer && useSearch ? (
-              <>
-                <View padding="md" paddingB="xs">
-                  <TextInput
-                    prefixIcon="search-line"
-                    prefixIconColor="text4"
-                    value={search}
-                    onChange={handleChangeSearch}
-                  />
-                </View>
+          {useBottomDrawer && useSearch && <KeyboardDismissButton />}
+          <Picker
+            row={false}
+            options={searchOptions(options, search, { labelKey })}
+            value={value}
+            gap={0}
+            maxHeight={!useBottomDrawer && popoverMaxHeight}
+            useFlatList
+            onlyOnScreen
+            itemMinHeight={30}
+            onChange={(v, option) => {
+              handleChange(v, option)
+              if (!multiple) {
+                setFocus(false)
+                onClose()
+              }
+            }}
+            {...pickerProps}
+            renderHeader={
+              <View paddingT={1}>
+                {useBottomDrawer && useSearch && (
+                  <View padding="md" paddingB="xs">
+                    <TextInput
+                      prefixIcon="search-line"
+                      prefixIconColor="text4"
+                      value={search}
+                      onChange={handleChangeSearch}
+                    />
+                  </View>
+                )}
                 {renderHeader?.()}
-              </>
-            ) : (
-              renderHeader
-            )
-          }
-          renderOption={({ option, selected, onChange }) => (
-            <Link
-              row
-              paddingH={useBottomDrawer ? 'md' : 'sm'}
-              paddingV="xs"
-              minHeight={useBottomDrawer ? 'xl' : 'md'}
-              gap="sm"
-              onMouseDown={(e) => !!multiple && e.preventDefault()}
-              onPress={onChange}
-              centerV
-              bg={selected && 'primary_op10'}
-            >
-              <View flex row>
-                {finalRenderOption({ option, labelKey, selected })}
               </View>
-              {selected && <Icon name="checkbox-circle-fill" primary />}
-            </Link>
-          )}
-        />
+            }
+            renderOption={({ option, selected, onChange }) => (
+              <Link
+                row
+                paddingH={useBottomDrawer ? 'md' : 'sm'}
+                paddingV="xs"
+                minHeight={useBottomDrawer ? 'xl' : 'md'}
+                gap="sm"
+                onMouseDown={(e) => !!multiple && e.preventDefault()}
+                onPress={onChange}
+                centerV
+                bg={selected && 'primary_op10'}
+              >
+                <View flex row>
+                  {finalRenderOption({ option, labelKey, selected })}
+                </View>
+                {selected && <Icon name="checkbox-circle-fill" primary />}
+              </Link>
+            )}
+          />
         </>
       )}
     >
