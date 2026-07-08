@@ -1,4 +1,7 @@
 import { FlatList } from 'react-native'
+import { omit } from 'ramda'
+
+const IGNORED_STYLE_FIELDS = ['overflow', 'overflowY', 'overflowX', 'flexDirection']
 
 export const AbsFlatList = ({
   style: { height, width, flex, ...style },
@@ -31,7 +34,7 @@ export const AbsFlatList = ({
       ListEmptyComponent={ListEmptyComponent}
       ListFooterComponent={ListFooterComponent}
       ListHeaderComponent={ListHeaderComponent}
-      contentContainerStyle={style}
+      contentContainerStyle={omit(IGNORED_STYLE_FIELDS, style)}
     />
   )
 }
