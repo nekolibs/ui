@@ -21,8 +21,8 @@ import { useSizeModifier } from '../../modifiers/size'
 import { useStateModifier } from '../../modifiers/state'
 import { useThemeComponentModifier } from '../../modifiers/themeComponent'
 
-const DEFAULT_PROPS = ([{ sizeCode }]) => ({
-  paddingH: sizeCode,
+const DEFAULT_PROPS = ([{ sizeCode }, { label, icon }]) => ({
+  paddingH: icon && (label == null || label === false) ? 2 : sizeCode,
   paddingV: 2,
   height: sizeCode,
   br: sizeCode,
