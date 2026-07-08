@@ -17,6 +17,7 @@ export function LazyAction({ children, disabled, action, minHeight: initMinHeigh
   return (
     <LazyRender whenVisible minHeight={2} {...props}>
       <InnerContent action={action} />
+      {!disabled && children}
     </LazyRender>
   )
 }
