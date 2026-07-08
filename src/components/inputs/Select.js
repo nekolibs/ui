@@ -1,4 +1,4 @@
-import { dissoc } from 'ramda'
+import { dissoc, is } from 'ramda'
 import React from 'react'
 
 import { Icon, IconLabel } from '../presentation'
@@ -7,7 +7,6 @@ import { Link } from '../actions'
 import { LinkInput } from './LinkInput'
 import { Picker, getOptionLabel, searchOptions } from './Picker'
 import { Popover } from '../structure/popover/Popover'
-import { Text } from '../text'
 import { TextInput } from './TextInput'
 import { View } from '../structure'
 import { useResponsiveValue } from '../../responsive'
@@ -44,6 +43,7 @@ export function Select({
   snapPoints,
   startsOpen,
   onOpenChange,
+  loading,
   ...props
 }) {
   const [focus, setFocus] = React.useState(false)
@@ -134,6 +134,7 @@ export function Select({
       watch={[search, options, valueWatcher]}
       unmountOnClose
       maxHeight={popoverMaxHeight}
+      bottomDrawerProps={{ useSafeArea: false }}
       {...popoverProps}
       renderContent={({ onClose }) => (
         <>
@@ -167,7 +168,12 @@ export function Select({
                     />
                   </View>
                 )}
-                {renderHeader?.()}
+                {is(Function, renderHeader) ? renderHeader?.() : renderHeader}
+              </View>
+            }
+            renderFooter={
+              <View paddingB={useBottomDrawer && 50}>
+                {is(Function, renderFooter) ? renderFooter?.() : renderFooter}
               </View>
             }
             renderOption={({ option, selected, onChange }) => (
@@ -215,6 +221,7 @@ export function Select({
         suffixIcon="arrow-down-s-fill"
         suffixIconColor="text4"
         fullW
+        loading={loading}
         {...props}
       />
     </Popover>
