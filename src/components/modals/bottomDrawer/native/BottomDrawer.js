@@ -13,6 +13,7 @@ import React from 'react'
 
 import { DrawerHandle } from './DrawerHandle'
 import { DrawerProvider } from './DrawerContext'
+import { HandleGestureDetector } from './HandleGestureDetector'
 import { SheetGestureDetector } from './SheetGestureDetector'
 import { Pressable } from '../../../actions/Pressable'
 import { View } from '../../../structure/View'
@@ -223,7 +224,9 @@ function InnerContent({
               {...props}
               minH={minSnapPoint}
             >
-              <DrawerHandle hide={hideHandle} />
+              <HandleGestureDetector gesture={panGesture}>
+                <DrawerHandle hide={hideHandle} />
+              </HandleGestureDetector>
               <View flex {...contentProps}>
                 {children}
               </View>

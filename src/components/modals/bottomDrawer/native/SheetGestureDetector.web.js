@@ -1,8 +1,7 @@
-// Web: no whole-sheet drag. react-native-gesture-handler stamps
-// `touch-action: none` on any node it wraps, which disables the browser's
-// native scrolling for the whole subtree — so wrapping the sheet would block
-// the list's touch scroll. The sheet closes via backdrop tap / selecting an
-// option instead.
+// Web: the sheet itself is not a drag target. Drag-to-close is bound to the
+// handle instead (see HandleGestureDetector.web) so the pan never covers the
+// scrollable list — which would otherwise fight the list's own scrolling. The
+// sheet also closes via backdrop tap / selecting an option.
 export function SheetGestureDetector({ children }) {
   return children
 }
