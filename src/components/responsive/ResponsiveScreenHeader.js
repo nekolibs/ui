@@ -49,7 +49,7 @@ function LargeHeader({ title, subtitle, actions = [], filterBar, useSearch, sear
 
           {filterBar}
 
-          {!!useSearch && <SearchInput placeholder={searchPlaceholder} sm />}
+          {!!useSearch && <SearchInput placeholder={searchPlaceholder} />}
         </View>
       )}
     </SafeAreaView>
@@ -78,7 +78,7 @@ function SmallHeader({ title, subtitle, actions = [], filterBar, useSearch, sear
 
       {!!useSearch && (
         <View paddingH="md">
-          <SearchInput placeholder={searchPlaceholder} sm />
+          <SearchInput placeholder={searchPlaceholder} />
         </View>
       )}
 
