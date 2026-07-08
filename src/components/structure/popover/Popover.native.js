@@ -61,7 +61,7 @@ export function Popover({
         {children}
 
         <BottomDrawer open={open} onClose={onClose} snapPoints={snapPoints} {...bottomDrawerProps}>
-          {renderContent({ onClose: onClose })}
+          {renderContent({ onClose })}
         </BottomDrawer>
       </View>
     )
@@ -91,7 +91,7 @@ export function Popover({
                     }}
                   >
                     <PopoverContent placement={placement} {...props}>
-                      {renderContent({ onClose: onClose })}
+                      {renderContent({ onClose })}
                     </PopoverContent>
                   </View>
                 )}

@@ -127,7 +127,7 @@ function DrawerPopover({ children, content, renderContent, snapPoints, onOpenCha
     <>
       {React.cloneElement(child, childProps)}
 
-      <BottomDrawer open={open} onClose={onClose} snapPoints={snapPoints} {...props}>
+      <BottomDrawer open={open} onClose={onClose} snapPoints={snapPoints} useSafeArea={false} {...props}>
         {renderContent({ onClose })}
       </BottomDrawer>
     </>
