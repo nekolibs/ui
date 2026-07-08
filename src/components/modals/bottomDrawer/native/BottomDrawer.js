@@ -1,4 +1,4 @@
-import { GestureDetector, Gesture, GestureHandlerRootView } from 'react-native-gesture-handler'
+import { Gesture, GestureHandlerRootView } from 'react-native-gesture-handler'
 import { Modal, Dimensions, StyleSheet, BackHandler, Platform } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import Animated, {
@@ -13,6 +13,7 @@ import React from 'react'
 
 import { DrawerHandle } from './DrawerHandle'
 import { DrawerProvider } from './DrawerContext'
+import { SheetGestureDetector } from './SheetGestureDetector'
 import { Pressable } from '../../../actions/Pressable'
 import { View } from '../../../structure/View'
 import { normalizeSnapPoints, findClosestSnapPoint } from './utils'
@@ -205,7 +206,7 @@ function InnerContent({
       />
 
       <DrawerProvider value={contextValue}>
-        <GestureDetector gesture={panGesture}>
+        <SheetGestureDetector gesture={panGesture}>
           <Animated.View
             style={[styles.container, { height: SCREEN_HEIGHT }, animatedSheetStyle]}
             pointerEvents="box-none"
@@ -228,7 +229,7 @@ function InnerContent({
               </View>
             </View>
           </Animated.View>
-        </GestureDetector>
+        </SheetGestureDetector>
       </DrawerProvider>
     </GestureHandlerRootView>
   )
