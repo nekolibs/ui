@@ -4,6 +4,7 @@ import { BASE_THEME } from './base'
 
 export const DEFAULT_BLACK_THEME = mergeDeepRight(BASE_THEME, {
   label: 'Pitch Black',
+  useOverlayDivider: true,
 
   colors: {
     primary: '#818DF9',
