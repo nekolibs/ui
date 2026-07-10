@@ -1,4 +1,5 @@
 import { ModalHeader } from '../modals'
+import { Platform } from '../../abstractions'
 import { ReturnLink } from '../routing'
 import { SubmitButton } from '../form'
 import { TopBar } from '../structure'
@@ -28,7 +29,7 @@ function MddHeader({ onClose, useSubmitButton, submitLabel, ...props }) {
       right={useSubmitButton && <SubmitButton label={submitLabel} paddingH="md" />}
       useSafeArea={false}
       borderB
-      marginT={-15}
+      marginT={Platform.OS === 'web' ? 0 : -15}
       {...props}
     />
   )
