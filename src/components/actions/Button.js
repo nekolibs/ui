@@ -21,18 +21,22 @@ import { useSizeModifier } from '../../modifiers/size'
 import { useStateModifier } from '../../modifiers/state'
 import { useThemeComponentModifier } from '../../modifiers/themeComponent'
 
-const DEFAULT_PROPS = ([{ sizeCode }, { label, icon }]) => ({
-  paddingH: icon && (label == null || label === false) ? 2 : sizeCode,
-  paddingV: 2,
-  height: sizeCode,
-  br: sizeCode,
-  border: 1,
-  center: true,
-  pointer: true,
-  hover: {
-    opacity: 0.7,
-  },
-})
+const DEFAULT_PROPS = ([{ sizeCode }, { label, icon, ratio }]) => {
+  const hasEvenSize = !label && ratio === 1
+
+  return {
+    paddingH: hasEvenSize ? 2 : sizeCode,
+    paddingV: 2,
+    height: sizeCode,
+    br: sizeCode,
+    border: 1,
+    center: true,
+    pointer: true,
+    hover: {
+      opacity: 0.7,
+    },
+  }
+}
 
 export function Button({ children, dashed, ...rootProps }) {
   if (dashed) rootProps = { outline: true, ...rootProps, borderStyle: 'dashed' }
