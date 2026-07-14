@@ -5,3 +5,8 @@ export function persistFile(uri) {
 }
 
 export function removeFile() {}
+
+// Web: no local filesystem — callers keep the remote url.
+export async function downloadFile() {
+  return null
+}

@@ -44,6 +44,23 @@ export function persistFile(uri, target = 'document/files', { name } = {}) {
   }
 }
 
+// Download a remote file into a permanent app directory (`target`, default
+// 'document/files'). Returns the local uri string, or null on failure / when
+// expo-file-system is unavailable — callers keep the remote url as fallback.
+export async function downloadFile(url, target = 'document/files', { name } = {}) {
+  if (!FS || !url) return null
+  try {
+    const ext = name?.split('.').pop() || url.split('?')[0].split('.').pop() || 'jpg'
+    const filename = `${Date.now()}_${seq++}_${Math.round(Math.random() * 1e6)}.${ext}`
+    const dest = new FS.File(resolveDir(target), filename)
+    await FS.File.downloadFileAsync(url, dest)
+    return dest.uri
+  } catch (e) {
+    console.warn('[neko-ui files] downloadFile failed:', e?.message)
+    return null
+  }
+}
+
 // Delete a persisted file. No-op if missing / unavailable.
 export function removeFile(uri) {
   if (!FS || !uri) return
