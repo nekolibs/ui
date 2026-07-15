@@ -6,7 +6,7 @@ let useNavigation
 try {
   useNavigation = require('@react-navigation/native').useNavigation
 } catch {
-  useNavigation = () => ({ goBack: () => console.warn('ReturnButton: @react-navigation/native not installed.') })
+  useNavigation = () => ({ goBack: () => console.warn('ReturnButton: @react-navigation/native not installed.'), canGoBack: () => true })
 }
 
 // A back/close Button. Defaults to a left-arrow icon that calls navigation.goBack(). `close` swaps to
@@ -14,6 +14,10 @@ try {
 // Button (label, outline, size, color, etc.).
 export function ReturnButton({ icon, close, onPress, ...props }) {
   const navigation = useNavigation()
+
+  // Default (goBack) with nothing to go back to -> render nothing. An onPress override always renders.
+  if (!onPress && !navigation.canGoBack()) return null
+
   const name = icon || (close ? 'close-line' : 'arrow-left-s-line')
 
   return <Button icon={name} onPress={onPress || (() => navigation.goBack())} {...props} />

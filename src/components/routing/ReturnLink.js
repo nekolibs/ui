@@ -15,6 +15,11 @@ try {
 // Extra props pass to the Icon (size, color, etc.).
 export function ReturnLink({ icon, close, onPress, ...props }) {
   const navigate = useNavigate()
+
+  // Default (goBack) on the first history entry -> render nothing. An onPress override always renders.
+  // react-router has no canGoBack; idx is 0 only on the first entry (show if unsure).
+  if (!onPress && typeof window !== 'undefined' && window.history.state?.idx === 0) return null
+
   const name = icon || (close ? 'close-line' : 'arrow-left-s-line')
 
   return (

@@ -7,7 +7,7 @@ let useNavigation
 try {
   useNavigation = require('@react-navigation/native').useNavigation
 } catch {
-  useNavigation = () => ({ goBack: () => console.warn('ReturnLink: @react-navigation/native not installed.') })
+  useNavigation = () => ({ goBack: () => console.warn('ReturnLink: @react-navigation/native not installed.'), canGoBack: () => true })
 }
 
 // A back/close Link: a Link wrapping an Icon. Defaults to a left-arrow that calls navigation.goBack().
@@ -15,6 +15,10 @@ try {
 // Extra props pass to the Icon (size, color, etc.).
 export function ReturnLink({ icon, close, onPress, ...props }) {
   const navigation = useNavigation()
+
+  // Default (goBack) with nothing to go back to -> render nothing. An onPress override always renders.
+  if (!onPress && !navigation.canGoBack()) return null
+
   const name = icon || (close ? 'close-line' : 'arrow-left-s-line')
 
   return (
