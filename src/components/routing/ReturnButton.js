@@ -19,7 +19,7 @@ export function ReturnButton({ icon, close, onPress, ...props }) {
   // react-router has no canGoBack; idx is 0 only on the first entry (show if unsure).
   if (!onPress && typeof window !== 'undefined' && window.history.state?.idx === 0) return null
 
-  const name = icon || (close ? 'close-line' : 'arrow-left-s-line')
+  const name = icon || (close ? 'close-line' : 'arrow-left-line')
 
   return <Button icon={name} onPress={onPress || (() => navigate(-1))} {...props} />
 }
