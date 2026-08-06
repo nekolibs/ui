@@ -19,10 +19,21 @@ export function useNewForm({ initialValues = {}, validate, onSubmit, onValuesCha
     const toKey = (name) => (Array.isArray(name) ? name.join('.') : name)
     const toPath = (name) => (Array.isArray(name) ? name : [name])
 
+    // Notify the exact field always; notify an ANCESTOR path only for listeners that
+    // opted into deep watching (registerListener(..., { deep: true })). This keeps a
+    // shallow parent watcher (the default) from firing on every nested keystroke — e.g.
+    // FormList watching 'config.options' must not re-render when 'config.options.0.label'
+    // changes, or the edited row remounts and the input loses focus. Deep watchers (e.g.
+    // a preview reading the whole 'config' object) still fire on nested changes.
     const notify = (name) => {
-      const key = toKey(name)
-      if (listenersRef.current[key]) {
-        listenersRef.current[key].forEach((cb) => cb(path(toPath(name), valuesRef.current)))
+      const parts = Array.isArray(name) ? name : String(name).split('.')
+      for (let i = parts.length; i >= 1; i--) {
+        const subPath = parts.slice(0, i)
+        const key = subPath.join('.')
+        const isExact = i === parts.length
+        listenersRef.current[key]?.forEach((entry) => {
+          if (isExact || entry.deep) entry.cb(path(subPath, valuesRef.current))
+        })
       }
     }
 
@@ -30,7 +41,7 @@ export function useNewForm({ initialValues = {}, validate, onSubmit, onValuesCha
       Object.keys(listenersRef.current).forEach((key) => {
         const keyPath = key.split('.')
         const value = path(keyPath, valuesRef.current)
-        listenersRef.current[key]?.forEach((cb) => cb(value))
+        listenersRef.current[key]?.forEach((entry) => entry.cb(value))
       })
     }
 
@@ -128,14 +139,17 @@ export function useNewForm({ initialValues = {}, validate, onSubmit, onValuesCha
       errorsRef.current = {}
     }
 
-    const registerListener = (name, cb) => {
+    // deep=false (default): fire only when this exact path changes. deep=true: also fire
+    // when any descendant path changes (watching a whole object subtree).
+    const registerListener = (name, cb, { deep = false } = {}) => {
       const key = toKey(name)
       if (!listenersRef.current[key]) {
         listenersRef.current[key] = []
       }
-      listenersRef.current[key].push(cb)
+      const entry = { cb, deep }
+      listenersRef.current[key].push(entry)
       return () => {
-        listenersRef.current[key] = listenersRef.current[key].filter((fn) => fn !== cb)
+        listenersRef.current[key] = listenersRef.current[key].filter((e) => e !== entry)
       }
     }
 

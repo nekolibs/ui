@@ -1,7 +1,10 @@
 import React from 'react'
 import { useFormInstance } from './Form'
 
-export function useWatch(name, { form } = {}) {
+// deep=false (default): re-render only when this exact path changes. deep=true: also
+// re-render when any nested path under `name` changes — use when watching a whole object
+// (e.g. useWatch('config', { deep: true })).
+export function useWatch(name, { form, deep = false } = {}) {
   const contextForm = useFormInstance()
   form = form || contextForm
   const [value, setValue] = React.useState(() => form?.getFieldValue(name))
@@ -14,12 +17,16 @@ export function useWatch(name, { form } = {}) {
 
     setValue(form.getFieldValue(name))
 
-    const unsubscribe = form.registerListener(name, (newValue) => {
-      setValue(newValue)
-    })
+    const unsubscribe = form.registerListener(
+      name,
+      (newValue) => {
+        setValue(newValue)
+      },
+      { deep }
+    )
 
     return unsubscribe
-  }, [form, name])
+  }, [form, name, deep])
 
   return value
 }
@@ -42,9 +49,13 @@ export function useWatchAll(form) {
       currentFields.forEach((field) => {
         if (!watchedFieldsRef.current.has(field)) {
           watchedFieldsRef.current.add(field)
-          const unsub = form.registerListener(field, () => {
-            setValues({ ...form.valuesRef.current })
-          })
+          const unsub = form.registerListener(
+            field,
+            () => {
+              setValues({ ...form.valuesRef.current })
+            },
+            { deep: true }
+          )
           unsubscribers.push(unsub)
         }
       })

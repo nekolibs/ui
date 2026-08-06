@@ -26,7 +26,13 @@ export function FormItem({
   const formState = useFormState()
   const listPath = useRelativePath(name, { isAbsolutePath })
   const listPathStr = listPath.join('$NEKOJOIN$')
-  const [value, setValue] = React.useState(form.getFieldValue(listPath))
+  // Fall back to initialValue for the first render so the control reflects the default
+  // immediately — the seeding effect below writes it to the form, but its notify fires
+  // before this item's listener registers, so the display must be seeded here too.
+  const [value, setValue] = React.useState(() => {
+    const current = form.getFieldValue(listPath)
+    return current === undefined && initialValue !== undefined ? initialValue : current
+  })
   const [error, setError] = React.useState(form.getError(listPath))
 
   // Set initial value on mount if provided and field has no value
