@@ -19,7 +19,7 @@ export function FloatingMenu({ fixed, onChange, items, activeIndex, size = 'md',
           const isActive = index === activeIndex
 
           return (
-            <Link key={index} onPress={() => onChange(item, index)} center padding="xs" gap={3} width={height} round>
+            <Link key={index} onPress={() => onChange(item, index)} center _paddingH="xs" gap={3} width={height}>
               <Icon
                 name={isActive ? item.icon?.replace(/line(?=[^line]*$)/, 'fill') : item.icon}
                 size={height}
