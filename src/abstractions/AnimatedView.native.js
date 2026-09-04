@@ -1,5 +1,10 @@
 import Animated from 'react-native-reanimated'
 
-export function AbsAnimatedView({ children, style, animatedStyles = [] }) {
-  return <Animated.View style={[style, ...animatedStyles]}>{children}</Animated.View>
+// `onClick` reaches the DOM on react-native-web (backdrop click-to-close); native ignores it.
+export function AbsAnimatedView({ children, style, animatedStyles = [], onPress, onClick }) {
+  return (
+    <Animated.View style={[style, ...animatedStyles]} onClick={onClick || onPress}>
+      {children}
+    </Animated.View>
+  )
 }
