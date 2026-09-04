@@ -233,7 +233,7 @@ export function useNewForm({ initialValues = {}, validate, onSubmit, onValuesCha
       const isValid = await validateForm()
       if (!isValid) return
       const { onSubmit } = callbacksRef.current
-      if (onSubmit) onSubmit({ ...valuesRef.current })
+      if (onSubmit) return onSubmit({ ...valuesRef.current })
     }
 
     return {
