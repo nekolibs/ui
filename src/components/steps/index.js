@@ -1,4 +1,5 @@
 export * from './StepsHandler'
 export * from './StepsMenu'
+export * from './StepsDots'
 export * from './ActiveStepContent'
 export * from './StepsNavigation'
