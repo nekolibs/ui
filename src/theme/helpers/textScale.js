@@ -9,6 +9,8 @@ export function moveTextScale(value, unit = 1) {
 }
 
 export function getTextFromProps({ size, ...props }, defaultValue) {
+  // numeric size = raw fontSize (px), not a scale code
+  if (typeof size === 'number') return [null, { ...props, fontSize: size }]
   if (!!size) return [size, props]
   size = SCALE.find((key) => !!props[key]) || defaultValue
   return [size, omit(SCALE, props)]
