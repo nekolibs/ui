@@ -80,14 +80,12 @@ export function ThemeHandler({
   disableDefaultThemes,
   enableOnlyThemes,
 }) {
-  const [themePickerOpen, setThemePickerOpen] = React.useState(false)
   const [activeThemeKey, setActiveThemeKey] = React.useState(initTheme || 'light')
   const theme = useFormattedTheme(themes, activeThemeKey)
 
   const onChangeThemeRef = React.useRef(onChangeTheme)
   onChangeThemeRef.current = onChangeTheme
 
-  const openThemePicker = React.useCallback(() => setThemePickerOpen(true), [])
   const handleChangeTheme = React.useCallback((key) => {
     setActiveThemeKey(key)
     onChangeThemeRef.current?.(key)
@@ -105,10 +103,7 @@ export function ThemeHandler({
       enableOnlyThemes,
       activeThemeKey,
       toggleTheme,
-      themePickerOpen,
-      setThemePickerOpen,
       onChangeTheme: handleChangeTheme,
-      openThemePicker,
       breakpoints: breakpoints || DEFAULT_BREAKPOINTS,
     }),
     [
@@ -118,9 +113,7 @@ export function ThemeHandler({
       enableOnlyThemes,
       activeThemeKey,
       toggleTheme,
-      themePickerOpen,
       handleChangeTheme,
-      openThemePicker,
       breakpoints,
     ]
   )
