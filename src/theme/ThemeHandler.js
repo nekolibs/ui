@@ -81,29 +81,49 @@ export function ThemeHandler({
   enableOnlyThemes,
 }) {
   const [themePickerOpen, setThemePickerOpen] = React.useState(false)
-  const openThemePicker = () => setThemePickerOpen(true)
   const [activeThemeKey, setActiveThemeKey] = React.useState(initTheme || 'light')
-  const handleChangeTheme = (key) => {
-    setActiveThemeKey(key)
-    onChangeTheme?.(key)
-  }
-  const toggleTheme = () => handleChangeTheme(activeThemeKey === 'light' ? 'dark' : 'light')
   const theme = useFormattedTheme(themes, activeThemeKey)
 
-  const value = {
-    theme,
-    rawThemesParam: themes,
-    disableDefaultThemes,
-    enableOnlyThemes,
-    activeThemeKey,
-    toggleTheme,
-    themePickerOpen,
-    setThemePickerOpen,
-    onChangeTheme: handleChangeTheme,
-    openThemePicker,
-    toggleTheme,
-    breakpoints: breakpoints || DEFAULT_BREAKPOINTS,
-  }
+  const onChangeThemeRef = React.useRef(onChangeTheme)
+  onChangeThemeRef.current = onChangeTheme
+
+  const openThemePicker = React.useCallback(() => setThemePickerOpen(true), [])
+  const handleChangeTheme = React.useCallback((key) => {
+    setActiveThemeKey(key)
+    onChangeThemeRef.current?.(key)
+  }, [])
+  const toggleTheme = React.useCallback(
+    () => handleChangeTheme(activeThemeKey === 'light' ? 'dark' : 'light'),
+    [activeThemeKey, handleChangeTheme]
+  )
+
+  const value = React.useMemo(
+    () => ({
+      theme,
+      rawThemesParam: themes,
+      disableDefaultThemes,
+      enableOnlyThemes,
+      activeThemeKey,
+      toggleTheme,
+      themePickerOpen,
+      setThemePickerOpen,
+      onChangeTheme: handleChangeTheme,
+      openThemePicker,
+      breakpoints: breakpoints || DEFAULT_BREAKPOINTS,
+    }),
+    [
+      theme,
+      themes,
+      disableDefaultThemes,
+      enableOnlyThemes,
+      activeThemeKey,
+      toggleTheme,
+      themePickerOpen,
+      handleChangeTheme,
+      openThemePicker,
+      breakpoints,
+    ]
+  )
 
   return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
 }
