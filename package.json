@@ -15,7 +15,7 @@
     "watch:sync": "node scripts/watch-and-sync.js",
     "dev": "yarn build && yarn watch",
     "prepublishOnly": "yarn build",
-    "publish": "npm publish --access public"
+    "release": "npm publish --access public"
   },
   "publishConfig": {
     "access": "public"
