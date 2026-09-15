@@ -221,6 +221,7 @@ function InnerContent({
               marginL="auto"
               marginR="auto"
               fullW
+              maxW={700}
               {...props}
               minH={minSnapPoint}
             >
