@@ -10,6 +10,7 @@ export function StatePresenter({
   errorDescription,
   emptyTitle = 'No results',
   emptyDescription,
+  renderEmpty,
   children,
   ...props
 }) {
@@ -32,7 +33,7 @@ export function StatePresenter({
   if (empty) {
     return (
       <View flex center {...props}>
-        <Result type="empty" title={emptyTitle} description={emptyDescription} />
+        {renderEmpty ? renderEmpty() : <Result type="empty" title={emptyTitle} description={emptyDescription} />}
       </View>
     )
   }
