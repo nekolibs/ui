@@ -111,7 +111,7 @@ export function Select({
       if (!!renderOption) return renderOption(params)
       let { option, labelKey, selected } = params
       if (option?.id) option = dissoc('id', option)
-      if (option?.color) option = { ...option, color: undefined, iconColor: option.color }
+      // if (option?.color) option = { ...option, color: undefined, iconColor: option.color }
 
       return <IconLabel {...option} label={option?.[labelKey]} flex strong={selected} />
     },
