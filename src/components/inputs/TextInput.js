@@ -8,7 +8,7 @@ export function TextInput({ onChange, multiline, rows, ...props }) {
   const spaces = useSpaces()
 
   const STYLE = {
-    width: '100%',
+    alignSelf: 'stretch',
     borderWidth: 0,
     background: 'transparent',
     outline: 'none',
