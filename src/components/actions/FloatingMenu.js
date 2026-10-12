@@ -5,35 +5,46 @@ import { View } from '../structure'
 import { moveScale } from '../../theme/helpers/sizeScale'
 import { useSafeAreaInsets } from '../../abstractions/helpers/useSafeAreaInsets'
 
-export function FloatingMenu({ fixed, onChange, items, activeIndex, size = 'md', WrapperView, ...props }) {
+export function FloatingMenu({ fixed, onChange, items, activeIndex, size = 'md', WrapperView, header, ...props }) {
   const insets = useSafeAreaInsets()
   const height = moveScale(size, 2)
 
   const bg = !WrapperView ? 'overlayBG' : null
   WrapperView = WrapperView || View
 
+  const links = items.map((item, index) => {
+    const isActive = index === activeIndex
+
+    return (
+      <Link key={index} onPress={() => onChange(item, index)} center _paddingH="xs" gap={3} width={height}>
+        <Icon
+          name={isActive ? item.icon?.replace(/line(?=[^line]*$)/, 'fill') : item.icon}
+          size={height}
+          color={isActive ? 'primary' : 'text3'}
+        />
+        {!!item.label && (
+          <Text size="xxs" center color={isActive ? 'primary' : 'text3'} strong numberOfLines={1}>
+            {item.label}
+          </Text>
+        )}
+      </Link>
+    )
+  })
+
   return (
     <View absolute={!fixed} fixed={fixed} left="md" right="md" centerH bottom={Math.max(insets.bottom / 2, 16)}>
-      <WrapperView height={height} shadow round row paddingH="sm" bg={bg} border="overlayDivider" {...props}>
-        {items.map((item, index) => {
-          const isActive = index === activeIndex
-
-          return (
-            <Link key={index} onPress={() => onChange(item, index)} center _paddingH="xs" gap={3} width={height}>
-              <Icon
-                name={isActive ? item.icon?.replace(/line(?=[^line]*$)/, 'fill') : item.icon}
-                size={height}
-                color={isActive ? 'primary' : 'text3'}
-              />
-              {!!item.label && (
-                <Text size="xxs" center color={isActive ? 'primary' : 'text3'} strong numberOfLines={1}>
-                  {item.label}
-                </Text>
-              )}
-            </Link>
-          )
-        })}
-      </WrapperView>
+      {header ? (
+        <WrapperView shadow br="xxl" hiddenOverflow bg={bg} border="overlayDivider" {...props}>
+          {header}
+          <View row centerV justify="space-around" height={height} paddingH="sm">
+            {links}
+          </View>
+        </WrapperView>
+      ) : (
+        <WrapperView height={height} shadow round row paddingH="sm" bg={bg} border="overlayDivider" {...props}>
+          {links}
+        </WrapperView>
+      )}
     </View>
   )
 }
