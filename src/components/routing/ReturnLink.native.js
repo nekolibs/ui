@@ -7,7 +7,10 @@ let useNavigation
 try {
   useNavigation = require('@react-navigation/native').useNavigation
 } catch {
-  useNavigation = () => ({ goBack: () => console.warn('ReturnLink: @react-navigation/native not installed.'), canGoBack: () => true })
+  useNavigation = () => ({
+    goBack: () => console.warn('ReturnLink: @react-navigation/native not installed.'),
+    canGoBack: () => true,
+  })
 }
 
 // A back/close Link: a Link wrapping an Icon. Defaults to a left-arrow that calls navigation.goBack().
