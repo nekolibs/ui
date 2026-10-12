@@ -18,7 +18,7 @@ export function ReturnButton({ icon, close, onPress, ...props }) {
   // Default (goBack) with nothing to go back to -> render nothing. An onPress override always renders.
   if (!onPress && !navigation.canGoBack()) return null
 
-  const name = icon || (close ? 'close-line' : 'arrow-left-s-line')
+  const name = icon || (close ? 'close-line' : 'arrow-left-line')
 
   return <Button icon={name} onPress={onPress || (() => navigation.goBack())} {...props} />
 }
