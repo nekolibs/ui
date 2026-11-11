@@ -218,7 +218,7 @@ export function Select({
         // )
         // }
         placeholder={(!multiple || !value?.length) && placeholder}
-        suffixIcon="arrow-down-s-fill"
+        suffixIcon="arrow-down-s-line"
         suffixIconColor="text4"
         fullW
         loading={loading}
