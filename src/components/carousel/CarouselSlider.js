@@ -11,7 +11,7 @@ function SlideContent({ item }) {
   return Content ? <Content /> : null
 }
 
-export function CarouselSlider() {
+export function CarouselSlider(props) {
   const { items, activeIndex, itemsCount, draggable, loop, afterChange, goToNext, goToPrev, pauseAutoplay, resumeAutoplay } =
     useCarousel()
 
@@ -97,10 +97,11 @@ export function CarouselSlider() {
   }
 
   return (
-    <View hiddenOverflow fullW ref={containerRef}>
+    <View hiddenOverflow fullW ref={containerRef} {...props}>
       <View
         row
         style={{
+          flexGrow: 1,
           width: `${itemsCount * 100}%`,
           transform: `translateX(${transformX}%)`,
           transition: isDragging || skipTransitionRef.current ? 'none' : 'transform 300ms ease-in-out',

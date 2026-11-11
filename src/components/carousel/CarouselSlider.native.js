@@ -19,7 +19,7 @@ function clampIndex(index, count, loop) {
   return Math.max(0, Math.min(index, count - 1))
 }
 
-export function CarouselSlider() {
+export function CarouselSlider(props) {
   const { items, activeIndex, itemsCount, draggable, goTo, afterChange, pauseAutoplay, resumeAutoplay, loop } =
     useCarousel()
 
@@ -104,7 +104,7 @@ export function CarouselSlider() {
     })
 
   const track = (
-    <Animated.View style={[{ flexDirection: 'row', width: slideWidth * itemsCount }, animatedStyle]}>
+    <Animated.View style={[{ flexDirection: 'row', flexGrow: 1, width: slideWidth * itemsCount }, animatedStyle]}>
       {items.map((item) => (
         <View key={item.key} style={{ width: slideWidth }}>
           <SlideContent item={item} />
@@ -114,7 +114,7 @@ export function CarouselSlider() {
   )
 
   return (
-    <View hiddenOverflow fullW onLayout={onLayout}>
+    <View hiddenOverflow fullW onLayout={onLayout} {...props}>
       {draggable ? <GestureDetector gesture={panGesture}>{track}</GestureDetector> : track}
     </View>
   )
