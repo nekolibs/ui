@@ -13,7 +13,7 @@ const DEFAULT_BREAKPOINTS = [
   { name: 'xl', value: 10000 },
 ]
 
-const ThemeContext = React.createContext(null)
+export const ThemeContext = React.createContext(null)
 export const useThemeHandler = () => React.useContext(ThemeContext) || {}
 
 export const useBreakpoints = () => useThemeHandler()?.breakpoints || DEFAULT_BREAKPOINTS

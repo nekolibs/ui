@@ -8,7 +8,7 @@ import { applyColorVariantsOnTheme } from './colorsVariations'
 
 export function useFormattedTheme(themes, key) {
   themes = themes || DEFAULT_THEMES
-  return React.useMemo(() => formatTheme(themes, key), [key])
+  return React.useMemo(() => formatTheme(themes, key), [themes, key])
 }
 
 export function formatTheme(themes, key) {

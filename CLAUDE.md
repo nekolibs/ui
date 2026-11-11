@@ -196,6 +196,20 @@ useSpaces()             // Shorthand for spaces
 useThemeHandler()       // { activeThemeKey, onChangeTheme, toggleTheme, ... }
 ```
 
+### src/theme/ScopedTheme.js
+
+Forces a theme on a subtree. Re-provides `ThemeContext` with the parent value and a swapped `theme`, so every modifier/hook inside resolves tokens from that theme. Breakpoints, `activeThemeKey` and `onChangeTheme` stay the app's. Renders no wrapper, the caller paints its own `bg`:
+
+```jsx
+<ScopedTheme theme="dark">
+  <View bg="mainBG" padding="md">
+    <Text>Dark text on dark bg, whatever the app theme</Text>
+  </View>
+</ScopedTheme>
+```
+
+Limitations: content teleported to the root escapes the scope on web (`Modal`/`Drawer` via `Portal`, `Popover`/`Tooltip`/`Select`/`Dropdown` via `OverlayHandler`), imperative `useModalOpener`/`useConfirmer`/`useNotifier` content, and the plain-web `::placeholder` style all use the app theme.
+
 ### src/theme/default/base.js
 
 Base scales shared by all themes:
