@@ -3,6 +3,7 @@ import dayjs from 'dayjs'
 import { ClearLink } from '../../actions/ClearLink'
 import { View } from '../../structure'
 import { useColors } from '../../../theme'
+import { useTranslation } from '../../../i18n'
 
 let DatePicker
 
@@ -14,6 +15,7 @@ try {
 
 export function DayWheelPicker({ value, onChange, min, max, onCheckDisabled, allowClear, ...props }) {
   const colors = useColors()
+  const { language } = useTranslation()
   if (!DatePicker) {
     console.warn('@quidone/react-native-wheel-picker not installed.')
     return null
@@ -24,7 +26,7 @@ export function DayWheelPicker({ value, onChange, min, max, onCheckDisabled, all
   return (
     <View center height={40 * 5} overflow="hidden" relative>
       <DatePicker
-        locale={'pt'}
+        locale={language}
         date={value.format('YYYY-MM-DD')}
         minDate={min ? dayjs(min).format('YYYY-MM-DD') : undefined}
         maxDate={max ? dayjs(max).format('YYYY-MM-DD') : undefined}
