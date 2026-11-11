@@ -34,6 +34,7 @@ export function Select({
   valueKey,
   useRawOption,
   multiple,
+  allowDeselect,
   onEndReached,
   renderFooter,
   renderHeader,
@@ -55,6 +56,7 @@ export function Select({
   valueKey = valueKey || pickerProps?.valueKey || 'value'
   useRawOption = useRawOption || pickerProps?.useRawOption
   multiple = multiple || pickerProps?.multiple
+  allowDeselect = allowDeselect || pickerProps?.allowDeselect
   onEndReached = onEndReached || pickerProps?.onEndReached
   renderFooter = renderFooter || pickerProps?.renderFooter
   renderHeader = renderHeader || pickerProps?.renderHeader
@@ -65,6 +67,7 @@ export function Select({
     valueKey,
     useRawOption,
     multiple,
+    allowDeselect,
     onEndReached,
     renderFooter,
     renderHeader,

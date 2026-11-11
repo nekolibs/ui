@@ -47,16 +47,9 @@ function compareOptionsValues(optionA, optionB, config = {}) {
   return valueA === valueB
 }
 
-function formatSingleChangeValue(option, value, { useRawOption, selected, valueKey }) {
-  let selectedOption = option
-  let selectedValue = option[valueKey]
-  if (!!useRawOption) selectedValue = option
-  if (selected) {
-    selectedOption = null
-    selectedValue = null
-  }
-
-  return selectedValue
+function formatSingleChangeValue(option, value, { useRawOption, selected, valueKey, allowDeselect }) {
+  if (selected && allowDeselect) return null
+  return !!useRawOption ? option : option[valueKey]
 }
 
 function formatMultipleChangeValue(option, value, { useRawOption, selected, multiple, valueKey }) {
@@ -73,12 +66,23 @@ function formatMultipleChangeValue(option, value, { useRawOption, selected, mult
   return value
 }
 
-function PickerItem({ option, onChange, value, renderOption, useRawOption, multiple, labelKey, valueKey, ...props }) {
+function PickerItem({
+  option,
+  onChange,
+  value,
+  renderOption,
+  useRawOption,
+  multiple,
+  allowDeselect,
+  labelKey,
+  valueKey,
+  ...props
+}) {
   const selected = isSelected(value, option, { multiple, valueKey })
 
   const handleChange = () => {
     const formatChangeValueFunc = multiple ? formatMultipleChangeValue : formatSingleChangeValue
-    const formattedValue = formatChangeValueFunc(option, value, { selected, useRawOption, valueKey })
+    const formattedValue = formatChangeValueFunc(option, value, { selected, useRawOption, valueKey, allowDeselect })
     onChange(formattedValue, option)
   }
 
@@ -117,6 +121,7 @@ export function Picker({
   useRawOption,
   useFlatList,
   multiple,
+  allowDeselect = false,
   valueKey,
   labelKey,
   Wrapper,
@@ -144,7 +149,7 @@ export function Picker({
   Wrapper = Wrapper || (useFlatList ? FlatListPickerWrapper : DefaultPickerWrapper)
 
   return (
-    <LoadingView active={isFirstLoad} replaceChildren flex>
+    <LoadingView active={isFirstLoad} replaceChildren flex={!!useFlatList}>
       <Wrapper
         {...rootProps}
         valueKey={valueKey}
@@ -158,6 +163,7 @@ export function Picker({
             renderOption={renderOption}
             useRawOption={useRawOption}
             multiple={multiple}
+            allowDeselect={allowDeselect}
             valueKey={valueKey}
             labelKey={labelKey}
             {...colProps}
